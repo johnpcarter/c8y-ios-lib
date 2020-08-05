@@ -1,0 +1,1 @@
+`JcManagedObject`s can be enriched with additional attributes, either simple String or complex sub structures.

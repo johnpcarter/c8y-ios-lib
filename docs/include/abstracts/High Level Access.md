@@ -1,0 +1,2 @@
+Convenience classes that abstract out the complexity of the c8y API to provide easy access to your groups and devices.
+Of course you have less flexibility in using these classes, but you use these in conjuction with the c8y API services too.

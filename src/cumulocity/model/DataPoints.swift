@@ -10,9 +10,42 @@ import Foundation
 
 let C8Y_MANAGED_OBJECT_DATA_POINTS = "c8y_DataPoint"
 
-struct JcDataPoints: Codable {
+public struct C8yDataPoints: Codable {
 
-    struct JcDataPointKey : CodingKey {
+    public let dataPoints: [DataPoint]
+    
+    public struct DataPoint: Codable {
+        
+        public let reference: String
+        public let value: DataPointValue
+    }
+    
+    public struct DataPointValue: Codable {
+
+        private(set) var id: String?
+        
+        public var fragment: String
+        public var unit: String
+        public var color: String // rgb e.g. #ffffff
+        public var series: String
+        public var  lineType: String
+        public var label: String
+        public var renderType: String
+        
+        enum CodingKeys: String, CodingKey {
+            case id
+            case fragment
+            case unit
+            case color // rgb e.g. #ffffff
+            case series
+            case lineType
+            case label
+            case renderType
+        }
+    }
+    
+    // dynamic version of enum CodingKeys
+    struct DataPointKey : CodingKey {
       
         var stringValue: String
       
@@ -23,66 +56,48 @@ struct JcDataPoints: Codable {
         var intValue: Int? { return nil }
         init?(intValue: Int) { return nil }
 
-        static let value = JcDataPointKey(stringValue: "value")!
+        // this represents the sub-element, referenced by an intermediary dynamic value
+        static let value = DataPointKey(stringValue: "value")!
     }
     
-    struct JcDataPoint: Codable {
-        
-        let reference: String
-        let value: JcDataPointValue
+    public init() {
+        self.dataPoints = []
     }
-   
-    let dataPoints: [JcDataPoint]
     
-    init(from decoder: Decoder) throws {
+    public init(_ reference: String, series: String, unit: String, color: String, label: String) {
         
-        let container = try decoder.container(keyedBy: JcDataPointKey.self)
+        self.dataPoints = [DataPoint(reference: reference, value: DataPointValue(id: nil, fragment: series, unit:  unit, color: color, series: series, lineType: "thin", label: label, renderType: "line"))]
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        do {
+            let container = try decoder.container(keyedBy: DataPointKey.self)
 
-        var values: [JcDataPoint] = []
-        
-        for key in container.allKeys {
+            var values: [DataPoint] = []
             
-            let nested = try container.nestedContainer(keyedBy: JcDataPointKey.self, forKey: key)
-            
-            let value = try nested.decode(JcDataPointValue.self, forKey: .value)
-            values.append(JcDataPoint(reference: key.stringValue, value: value))
-        }
+            for key in container.allKeys {
+                            
+                let value = try container.decode(DataPointValue.self, forKey: key)
+                values.append(DataPoint(reference: key.stringValue, value: value))
+            }
 
-        self.dataPoints = values
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: JcDataPointKey.self)
-        
-        for style in dataPoints {
-            let key = JcDataPointKey(stringValue: style.reference)!
-            var nested = container.nestedContainer(keyedBy: JcDataPointKey.self, forKey: key)
-            try nested.encode(style.value, forKey: .value)
+            self.dataPoints = values
+        } catch {
+            // assume error is because we have an empty structure, just ignore it
+            self.dataPoints = []
         }
     }
-}
-
-struct JcDataPointValue: Codable {
-
-    let id: String?
     
-    var fragment: String
-    var unit: String
-    var color: String // rgb e.g. #ffffff
-    var series: String
-    var  lineType: String
-    var label: String
-    var renderType: String
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case fragment
-        case unit
-        case color // rgb e.g. #ffffff
-        case series
-        case lineType
-        case label
-        case renderType
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: DataPointKey.self)
+        
+        for d in dataPoints {
+            let key = DataPointKey(stringValue: d.reference)!
+            try container.encode(d.value, forKey: key)
+            //var nested = container.nestedContainer(keyedBy: DataPointKey.self, forKey: key)
+            //try nested.encode(d.value, forKey: .value)
+        }
     }
 }

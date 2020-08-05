@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>High Level Access  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/High Level Access" class="dashAnchor"></a>
+    <a title="High Level Access  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">Cumulocity Client library for macOS/iOS</a></p>
+        <p class="header-right"><a href="https://github.com/johnpcarter/siesta"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+        High Level Access  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="About.html">About</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="installation.html">Installation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="quick-use-guide.html">Quick Use Guide</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="High%20Level%20Access.html">High Level Access</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/JcGroupManager.html">JcGroupManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcGroupManager/APIAccessError.html">– APIAccessError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcGroup.html">JcGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcDevice.html">JcDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcDevice/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/JcGroupsManagerUpdateNotification.html">JcGroupsManagerUpdateNotification</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="c8y%20API%20Access.html">c8y API Access</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/JcCumulocityConnection.html">JcCumulocityConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObjectsService.html">JcManagedObjectsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObjectsService/ManagedObjectNotFoundError.html">– ManagedObjectNotFoundError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcManagedObjectQuery.html">JcManagedObjectQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcManagedObjectQuery/Operator.html">– Operator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcManagedObjectQuery.html#/s:25Cumulocity_Client_Library20JcManagedObjectQueryV0G0V">– Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcEventsService.html">JcEventsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcMeasurementsService.html">JcMeasurementsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcAlarmsService.html">JcAlarmsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="c8y%20API%20Access.html#/s:25Cumulocity_Client_Library18JcOperationServiceC">JcOperationService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcBinariesService.html">JcBinariesService</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Data%20Models.html">Data Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html">JcManagedObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject/C8y_Connection_Status.html">– C8y_Connection_Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject/AvailabilityStatus.html">– AvailabilityStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject/ChildReferences.html">– ChildReferences</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject/C8y_Status.html">– C8y_Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC16C8y_AvailabilityV">– C8y_Availability</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC12C8y_FirmwareV">– C8y_Firmware</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC22C8y_ActiveAlarmsStatusV">– C8y_ActiveAlarmsStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC12C8y_IsDeviceV">– C8y_IsDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC24C8y_RequiredAvailabilityV">– C8y_RequiredAvailability</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC14C8y_ConnectionV">– C8y_Connection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC12C8y_PositionV">– C8y_Position</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC15C8y_LpwanDeviceV">– C8y_LpwanDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC12C8y_HardwareV">– C8y_Hardware</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcExternalId.html">JcExternalId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcDataPoints.html">JcDataPoints</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcDataPoints.html#/s:25Cumulocity_Client_Library12JcDataPointsV0E5PointV">– DataPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcDataPoints.html#/s:25Cumulocity_Client_Library12JcDataPointsV0E10PointValueV">– DataPointValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcAlarm.html">JcAlarm</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcAlarm/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcAlarm/Severity.html">– Severity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcEvent.html">JcEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcMeasurement.html">JcMeasurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcMeasurement/MeasurementValue.html">– MeasurementValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcMeasurementSeries.html">JcMeasurementSeries</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcMeasurementSeries/AggregateType.html">– AggregateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcOperation.html">JcOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcPagedManagedObjects.html">JcPagedManagedObjects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcPagedAlarms.html">JcPagedAlarms</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcPagedEvents.html">JcPagedEvents</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcPagedMeasurements.html">JcPagedMeasurements</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Custom%20Models.html">Custom Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/JcAddress.html">JcAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcContactInfo.html">JcContactInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcPlanning.html">JcPlanning</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcLoRaDeviceInfo.html">JcLoRaDeviceInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcLoRaNetworkInfo.html">JcLoRaNetworkInfo</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Customising%20Managed%20Objects.html">Customising Managed Objects</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="customisation-overview.html">Customisation Overview</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcCustomAssetProcessor.html">JcCustomAssetProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcCustomAssetProcessor/AssetObjectKey.html">– AssetObjectKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Customising%20Managed%20Objects.html#/s:25Cumulocity_Client_Library20JcCustomAssetDecoderC">JcCustomAssetDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Customising%20Managed%20Objects.html#/s:25Cumulocity_Client_Library13JcCustomAssetC">JcCustomAsset</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="API%20Tools.html">API Tools</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/JcConnectionFactory.html">JcConnectionFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/JcConnection.html">JcConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="API%20Tools.html#/s:25Cumulocity_Client_Library13JcCredentialsC">JcCredentials</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcConnectionRequest.html">JcConnectionRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcConnectionRequest/Method.html">– Method</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/JCResponseStatus.html">JCResponseStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="API%20Tools.html#/s:25Cumulocity_Client_Library18JcEncodableContentC">JcEncodableContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcMultiPartContent.html">JcMultiPartContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcMultiPartContent/ContentPart.html">– ContentPart</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other%20Guides.html">Other Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="about.html">About</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other%20Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other%20Classes.html#/s:25Cumulocity_Client_Library13JcExternalIdsC">JcExternalIds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcRequestResponse.html">JcRequestResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcSimpleConnection.html">JcSimpleConnection</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other%20Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/Date.html">Date</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other%20Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other%20Structs.html#/s:25Cumulocity_Client_Library11JcGroupInfoV">JcGroupInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Structs.html#/s:25Cumulocity_Client_Library26JcMultiPartRequestResponseV">JcMultiPartRequestResponse</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>High Level Access</h1>
+            <p>Convenience classes that abstract out the complexity of the c8y API to provide easy access to your groups and devices.
+Of course you have less flexibility in using these classes, but you use these in conjuction with the c8y API services too.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library14JcGroupManagerC"></a>
+                    <a name="//apple_ref/swift/Class/JcGroupManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library14JcGroupManagerC">JcGroupManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                        <a href="Classes/JcGroupManager.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">JcGroupManager</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library7JcGroupC"></a>
+                    <a name="//apple_ref/swift/Class/JcGroup" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library7JcGroupC">JcGroup</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/JcGroup.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">JcGroup</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library8JcDeviceC"></a>
+                    <a name="//apple_ref/swift/Class/JcDevice" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8JcDeviceC">JcDevice</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/JcDevice.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">JcDevice</span> <span class="p">:</span> <span class="kt"><a href="Classes/JcGroup.html">JcGroup</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library33JcGroupsManagerUpdateNotificationP"></a>
+                    <a name="//apple_ref/swift/Protocol/JcGroupsManagerUpdateNotification" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library33JcGroupsManagerUpdateNotificationP">JcGroupsManagerUpdateNotification</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/JcGroupsManagerUpdateNotification.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">JcGroupsManagerUpdateNotification</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="http://bustoutsolutions.com" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-04-24)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

@@ -1,0 +1,10 @@
+framework module Cumulocity_Client_Library {
+  umbrella header "Cumulocity_Client_Library.h"
+
+  export *
+  module * { export * }
+}
+
+module Cumulocity_Client_Library.__Swift {
+    exclude header "Cumulocity_Client_Library-Swift.h"
+}

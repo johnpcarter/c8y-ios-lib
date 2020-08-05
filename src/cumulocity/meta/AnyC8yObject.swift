@@ -249,7 +249,7 @@ extension C8yObject {
         }
     }
     
-    mutating func setExternalIds(_ ids: [C8yExternalId]) {
+    public mutating func setExternalIds(_ ids: [C8yExternalId]) {
     
         self.externalIds.removeAll()
                        
@@ -259,7 +259,7 @@ extension C8yObject {
     }
     
     public var isNew: Bool {
-        return self.c8yId == "_new_"
+        return  self.c8yId.isEmpty || self.c8yId == "_none_"
     }
     
     public var hasChildren: Bool {

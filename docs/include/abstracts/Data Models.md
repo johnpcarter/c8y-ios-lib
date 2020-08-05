@@ -1,0 +1,1 @@
+Classes that represent the standard c8y data models that are used by the API.

@@ -1,0 +1,74 @@
+title: Cumulocity Client library for macOS/iOS
+author: John Carter \(john.carter@softwareag.com\)
+author_url: http://bustoutsolutions.com
+github_url: https://github.com/johnpcarter/siesta
+hide_documentation_coverage: true
+documentation: docs/include/docs/*.md
+abstract: docs/include/abstracts/*.md
+output: ./docs/generated
+
+custom_categories:
+  - name: About
+    children:
+    - Installation
+    - Quick Use Guide
+
+  - name: High Level Access
+    children:
+    - JcGroupManager
+    - JcGroup
+    - JcDevice
+    - JcGroupsManagerUpdateNotification
+
+  - name: c8y API Access
+    children:
+    - JcCumulocityConnection
+    - JcManagedObjectsService
+    - JcManagedObjectQuery
+    - JcEventsService
+    - JcMeasurementsService
+    - JcAlarmsService
+    - JcOperationService
+    - JcBinariesService
+
+  - name: Data Models
+    children:
+    - JcCumulocityUser
+    - JcManagedObject
+    - JcExternalId
+    - JcDataPoints
+    - JcAlarm
+    - JcEvent
+    - JcMeasurement
+    - JcMeasurementSeries
+    - JcOperation
+    - JcPagedManagedObjects
+    - JcPagedAlarms
+    - JcPagedEvents
+    - JcPagedMeasurements
+
+  - name: Custom Models
+    children:
+    - JcAddress
+    - JcContactInfo
+    - JcPlanning
+    - JcLoRaDeviceInfo
+    - JcLoRaNetworkInfo
+
+  - name: Customising Managed Objects
+    children:
+    - Customisation Overview
+    - JcCustomAssetProcessor
+    - JcCustomAssetDecoder
+    - JcCustomAsset
+
+  - name: API Tools
+    children:
+    - JcConnectionFactory
+    - JcConnection
+    - JcCredentials
+    - JcConnectionRequest
+    - JCResponseStatus
+    - JcEncodableContent
+    - JcMultiPartContent
+

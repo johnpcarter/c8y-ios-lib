@@ -8,7 +8,7 @@
 
 import Foundation
 
-let JC_MANAGED_OBJECT_NETWORK = "networkType"
+let JC_MANAGED_OBJECT_NETWORK_TYPE = "networkType"
 let JC_MANAGED_OBJECT_NETWORK_PROVIDER = "networkProvider"
 let JC_MANAGED_OBJECT_NETWORK_INSTANCE = "lnsInstanceId"
 let JC_MANAGED_OBJECT_NETWORK_EUI = "appEUI"
@@ -16,64 +16,88 @@ let JC_MANAGED_OBJECT_NETWORK_KEY = "appKey"
 let JC_MANAGED_OBJECT_NETWORK_CODEC = "codec"
 let JC_MANAGED_OBJECT_NETWORK_LPWAN = "c8y_LpwanDevice"
 
-class C8yNetworkDecoder: C8yCustomAssetDecoder {
+class C8yAssignedNetworkDecoder: C8yCustomAssetDecoder {
     
+
     static func register() {
-        C8yCustomAssetProcessor.registerCustomPropertyClass(property: JC_MANAGED_OBJECT_NETWORK, decoder: C8yNetworkDecoder())
+        //C8yCustomAssetProcessor.registerCustomPropertyClass(property: JC_MANAGED_OBJECT_NETWORK_TYPE, decoder: C8yAssignedNetworkDecoder())
     }
     
     override func make() -> C8yCustomAsset {
-        return C8yNetwork()
+        return C8yAssignedNetwork()
     }
     
     override func make(key: C8yCustomAssetProcessor.AssetObjectKey, container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>) throws -> C8yCustomAsset {
-       try container.decode(C8yNetwork.self, forKey: key)
+       try container.decode(C8yAssignedNetwork.self, forKey: key)
     }
 }
 
-public struct C8yNetwork: C8yCustomAsset {
+public struct C8yAssignedNetwork: C8yCustomAsset, Equatable {
     
-    public private(set) var type: String?
-    public private(set) var provider: String
-    public private(set) var instance: String
-    public private(set) var appEUI: String?
-    public private(set) var appKey: String?
-    public private(set) var codec: String?
+    public internal(set) var type: String?
+    public internal(set) var provider: String?
+    public internal(set) var instance: String?
+    public internal(set) var appEUI: String?
+    public internal(set) var appKey: String?
+    public internal(set) var codec: String?
 
-    public mutating func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws {
+    public internal(set) var isProvisioned: Bool = false
+    
+    enum LPWanCodingKeys: String, CodingKey {
+        case provisioned
+    }
+    
+    public init(_ isProvisioned: Bool?) {
+    
+        if (isProvisioned != nil) {
+            self.isProvisioned = isProvisioned!
+        }
+    }
+    
+    public init() {
         
+    }
+    
+    public mutating func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws {
+                
         switch forKey.stringValue {
-        case JC_MANAGED_OBJECT_NETWORK:
+        case JC_MANAGED_OBJECT_NETWORK_TYPE:
             self.type = try container.decode(String.self, forKey: forKey)
         case JC_MANAGED_OBJECT_NETWORK_PROVIDER:
             self.provider = try container.decode(String.self, forKey: forKey)
         case JC_MANAGED_OBJECT_NETWORK_INSTANCE:
             self.instance = try container.decode(String.self, forKey: forKey)
         case JC_MANAGED_OBJECT_NETWORK_EUI:
-            self.appEUI =  try container.decode(String.self, forKey: forKey)
+            self.appEUI = try container.decode(String.self, forKey: forKey)
+            if (self.type == nil) {
+                self.type = C8yNetworkType.lora.rawValue
+            }
         case JC_MANAGED_OBJECT_NETWORK_KEY:
             self.appKey =  try container.decode(String.self, forKey: forKey)
         case JC_MANAGED_OBJECT_NETWORK_CODEC:
             self.codec = try container.decode(String.self, forKey: forKey)
         case JC_MANAGED_OBJECT_NETWORK_LPWAN:
-            let lpc = container.nestedContainer()
+            let l = try container.nestedContainer(keyedBy: LPWanCodingKeys.self, forKey: forKey)
+            self.isProvisioned = try l.decode(Bool.self, forKey: .provisioned)
         default:
             break
         }
     }
+    
+    // this never gets called, refer to C8yManagedObject.encode
     
     public func encode(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
 
         var copy = container
         
         if (self.type != nil) {
-            try copy.encode(self.type, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK)!)
+            try copy.encode(self.type, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_TYPE)!)
         }
         
         if (self.provider != nil) {
             try copy.encode(self.provider, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_PROVIDER)!)
         }
-
+        
         if (self.instance != nil) {
             try copy.encode(self.instance, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_INSTANCE)!)
         }
@@ -91,5 +115,10 @@ public struct C8yNetwork: C8yCustomAsset {
         }
         
         return copy
+    }
+    
+    public static func == (lhs: C8yAssignedNetwork, rhs: C8yAssignedNetwork) -> Bool {
+        
+        return lhs.type != rhs.type || lhs.provider != rhs.provider || lhs.instance != rhs.instance || lhs.appEUI != rhs.appEUI || lhs.appKey != rhs.appKey || lhs.codec != rhs.codec
     }
 }

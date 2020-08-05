@@ -1,0 +1,1412 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/ConnectionFactory.swift",
+      "line": 63,
+      "symbol": "JcSimpleConnection",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/ConnectionFactory.swift",
+      "line": 66,
+      "symbol": "JcSimpleConnection.authEndpoint",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/ConnectionRequest.swift",
+      "line": 27,
+      "symbol": "JcConnectionRequest.Method.GET",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/ConnectionRequest.swift",
+      "line": 28,
+      "symbol": "JcConnectionRequest.Method.POST",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/ConnectionRequest.swift",
+      "line": 29,
+      "symbol": "JcConnectionRequest.Method.PUT",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/ConnectionRequest.swift",
+      "line": 30,
+      "symbol": "JcConnectionRequest.Method.PATCH",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/ConnectionRequest.swift",
+      "line": 31,
+      "symbol": "JcConnectionRequest.Method.DELETE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/EncodableContent.swift",
+      "line": 11,
+      "symbol": "JcEncodableContent",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/MultiPartContent.swift",
+      "line": 61,
+      "symbol": "JcMultiPartContent.ContentPart.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/MultiPartContent.swift",
+      "line": 62,
+      "symbol": "JcMultiPartContent.ContentPart.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/MultiPartContent.swift",
+      "line": 63,
+      "symbol": "JcMultiPartContent.ContentPart.fileName",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/MultiPartContent.swift",
+      "line": 64,
+      "symbol": "JcMultiPartContent.ContentPart.contentType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/api/MultiPartContent.swift",
+      "line": 65,
+      "symbol": "JcMultiPartContent.ContentPart.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/common/extensions/DateExtensions.swift",
+      "line": 13,
+      "symbol": "Date.isSameDay(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/AlarmsService.swift",
+      "line": 27,
+      "symbol": "JcAlarmsService.version",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManageObjectQuery.swift",
+      "line": 11,
+      "symbol": "JcManagedObjectQuery",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManageObjectQuery.swift",
+      "line": 17,
+      "symbol": "JcManagedObjectQuery.Operator.eq",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManageObjectQuery.swift",
+      "line": 18,
+      "symbol": "JcManagedObjectQuery.Operator.ne",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManageObjectQuery.swift",
+      "line": 19,
+      "symbol": "JcManagedObjectQuery.Operator.lt",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManageObjectQuery.swift",
+      "line": 20,
+      "symbol": "JcManagedObjectQuery.Operator.gt",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManageObjectQuery.swift",
+      "line": 21,
+      "symbol": "JcManagedObjectQuery.Operator.le",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManageObjectQuery.swift",
+      "line": 22,
+      "symbol": "JcManagedObjectQuery.Operator.ge",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManageObjectQuery.swift",
+      "line": 85,
+      "symbol": "JcManagedObjectQuery.build()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManagedObjectService.swift",
+      "line": 28,
+      "symbol": "JcManagedObjectsService.ManagedObjectNotFoundError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManagedObjectService.swift",
+      "line": 29,
+      "symbol": "JcManagedObjectsService.ManagedObjectNotFoundError.id(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManagedObjectService.swift",
+      "line": 30,
+      "symbol": "JcManagedObjectsService.ManagedObjectNotFoundError.externalId(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/api/ManagedObjectService.swift",
+      "line": 31,
+      "symbol": "JcManagedObjectsService.ManagedObjectNotFoundError.type(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 13,
+      "symbol": "JcDevice",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 15,
+      "symbol": "JcDevice.Status",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 16,
+      "symbol": "JcDevice.Status.UNDEPLOYED",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 17,
+      "symbol": "JcDevice.Status.UNKNOWN",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 18,
+      "symbol": "JcDevice.Status.ONLINE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 19,
+      "symbol": "JcDevice.Status.ONLINE_WITH_ERRORS",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 20,
+      "symbol": "JcDevice.Status.OFFLINE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 21,
+      "symbol": "JcDevice.Status.OFFLINE_WITH_ERRORS",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 22,
+      "symbol": "JcDevice.Status.MAINTENANCE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 25,
+      "symbol": "JcDevice.serialNumber",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 60,
+      "symbol": "JcDevice.model",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 66,
+      "symbol": "JcDevice.revision",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 72,
+      "symbol": "JcDevice.notes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 78,
+      "symbol": "JcDevice.lastUpdated",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 84,
+      "symbol": "JcDevice.requiredResponseInterval",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 90,
+      "symbol": "JcDevice.status",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 114,
+      "symbol": "JcDevice.isDeployed",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 131,
+      "symbol": "JcDevice.connected",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 141,
+      "symbol": "JcDevice.alarms",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 147,
+      "symbol": "JcDevice.dataPoints",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 153,
+      "symbol": "JcDevice.attachments",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Device.swift",
+      "line": 199,
+      "symbol": "JcDevice.match(forExternalId:type:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 13,
+      "symbol": "JcGroup",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 15,
+      "symbol": "JcGroup.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 21,
+      "symbol": "JcGroup.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 27,
+      "symbol": "JcGroup.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 33,
+      "symbol": "JcGroup.position",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 44,
+      "symbol": "JcGroup.info",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 46,
+      "symbol": "JcGroup.childGroups",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 47,
+      "symbol": "JcGroup.devices",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 71,
+      "symbol": "JcGroup.addDevice(_:completionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 91,
+      "symbol": "JcGroup.device(forId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 96,
+      "symbol": "JcGroup.device(forExternalId:ofType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 101,
+      "symbol": "JcGroup.commitChanges(completionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/Group.swift",
+      "line": 203,
+      "symbol": "JcGroupInfo",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 35,
+      "symbol": "JcGroupManager.availableGroups",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 36,
+      "symbol": "JcGroupManager.myGroups",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 37,
+      "symbol": "JcGroupManager.plannedGroups",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 60,
+      "symbol": "JcGroupManager.addMyGroups(groupId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 72,
+      "symbol": "JcGroupManager.removeFromMyGroups(groupId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 85,
+      "symbol": "JcGroupManager.reload()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 90,
+      "symbol": "JcGroupManager.registerNotifier(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 95,
+      "symbol": "JcGroupManager.unregisterNotifier(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 107,
+      "symbol": "JcGroupManager.lookupDevice(forId:completionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 133,
+      "symbol": "JcGroupManager.lookupDevice(forExternalId:ofType:completionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 238,
+      "symbol": "JcGroupManager.APIAccessError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 239,
+      "symbol": "JcGroupManager.APIAccessError.message(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 243,
+      "symbol": "JcGroupsManagerUpdateNotification",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 245,
+      "symbol": "JcGroupsManagerUpdateNotification.groupsManagerUpdateNotification(manager:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 247,
+      "symbol": "JcGroupsManagerUpdateNotification.groupsManagerUpdateNotification(group:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/meta/GroupsManager.swift",
+      "line": 248,
+      "symbol": "JcGroupsManagerUpdateNotification.groupsManagerUpdateNotification(device:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 16,
+      "symbol": "JcAlarm.Status",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 36,
+      "symbol": "JcAlarm.Severity.CRITICAL",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 37,
+      "symbol": "JcAlarm.Severity.MAJOR",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 38,
+      "symbol": "JcAlarm.Severity.MINOR",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 39,
+      "symbol": "JcAlarm.Severity.WARNING",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 42,
+      "symbol": "JcAlarm.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 44,
+      "symbol": "JcAlarm.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 45,
+      "symbol": "JcAlarm.source",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 46,
+      "symbol": "JcAlarm.time",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 47,
+      "symbol": "JcAlarm.status",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 48,
+      "symbol": "JcAlarm.severity",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 49,
+      "symbol": "JcAlarm.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 74,
+      "symbol": "JcAlarm.init(forSource:type:description:status:severity:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 86,
+      "symbol": "JcAlarm.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 104,
+      "symbol": "JcAlarm.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Alarm.swift",
+      "line": 118,
+      "symbol": "JcAlarm.toJsonString()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/DataPoints.swift",
+      "line": 13,
+      "symbol": "JcDataPoints",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/DataPoints.swift",
+      "line": 18,
+      "symbol": "JcDataPoints.DataPoint",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/DataPoints.swift",
+      "line": 24,
+      "symbol": "JcDataPoints.DataPointValue",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 16,
+      "symbol": "JcEvent.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 18,
+      "symbol": "JcEvent.source",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 19,
+      "symbol": "JcEvent.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 20,
+      "symbol": "JcEvent.time",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 21,
+      "symbol": "JcEvent.text",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 23,
+      "symbol": "JcEvent.creationTime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 24,
+      "symbol": "JcEvent.eventDecodeError",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 26,
+      "symbol": "JcEvent.info",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 43,
+      "symbol": "JcEvent.init(forSource:type:text:eventObject:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 56,
+      "symbol": "JcEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Event.swift",
+      "line": 98,
+      "symbol": "JcEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ExternalId.swift",
+      "line": 80,
+      "symbol": "JcExternalId.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 39,
+      "symbol": "JcManagedObject.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 41,
+      "symbol": "JcManagedObject.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 42,
+      "symbol": "JcManagedObject.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 44,
+      "symbol": "JcManagedObject.createdTime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 45,
+      "symbol": "JcManagedObject.lastUpdated",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 47,
+      "symbol": "JcManagedObject.owner",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 49,
+      "symbol": "JcManagedObject.status",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 51,
+      "symbol": "JcManagedObject.applicationOwner",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 52,
+      "symbol": "JcManagedObject.applicationId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 53,
+      "symbol": "JcManagedObject.notes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 55,
+      "symbol": "JcManagedObject.firmware",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 57,
+      "symbol": "JcManagedObject.childDevices",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 58,
+      "symbol": "JcManagedObject.childAssets",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 60,
+      "symbol": "JcManagedObject.connectionStatus",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 61,
+      "symbol": "JcManagedObject.availability",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 62,
+      "symbol": "JcManagedObject.activeAlarmsStatus",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 63,
+      "symbol": "JcManagedObject.isDevice",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 65,
+      "symbol": "JcManagedObject.requiredAvailability",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 66,
+      "symbol": "JcManagedObject.dataPoints",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 68,
+      "symbol": "JcManagedObject.supportedOperations",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 69,
+      "symbol": "JcManagedObject.position",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 70,
+      "symbol": "JcManagedObject.lpwanDevice",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 71,
+      "symbol": "JcManagedObject.hardware",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 78,
+      "symbol": "JcManagedObject.C8y_Connection_Status",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 79,
+      "symbol": "JcManagedObject.C8y_Connection_Status.DISCONNECTED",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 80,
+      "symbol": "JcManagedObject.C8y_Connection_Status.CONNECTED",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 82,
+      "symbol": "JcManagedObject.AvailabilityStatus",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 83,
+      "symbol": "JcManagedObject.AvailabilityStatus.ONLINE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 84,
+      "symbol": "JcManagedObject.AvailabilityStatus.OFFLINE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 85,
+      "symbol": "JcManagedObject.AvailabilityStatus.UNAVAILABLE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 86,
+      "symbol": "JcManagedObject.AvailabilityStatus.UNKNOWN",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 89,
+      "symbol": "JcManagedObject.ChildReferences",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 134,
+      "symbol": "JcManagedObject.C8y_Status",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 169,
+      "symbol": "JcManagedObject.C8y_Availability",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 176,
+      "symbol": "JcManagedObject.C8y_Firmware",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 180,
+      "symbol": "JcManagedObject.C8y_ActiveAlarmsStatus",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 191,
+      "symbol": "JcManagedObject.C8y_IsDevice",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 195,
+      "symbol": "JcManagedObject.C8y_RequiredAvailability",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 199,
+      "symbol": "JcManagedObject.C8y_Connection",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 203,
+      "symbol": "JcManagedObject.C8y_Position",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 209,
+      "symbol": "JcManagedObject.C8y_LpwanDevice",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 213,
+      "symbol": "JcManagedObject.C8y_Hardware",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 219,
+      "symbol": "JcManagedObject.init(name:type:notes:isDevice:requiredResponseInterval:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/ManagedObject.swift",
+      "line": 295,
+      "symbol": "JcManagedObject.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Measurement.swift",
+      "line": 29,
+      "symbol": "JcMeasurement.init(fromSource:type:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Measurement.swift",
+      "line": 87,
+      "symbol": "JcMeasurement.addValues(_:forType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Measurement.swift",
+      "line": 138,
+      "symbol": "JcMeasurement.MeasurementValue.init(_:unit:withLabel:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/MeasurementSeries.swift",
+      "line": 20,
+      "symbol": "JcMeasurementSeries.AggregateType.DAILY",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/MeasurementSeries.swift",
+      "line": 21,
+      "symbol": "JcMeasurementSeries.AggregateType.HOURLY",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/MeasurementSeries.swift",
+      "line": 22,
+      "symbol": "JcMeasurementSeries.AggregateType.MINUTELY",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/MeasurementSeries.swift",
+      "line": 34,
+      "symbol": "JcMeasurementSeries.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/MeasurementSeries.swift",
+      "line": 52,
+      "symbol": "JcMeasurementSeries.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Operation.swift",
+      "line": 36,
+      "symbol": "JcOperation.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/Operation.swift",
+      "line": 68,
+      "symbol": "JcOperation.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/PagedMeasurements.swift",
+      "line": 31,
+      "symbol": "JcPagedMeasurements.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/PagedMeasurements.swift",
+      "line": 41,
+      "symbol": "JcPagedMeasurements.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/model/PagedMeasurements.swift",
+      "line": 49,
+      "symbol": "JcPagedMeasurements.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Address.swift",
+      "line": 29,
+      "symbol": "JcAddress",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Address.swift",
+      "line": 31,
+      "symbol": "JcAddress.addressSummary",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Address.swift",
+      "line": 32,
+      "symbol": "JcAddress.addressLine1",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Address.swift",
+      "line": 33,
+      "symbol": "JcAddress.city",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Address.swift",
+      "line": 34,
+      "symbol": "JcAddress.zipCode",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Address.swift",
+      "line": 35,
+      "symbol": "JcAddress.country",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Address.swift",
+      "line": 36,
+      "symbol": "JcAddress.phone",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/ContactInfo.swift",
+      "line": 28,
+      "symbol": "JcContactInfo",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/ContactInfo.swift",
+      "line": 30,
+      "symbol": "JcContactInfo.contact",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/ContactInfo.swift",
+      "line": 31,
+      "symbol": "JcContactInfo.contactPhone",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/ContactInfo.swift",
+      "line": 32,
+      "symbol": "JcContactInfo.contactEmail",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/CustomAsset.swift",
+      "line": 11,
+      "symbol": "JcCustomAssetDecoder",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/CustomAsset.swift",
+      "line": 24,
+      "symbol": "JcCustomAsset",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/CustomAssetProcesor.swift",
+      "line": 11,
+      "symbol": "JcCustomAssetProcessor",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/CustomAssetProcesor.swift",
+      "line": 14,
+      "symbol": "JcCustomAssetProcessor.AssetObjectKey",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/CustomAssetProcesor.swift",
+      "line": 40,
+      "symbol": "JcCustomAssetProcessor.registerCustomPropertyClass(property:decoder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaDeviceInfo.swift",
+      "line": 41,
+      "symbol": "JcLoRaDeviceInfo",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaDeviceInfo.swift",
+      "line": 43,
+      "symbol": "JcLoRaDeviceInfo.appKey",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaDeviceInfo.swift",
+      "line": 44,
+      "symbol": "JcLoRaDeviceInfo.appEUI",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaDeviceInfo.swift",
+      "line": 46,
+      "symbol": "JcLoRaDeviceInfo.codecName",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaDeviceInfo.swift",
+      "line": 47,
+      "symbol": "JcLoRaDeviceInfo.codecId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaDeviceInfo.swift",
+      "line": 74,
+      "symbol": "JcLoRaDeviceInfo.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaNetworkInfo.swift",
+      "line": 31,
+      "symbol": "JcLoRaNetworkInfo",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaNetworkInfo.swift",
+      "line": 33,
+      "symbol": "JcLoRaNetworkInfo.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaNetworkInfo.swift",
+      "line": 35,
+      "symbol": "JcLoRaNetworkInfo.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaNetworkInfo.swift",
+      "line": 36,
+      "symbol": "JcLoRaNetworkInfo.apiKey",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaNetworkInfo.swift",
+      "line": 37,
+      "symbol": "JcLoRaNetworkInfo.user",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaNetworkInfo.swift",
+      "line": 38,
+      "symbol": "JcLoRaNetworkInfo.password",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/LoRaNetworkInfo.swift",
+      "line": 67,
+      "symbol": "JcLoRaNetworkInfo.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Planning.swift",
+      "line": 29,
+      "symbol": "JcPlanning",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Planning.swift",
+      "line": 31,
+      "symbol": "JcPlanning.isDeployed",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Planning.swift",
+      "line": 32,
+      "symbol": "JcPlanning.deployedDate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Planning.swift",
+      "line": 33,
+      "symbol": "JcPlanning.planningDate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Planning.swift",
+      "line": 34,
+      "symbol": "JcPlanning.projectOwner",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library/src/cumulocity/xModel/Planning.swift",
+      "line": 35,
+      "symbol": "JcPlanning.isVerified",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/johncarter/Programming/xcode/SAG/Cumulocity Client Library"
+}

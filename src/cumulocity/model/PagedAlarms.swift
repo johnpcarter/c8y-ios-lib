@@ -8,35 +8,33 @@
 
 import Foundation
 
-public class JcPagedAlarms: Codable {
+/**
+Results from `C8yAlarmsService` request
+
+*/
+public struct C8yPagedAlarms: Codable {
  
-    let alarms: [JcAlarm]
-    let statistics: Statistics
+    /**
+     Alarms for current page
+     */
+    let alarms: [C8yAlarm]
     
-    public struct Statistics: Codable {
-        
-        let currentPage: Int
-        let pageSize: Int
-        let totalPages: Int
-        
-        enum CodingKeys : String, CodingKey {
-            case currentPage
-            case pageSize
-            case totalPages
-        }
-    }
+    /**
+     Paging info, to show what page these results represent, refer to `C8yPageStatistics`
+     */
+    let statistics: C8yPageStatistics
     
     enum CodingKeys : String, CodingKey {
         case  alarms
         case statistics
     }
     
-    public required init(from decoder:Decoder) throws {
+    public init(from decoder:Decoder) throws {
        
         let values = try decoder.container(keyedBy: CodingKeys.self)
        
-        alarms = try values.decode([JcAlarm].self, forKey: .alarms)
-        statistics = try values.decode(Statistics.self, forKey: .statistics)
+        alarms = try values.decode([C8yAlarm].self, forKey: .alarms)
+        statistics = try values.decode(C8yPageStatistics.self, forKey: .statistics)
     }
  
     public func encode(to encoder: Encoder) throws {

@@ -1,5 +1,5 @@
 //
-//  JcCumulocityUser.swift
+//  C8yCumulocityUser.swift
 //  Cumulocity Client Library
 //
 //  Created by John Carter on 17/04/2020.
@@ -8,71 +8,22 @@
 
 import Foundation
 
-class JcCumulocityUser: JcConnectionAccountInfo {
-        
-    private var _c8yUser: c8y_User
-    
-    public var user: String {
-        get {
-            return _c8yUser.userName
-        }
-    }
-    
-    public var lastName: String? {
-        get {
-            return _c8yUser.lastName
-        }
-    }
-    
-    public var firstName: String? {
-        get {
-            return _c8yUser.firstName
-        }
-    }
-    
-    public var alias: String? {
-        get {
-            return _c8yUser.userName
-        }
-    }
-    
-    public var emailAddress: String? {
-        get {
-            return _c8yUser.email
-        }
-    }
-    
-    public var phoneNumber: String? {
-        get {
-            return nil
-        }
-    }
-
-    init(_ json: Data) {
-        
-        _c8yUser = try! JSONDecoder().decode(c8y_User.self, from: json)
-    }
-    
-    init(user: String, lastName: String?, firstName: String?, alias: String?, emailAddress: String?, phoneNumber: String?) {
-        
-        _c8yUser = c8y_User(userName: user, firstName: firstName, lastName: lastName, email: emailAddress)
-    }
-    
-    struct c8y_User: Codable {
-    
-        var id: String?
-        var userName: String
-        
-        var firstName: String?
-        var lastName: String?
-        var email: String?
-        
-        init(userName: String, firstName: String?, lastName: String?, email: String?) {
+/**
+ Wraps a c8y UserProfile, refer to [c8y API Reference guid](https://cumulocity.com/guides/reference/users/#user) for more info
+ */
+public struct C8yCumulocityUser: Codable {
             
-            self.userName = userName
-            self.firstName = firstName
-            self.lastName = lastName
-            self.email = email
-        }
+    public private(set) var userName: String
+    
+    public private(set) var lastName: String?
+    public private(set) var firstName: String?
+    public private(set) var email: String?
+    
+    enum CodingKeys : String, CodingKey {
+
+        case userName
+        case lastName
+        case firstName
+        case email
     }
 }
