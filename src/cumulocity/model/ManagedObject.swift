@@ -10,6 +10,12 @@ import Foundation
 
 let C8Y_MANAGED_OBJECT_API = "/inventory/managedObject"
 
+let C8Y_MANAGED_OBJECTS_DEVICEx = "c8y_IsDevice"
+let C8Y_MANAGED_OBJECTS_GROUPx = "c8y_IsDeviceGroup"
+
+let C8Y_MANAGED_OBJECTS_GROUP_TYPE = "c8y_DeviceSubgroup"
+let C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE = "c8y_DeviceSubgroup"
+
 /**
 Wraps a c8y ManagedObject, refer to [c8y API Reference guid](https://cumulocity.com/guides/reference/inventory/#managed-object) for more info
  
@@ -61,19 +67,36 @@ public struct C8yManagedObject: JcEncodableContent {
     public internal(set) var availability: Availability?
     public internal(set) var activeAlarmsStatus: ActiveAlarmsStatus?
     public internal(set) var isDevice: Bool = false
-    
+	public internal(set) var isGroup: Bool = false
+
     public var requiredAvailability: RequiredAvailability?
     public var dataPoints: C8yDataPoints?
     public var sensorType: [SensorType] = []
     
+	/**
+	Used to record current stated of a device that acts as a relay, i.e. open or closed
+	This attribute is passive and should be updated only following an operation.
+	*/
     public var relayState: RelayStateType?
     
+	/**
+	GPS postion of device, dynamic GPS tracking of mobile devices should be managed via
+	the event log associated with the device
+	*/
     public internal(set) var position: Position?
 
+	/**
+	List of operations that this device supports
+	*/
     public internal(set) var supportedOperations: [String]?
+	
+	
     public internal(set) var hardware: Hardware?
     
-    public internal(set) var network: C8yAssignedNetwork?
+	/**
+	Indicates the type of network that is used to communicate with the device
+	*/
+	public internal(set) var network: C8yAssignedNetwork?
     
     /**
      Access custom properties through this class, only properties prefixed with 'x' or provided with a dedicated custom processor class will be available
@@ -112,6 +135,9 @@ public struct C8yManagedObject: JcEncodableContent {
         case CLOSE_PENDING
     }
     
+	/**
+	Represents child assets related to this object
+	*/
     public struct ChildReferences: Decodable {
         
         public  let ref: String?
@@ -157,9 +183,20 @@ public struct C8yManagedObject: JcEncodableContent {
         }
     }
 
+	/**
+	Status as determined by Cumulocity
+	*/
     public struct Status: Decodable {
         
+		/**
+		Connection status of device, normally one of CONNECTED, DISCONNECTED or MAINTENANCE
+		requires that the device allows push connectivity
+		*/
         public let status: String
+		
+		/**
+		Last time that this object was updated in Cumulocity
+		*/
         public let lastUpdated: Date?
 
         enum CodingKeys: String, CodingKey {
@@ -192,9 +229,20 @@ public struct C8yManagedObject: JcEncodableContent {
         }
     }
     
+	/**
+	Status as determined by Cumulocity
+	*/
     public struct Availability: Decodable {
         
+		/**
+		Determines if cumulocity thinks that the device is available based on data received from the device via its agent.
+		The responseInterval in requiredAvailability with have to be a non negative integer, otherwise this return MAINTENANCE
+		*/
         public let status: AvailabilityStatus
+		
+		/**
+		Last recorded update received by cumulocity from the device/agent
+		*/
         public let lastMessage: Date
     }
 
@@ -202,6 +250,9 @@ public struct C8yManagedObject: JcEncodableContent {
         public var version: String
     }
 
+	/**
+	Summary of outstanding alarm totals
+	*/
     public struct ActiveAlarmsStatus: Decodable {
         public let warning: Int
         public let minor: Int
@@ -258,36 +309,24 @@ public struct C8yManagedObject: JcEncodableContent {
         }
     }
 
-    public struct EmptyFragment: Codable {
-        
-        private var _name: String? = nil
-        
-        public init() {
-            
-        }
-        
-        public init(_ name: String) {
-            self._name = name
-        }
-        
-        public func encode(to encoder: Encoder) throws {
-            
-            var container = encoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
-
-            if (_name != nil) {
-                try container.encode(_name, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "name")!)
-            }
-        }
-    }
-
+	/**
+	Specifies after which period that cumulocity will flag a device as unavailable if no activity has been received
+	i.e. mesurements or events
+	*/
     public struct RequiredAvailability: Codable {
         public var responseInterval: Int
     }
 
+	/**
+	Only applicable for devices that are capable of connecting to cumulocity i.e. push
+	*/
     public struct ConnectionStatus : Decodable {
         public let status: ConnectionStatusType
     }
 
+	/**
+	Represents a GPS position
+	*/
     public struct Position: Codable {
         
         public var lat: Double
@@ -336,36 +375,111 @@ public struct C8yManagedObject: JcEncodableContent {
         }
     }
    
-    public struct LpwanDevice: Decodable {
+	/**
+	Used to indicate whether a device is connected to a LoRa network or not
+	*/
+    public struct LpwanDevice: Codable {
         public let provisioned: Bool
+		
+		enum LPWanCodingKeys: String, CodingKey {
+			case provisioned
+		}
     }
 
+	/**
+	Description of device
+	*/
     public struct Hardware: Codable {
         public var serialNumber: String?
         public var model: String?
         public var supplier: String?
         public var revision: String?
     }
+	
+	struct EmptyFragment: Codable {
+		
+		private var _name: String? = nil
+		
+		public init() {
+			
+		}
+		
+		public init(_ name: String) {
+			self._name = name
+		}
+		
+		public func encode(to encoder: Encoder) throws {
+			
+			var container = encoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
+
+			if (_name != nil) {
+				try container.encode(_name, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "name")!)
+			}
+		}
+	}
     
+	/**
+	Creates a new empty ManagedObject. Should only be used with the service `ManagedObjectService#put()` in order to make changes to an existing ManagedObject
+	- parameter id c8y internal id of the ManagedObject to be updated
+	*/
     public init(_ id: String) {
             
         self.id = id
     }
     
+	/**
+	Convenience constructor to allow the requried availability property to be updated via the `ManagedObjectService#put()` method
+	- parameter id c8y internal id of the ManagedObject to be updated
+	- parameter requiredAvailability specify the interval in which c8y will consider a device unavailable if it hasn't received any measurement or event. set to -1 to activate maintenance mode
+	*/
+	public init(_ id: String, requiredAvailability: RequiredAvailability) {
+			
+		self.id = id
+		self.requiredAvailability = requiredAvailability
+	}
+	
+	/**
+	Convenience constructor to allow a range of different properties  to be updated for the given ManagedObject via the `ManagedObjectService#put()` method
+	You can include both standard and custom attributes. If you want to update attributes within sub-fragments; specify the full name-space using '.' dot separator.
+	
+	- parameter id c8y internal id of the ManagedObject to be updated
+	- parameter set of properties to be updated
+	*/
+	public init(_ id: String, properties: Dictionary<String, String>) {
+		self.id = id
+		
+		for p in properties {
+			self.properties[p.key] = C8yStringWrapper(p.value)
+		}
+	}
+	
+	/**
+	Creates a *new* managed object for the given type
+	- parameter name descriptive name of manage object
+	- parameter type string describing the type of asset
+	- parameter notes ffree form text to be associated with asset. Visible in c8y cockpit web page
+	*/
     public init(name: String, type: String, notes: String?) {
         self.name = name
         self.type = type
         self.notes = notes
         
-        //super.init()
+		if (type == C8Y_MANAGED_OBJECTS_GROUP_TYPE || type == C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE) {
+			self.isGroup = true
+		}
     }
     
-    public init(_ id: String, requiredAvailability: RequiredAvailability) {
-            
-        self.id = id
-        self.requiredAvailability = requiredAvailability
-    }
-    
+	/**
+	Creates a *new* managed object for a device with the given serial number
+	- parameter serialNumber device serial number
+	- parameter name descriptive name of manage object
+	- parameter type string describing the type of asset
+	- parameter supplier free form text of the device supplier
+	- parameter model free form text of the device, can be used in conjunction with `C8yDeviceModels` to lookup additional info about the device type
+	- parameter notes ffree form text to be associated with asset. Visible in c8y cockpit web page
+	- parameter revision hardware revision of the device
+	- parameter requredResponseInterval delay in seconds in which if no activity is received by c8y that it will set the availability status to unavailable
+	*/
     public init(deviceWithSerialNumber serialNumber: String?, name: String, type: String, supplier: String?, model: String, notes: String?, revision: String?, requiredResponseInterval: Int?) {
         
         self.name = name
@@ -381,8 +495,6 @@ public struct C8yManagedObject: JcEncodableContent {
         if (requiredResponseInterval != nil) {
             self.requiredAvailability = RequiredAvailability(responseInterval: requiredResponseInterval!)
         }
-        
-        //super.init()
     }
     
     public init(from decoder: Decoder) throws {
@@ -419,8 +531,10 @@ public struct C8yManagedObject: JcEncodableContent {
                     self.childAssets = Self.safeDecodeChildAssets(key, container: container)
                 case "childDevices":
                     self.childDevices = Self.safeDecodeChildReferences(key, container: container)
-                case "c8y_IsDevice":
+                case C8Y_MANAGED_OBJECTS_DEVICEx:
                     self.isDevice = true
+				case C8Y_MANAGED_OBJECTS_GROUPx:
+					self.isGroup = true
                 case "c8y_Connection":
                     self.connectionStatus = try container.decode(ConnectionStatus.self, forKey: key)
                 case "c8y_Availability":
@@ -481,8 +595,10 @@ public struct C8yManagedObject: JcEncodableContent {
         }
         
         if (self.isDevice) {
-            try container.encode(EmptyFragment(), forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "c8y_IsDevice")!)
-        }
+            try container.encode(EmptyFragment(), forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: C8Y_MANAGED_OBJECTS_DEVICEx)!)
+		} else if (self.isGroup) {
+			try container.encode(EmptyFragment(), forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: C8Y_MANAGED_OBJECTS_GROUPx)!)
+		}
         
         if (self.sensorType.count > 0) {
             for k in self.sensorType {
@@ -518,6 +634,10 @@ public struct C8yManagedObject: JcEncodableContent {
                 
             if (self.network!.type != nil) {
                 try container.encode(self.network!.type!, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_TYPE)!)
+				
+				// isprovisioned
+				let lpwan = LpwanDevice(provisioned: self.network!.isProvisioned)
+				try container.encode(lpwan, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_LPWAN)!)				
             }
             
             if (self.network!.provider != nil) {

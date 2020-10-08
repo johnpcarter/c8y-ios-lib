@@ -32,8 +32,10 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
         case DELETE
     }
     
-    private var _connection: T
+    internal var _connection: T
     
+	private var _session: URLSessionDataTask? = nil
+	
     /**
      Invoke this as your super init to propagate the connection parameter
      */
@@ -50,18 +52,9 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
      - returns: Http session task used to invoke request
      */
     
-    internal func _get(resourcePath: String) -> Future<JcRequestResponse<Data>, APIError> {
+    internal func _get(resourcePath: String) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
         
-        return Future<JcRequestResponse<Data>, APIError>.init { (promise) in
-            _ = self.call(method: Method.GET, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil) { response in
-                
-                if (response.status == .SUCCESS) {
-                    promise(.success(response))
-                } else {
-                    promise(.failure(self.makeError(response)))
-                }
-            }
-        }
+        return self.call(method: Method.GET, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil)
     }
     
     /**
@@ -71,49 +64,33 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     - parameter completionHandler: callback for processing results
     - returns: Http session task used to invoke request
     */
-    internal func _getMultipart(resourcePath: String, completionHandler: @escaping (JcMultiPartRequestResponse) -> Void) -> URLSessionDataTask {
-        
-        return self.call(method: Method.GET, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil) { (response) in
-            
-            completionHandler(JcMultiPartRequestResponse(response))
-        }
-    }
     
-    internal func _getMultipart(resourcePath: String) -> Future<JcMultiPartRequestResponse, APIError> {
+    internal func _getMultipart(resourcePath: String) -> AnyPublisher<JcMultiPartRequestResponse, APIError> {
         
-        return Future<JcMultiPartRequestResponse, APIError>.init { (promise) in
-            _ = self.call(method: Method.GET, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil) { (response) in
-                
-                if (response.status == .SUCCESS) {
-                    promise(.success(JcMultiPartRequestResponse(response)))
-                } else {
-                    promise(.failure(self.makeError(response)))
-                }
-            }
-        }
+		self.call(method: Method.GET, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil)
+			.map({ (response) -> JcMultiPartRequestResponse in
+				return JcMultiPartRequestResponse(response)
+			}).eraseToAnyPublisher()
     }
     
     /**
     Simple REST DELETE call
     
     - parameter resourePath: the path of the resource to be interrogated, can include resource attributes and include parameters
-    - parameter completionHandler: callback for processing results
     - returns: Http session task used to invoke request
     */
     
-    internal func _delete(resourcePath: String) -> Future<JcRequestResponse<Bool>, APIError> {
-        
-        return Future<JcRequestResponse<Bool>, APIError>.init { (promise) in
-            _ = self.call(method: Method.DELETE, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil) { response in
-                
-                if (response.status == .SUCCESS) {
-                    promise(.success(JcRequestResponse(response, content: true)))
-                } else {
-                    promise(.failure(self.makeError(response)))
-                }
-            }
-        }
-    }
+	internal func _delete(resourcePath: String) -> AnyPublisher<JcRequestResponse<Bool>, APIError> {
+		
+		return self.call(method: Method.DELETE, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil)
+			.map({ (response) -> JcRequestResponse<Bool> in
+				if (response.status == .SUCCESS) {
+					return JcRequestResponse(response, content: true)
+				} else {
+					return JcRequestResponse(response, content: false)
+				}
+			}).eraseToAnyPublisher()
+	}
 
     /**
     Allows REST call with specified Method with  `JcEncodableContent` request content
@@ -126,23 +103,9 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     - returns: Http session task used to invoke request
     */
     
-    internal func _execute<RequestContent:JcEncodableContent>(method: Method,resourcePath: String, contentType: String, request: RequestContent) throws -> Future<JcRequestResponse<Data>, APIError> {
+    internal func _execute<RequestContent:JcEncodableContent>(method: Method,resourcePath: String, contentType: String, request: RequestContent) throws -> AnyPublisher<JcRequestResponse<Data>, APIError> {
         
-        return Future<JcRequestResponse<Data>, APIError>.init { (promise) in
-            
-            do {
-                _ = try self.call(method: method, resourceEndPoint: resourcePath, contentType: contentType, data: self.parseRequestContent(request), acceptType: self.acceptTypeForResponse(request)) { response in
-                    
-                    if (response.status == .SUCCESS) {
-                        promise(.success(response))
-                    } else {
-                        promise(.failure(self.makeError(response)))
-                    }
-                }
-            } catch {
-                promise(.failure(self.makeError(error)))
-            }
-        }
+		return try self.call(method: method, resourceEndPoint: resourcePath, contentType: contentType, data: self.parseRequestContent(request), acceptType: self.acceptTypeForResponse(request))
     }
     
     /**
@@ -152,23 +115,12 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     - parameter resourePath: the path of the resource to be interrogated, can include resource attributes and include parameters
     - parameter contentType: Indicates the type of content to be sent e.g. 'text/plain', 'application/json' etc.
     - parameter RequestContent: Data to be sent
-    - parameter completionHandler: callback for processing results
     - returns: Http session task used to invoke request
     */
     
-    internal func _execute(method: Method, resourcePath: String, contentType: String, request: Data) -> Future<JcRequestResponse<Data>, APIError> {
+    internal func _execute(method: Method, resourcePath: String, contentType: String, request: Data) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
 
-        return Future<JcRequestResponse<Data>, APIError>.init { (promise) in
-            
-            _ = self.call(method: method, resourceEndPoint: resourcePath, contentType: contentType, data: request, acceptType: self.acceptTypeForResponse(request)) { response in
-                
-                if (response.status == .SUCCESS) {
-                    promise(.success(response))
-                } else {
-                    promise(.failure(self.makeError(response)))
-                }
-            }
-        }
+		return self.call(method: method, resourceEndPoint: resourcePath, contentType: contentType, data: request, acceptType: self.acceptTypeForResponse(request))
     }
     
     /**
@@ -178,23 +130,12 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     - parameter resourePath: the path of the resource to be interrogated, can include resource attributes and include parameters
     - parameter contentType: Indicates the type of content to be sent e.g. 'text/plain', 'application/json' etc.
     - parameter RequestContent: multipart formatted data via `JcMultiPartRequestResponse`
-    - parameter completionHandler: callback for processing results
     - returns: Http session task used to invoke request
     */
     
-    internal func _execute(method: Method,resourcePath: String, request: JcMultiPartContent) -> Future<JcRequestResponse<Data>, APIError> {
+    internal func _execute(method: Method,resourcePath: String, request: JcMultiPartContent) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
         
-        return Future<JcRequestResponse<Data>, APIError>.init { (promise) in
-            
-            _ = self.call(method: method, resourceEndPoint: resourcePath, contentType: JC_MULTIPART_CONTENT_TYPE, data: request.build(), acceptType: self.acceptTypeForResponse(request)) { response in
-                
-                if (response.status == .SUCCESS) {
-                    promise(.success(response))
-                } else {
-                    promise(.failure(self.makeError(response)))
-                }
-            }
-        }
+		return self.call(method: method, resourceEndPoint: resourcePath, contentType: JC_MULTIPART_CONTENT_TYPE, data: request.build(), acceptType: self.acceptTypeForResponse(request))
     }
     
     /**
@@ -214,71 +155,58 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     }
     
     
-    private func call(method: Method, resourceEndPoint: String, contentType: String?, data: Data?, acceptType: String?, completionHandler: @escaping (JcRequestResponse<Data>) -> Void) -> URLSessionDataTask {
-        
-        print ("===== wotsit \(_connection.endPoint)/\(resourceEndPoint)")
-        
-        let url = URL(string: resourceEndPoint, relativeTo: _connection.endPoint)
-        var urlRequest = URLRequest(url: url!)
-        
-        urlRequest.httpMethod = method.rawValue
-        
-        if (_connection.credentials != nil) {
-            urlRequest = _connection.credentials!.encodeCredentials(urlRequest: urlRequest)
-        }
-        
-        print("invoking \(method.rawValue) - " + urlRequest.url!.absoluteString)
-        
-        urlRequest.addValue(acceptType ?? "application/json", forHTTPHeaderField: "Accept")
-        
-        if (method == Method.POST || method == Method.PUT || method == Method.PATCH) {
-            
-            if (data != nil && data!.count < 2048) {
-                print("\(String(decoding: data!, as: UTF8.self))")
-            }
-            
-            urlRequest.addValue(contentType ?? "application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = data!
-        }
+	private func call(method: Method, resourceEndPoint: String, contentType: String?, data: Data?, acceptType: String?) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
+		
+		return _call(method: method, resourceEndPoint: resourceEndPoint, contentType: contentType, data: data, acceptType: acceptType)
+			.map({ (data, response) -> JcRequestResponse<Data> in
+				
+				let statusCode = (response as! HTTPURLResponse).statusCode
+				var message: String? = nil
+				
+				if (statusCode < 200 || statusCode > 204) {
+					message = String(decoding: data, as: UTF8.self)
+				}
+				
+				return JcRequestResponse(status: statusCode, message: message, headers: (response as! HTTPURLResponse).allHeaderFields, content: data)
+			}).eraseToAnyPublisher()
+	}
+	
+	private func _call(method: Method, resourceEndPoint: String, contentType: String?, data: Data?, acceptType: String?) -> AnyPublisher<URLSession.DataTaskPublisher.Output, APIError> {
+				
+		let url = URL(string: resourceEndPoint, relativeTo: _connection.endPoint)
+		var urlRequest = URLRequest(url: url!)
+		
+		urlRequest.httpMethod = method.rawValue
+		
+		if (_connection.credentials != nil) {
+			urlRequest = _connection.credentials!.encodeCredentials(urlRequest: urlRequest)
+		}
+		
+		print("invoking \(method.rawValue) - " + urlRequest.url!.absoluteString)
+		
+		urlRequest.addValue(acceptType ?? "application/json", forHTTPHeaderField: "Accept")
+		
+		if (method == Method.POST || method == Method.PUT || method == Method.PATCH) {
+			
+			if (data != nil && data!.count < 2048) {
+				print("\(String(decoding: data!, as: UTF8.self))")
+			}
+			
+			urlRequest.addValue(contentType ?? "application/json", forHTTPHeaderField: "Content-Type")
+			urlRequest.httpBody = data!
+		}
 
-        //let session = URLSession.shared
-        let session = URLSession(configuration: URLSessionConfiguration.default);
-
-        let task = session.dataTask(with: urlRequest as URLRequest, completionHandler: { data, response, error in
-
-            guard error == nil else {
-                
-                completionHandler(JcRequestResponse(status: -1, message: error?.localizedDescription ?? "Unknown error", headers: nil, content: nil))
-                return
-            }
-            
-            let statusCode = (response as! HTTPURLResponse).statusCode;
-            var content: Data? = nil
-            var message: String? = nil
-            
-            if (statusCode >= 200 && statusCode <= 201) {
-                
-                if (data != nil) {
-                    content = data
-                }
-            } else if (data != nil) {
-                // assume data is error reason
-                message = String(decoding: data!, as: UTF8.self)
-            }
-            
-            completionHandler(JcRequestResponse(status: statusCode, message: message, headers: (response as! HTTPURLResponse).allHeaderFields, content: content))
-        })
-
-        task.resume()
-        
-        return task
-    }
+		return URLSession.shared.dataTaskPublisher(for: urlRequest)
+			.mapError({ error -> APIError in
+				return self.makeError(error)
+			}).eraseToAnyPublisher()
+	}
     
     private func makeError(_ error: Error) -> APIError {
         return APIError(httpCode: -1, reason: error.localizedDescription)
     }
     
-    private func makeError<T>(_ response: JcRequestResponse<T>) -> APIError {
+    internal func makeError<T>(_ response: JcRequestResponse<T>) -> APIError {
         
         if (response.httpMessage != nil) {
             return APIError(httpCode: response.httpStatus, reason: response.httpMessage)

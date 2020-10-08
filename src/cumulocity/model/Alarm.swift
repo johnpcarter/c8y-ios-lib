@@ -72,6 +72,14 @@ public struct C8yAlarm: JcEncodableContent, Identifiable {
         case id
     }
     
+	/**
+	Creates new alarm for the associated `C8yManagedObject`
+	- parameter forSource internal c8y id of the associated managed object/asset
+	- parameter type free form text to categorise the alarm type
+	- parameter description free form text describing the alarm
+	- parameter status One of ACTIVE, ACKNOWLEDGED or CLEARED
+	- parameter severity  current status of the alarm, CRITICAL, MAJOR, MINOR or WARNING
+	*/
     public init(forSource: String, type: String, description: String, status: Status, severity: Severity) {
         
         self.source = forSource

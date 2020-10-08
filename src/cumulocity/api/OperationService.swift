@@ -18,6 +18,12 @@ Refer to the [c8y API documentation](https://cumulocity.com/guides/reference/dev
  */
 public class C8yOperationService: JcConnectionRequest<C8yCumulocityConnection> {
     
+	/**
+	Fetch a list of operations associated with the managed object given by the id
+	
+	- parameter source internal c8y id of the associated managed object
+	- returns Publisher that will issue a list of operations.
+	*/
     public func get(_ source: String) -> AnyPublisher<JcRequestResponse<C8yPagedOperations>, APIError> {
      
         return super._get(resourcePath: self.args(id: source)).tryMap({ response in
@@ -35,12 +41,11 @@ public class C8yOperationService: JcConnectionRequest<C8yCumulocityConnection> {
     /**
      Submits an operation to Cumulocity to be run on the targeted device refereneced by the managed object
      
-     - parameter operation : `C8yOperation` to be posted to Cumulocity
-     - parameter version: The version of the operation to be rerenced
-     - parameter completionHandler: callback function which will be called with the updated c8y internal id
-     - throws: If operation is not correctly formatted or references non existent device in c8y
+     - parameter operation  `C8yOperation` to be posted to Cumulocity
+     - returns Publisher that will issue updated operation including attributed c8y internal id
+     - throws If operation is not correctly formatted
      */
-    func post(operation: C8yOperation, version: Double) throws -> AnyPublisher<JcRequestResponse<C8yOperation>, APIError>  {
+    func post(operation: C8yOperation) throws -> AnyPublisher<JcRequestResponse<C8yOperation>, APIError>  {
 
         // "application/vnd.com.nsn.cumulocity.operation+json;ver=\(version)"
         

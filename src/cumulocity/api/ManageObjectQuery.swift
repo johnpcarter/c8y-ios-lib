@@ -8,17 +8,45 @@
 
 import Foundation
 
+/**
+
+Collection of queries to be used with `C8yManagedObjectsService#get(forQuery:pageNum:)`
+
+Refer to the [c8y API documentation](https://cumulocity.com/guides/reference/inventory/) for more information
+
+*/
 public struct C8yManagedObjectQuery {
 
     /**
-     * Represents the operator to be applied to the value of the query i.e. equals, not equals etc.
-     */
+	Represents the operator to be applied to the value of the query i.e. equals, not equals etc.
+	
+	Refer to the [c8y API documentation](https://cumulocity.com/guides/reference/inventory/) for more information
+	
+	*/
     public enum Operator: String {
+		/**
+		equal
+		*/
         case eq
+		/**
+		not equal
+		*/
         case ne
+		/**
+		less than (numeric only)
+		*/
         case lt
+		/**
+		greater than (numeric only)
+		*/
         case gt
+		/**
+		less than or equals (numeric only)
+		*/
         case le
+		/**
+		greater than or equals (numeric only)
+		*/
         case ge
     }
 
@@ -37,8 +65,20 @@ public struct C8yManagedObjectQuery {
      */
     public struct Query {
      
+		/**
+		Identifies the c8y attribute to queried
+		*/
         let key: String
+		
+		/**
+		identifies the type of query to be performed, e.g. equals, not equals, less than etc. etc.
+		*/
         let op: Operator?
+		
+		/**
+		Identifies the value to be looked up, can included wildcards and also regular expressions
+		Refer to cumulocity documentation for more info
+		*/
         let value: String
         
         public init(key: String, op: Operator?, value: String) {

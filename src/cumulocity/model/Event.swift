@@ -34,6 +34,12 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         case id
     }
     
+	/**
+	Creates a new event for the associated `C8yManagedObject`
+	- parameter forSource internal c8y id of the associated managed object/asset
+	- parameter type free form text to categorise the alarm type
+	- parameter text free form text describing the event
+	*/
     public init(forSource: String, type: String, text: String) {
     
         self.source = forSource
@@ -42,6 +48,12 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         self.text = text
     }
     
+	/**
+	Creates a new event for the associated `C8yManagedObject` representing a postional
+	tracking event.
+	- parameter forSource internal c8y id of the associated managed object/asset
+	- parameter position current GPS position of asset/device
+	*/
     public init(forSource: String, position: C8yManagedObject.Position) {
     
         self.source = forSource
@@ -52,7 +64,14 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         self.position = position
     }
     
-    public init(forSource: String, type: String, text: String, eventObject: C8yCustomAsset) {
+	/**
+	Creates a new event for the associated `C8yManagedObject` with custom properties
+	- parameter forSource internal c8y id of the associated managed object/asset
+	- parameter type free form text to categorise the alarm type
+	- parameter text free form text describing the event
+	- parameter properties Implementation of protocol `C8yCustomAsset` to define attributes to be included
+	*/
+    public init(forSource: String, type: String, text: String, properties: C8yCustomAsset) {
         
         self.source = forSource
         self.time = Date()
@@ -60,7 +79,7 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         self.text = text
         
         self.info = Dictionary()
-        self.info![type] = eventObject
+        self.info![type] = properties
     }
     
     public init(from decoder:Decoder) throws {

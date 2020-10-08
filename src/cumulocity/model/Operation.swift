@@ -10,9 +10,13 @@ import Foundation
 
 public let C8Y_OPERATION_COMMAND = "c8y_Command"
 public let C8Y_OPERATION_RESTART = "c8y_Restart"
+public let C8Y_OPERATION_MESSAGE = "c8y_Message"
 public let C8Y_OPERATION_RELAY = "c8y_Relay"
 public let C8Y_OPERATION_LOG_REQ = "c8y_LogfileRequest"
-
+public let C8Y_OPERATION_PROPERTY = "c8y_Property"
+public let C8Y_OPERATION_FIRMWARE = "c8y_Firmware"
+public let C8Y_OPERATION_UPLOAD = "c8y_UploadConfigFile"
+public let C8Y_OPERATION_DOWNLOAD = "c8y_DownloadConfigFile"
 public let C8Y_OPERATION_RELAY_STATE = "state"
 
 /**
@@ -27,13 +31,13 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
     public private(set) var deviceExternalIDs: [C8yExternalId]?
     
     public private(set) var creationTime: Date?
-    public private(set) var status: Status?
+    public internal(set) var status: Status?
     public private(set) var failureReason: String?
     
     public private(set) var type: String?
     public private(set) var description: String?
     
-    public var operationDetails: OperationDetails?
+    public var operationDetails: OperationDetails
     
     public enum Status: String, Codable {
         case SUCCESSFUL
@@ -42,13 +46,20 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
         case PENDING
     }
     
-    public init(source: String, type: String, description: String) {
+	/**
+	Creates a new operation for the associated `C8yManagedObject`
+	- parameter forSource internal c8y id of the associated managed object/asset
+	- parameter type free form text to categorise the measurement type
+	- parameter description free form text to describe the operation
+	*/
+    public init(forSource source: String, type: String, description: String) {
             
         self.deviceId = source
         self.type = type
         self.description = description
         self.creationTime = Date()
         self.status = .PENDING
+		self.operationDetails = OperationDetails()
     }
     
     public init(from decoder:Decoder) throws {
@@ -57,6 +68,8 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
         
         self.deviceId = ""
         
+		self.operationDetails = OperationDetails()
+		
         for (key) in values.allKeys {
             
             switch (key.stringValue) {
@@ -98,24 +111,36 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
         try container.encode(deviceId, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "deviceId")!)
         try container.encode(description, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "description")!)
 
-        if (operationDetails != nil) {
-            try container.encode(operationDetails!, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: self.type!)!)
+		if (!operationDetails.params.isEmpty) {
+            try container.encode(operationDetails, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: self.type!)!)
         } else {
             try container.encode(C8yManagedObject.EmptyFragment("pow"), forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: self.type!)!)
         }
     }
     
+	/**
+	Defines the details of the operation to be executed by the device
+	*/
     public struct OperationDetails: Codable {
         
         public private(set) var id: String?
         public private(set) var name: String?
         
-        public var parameters: Dictionary<String, String> = [:]
-        
+        public var values: Dictionary<String, String> = [:]
+		public var params: Dictionary<String, String> = [:]
+		
+		public init() {
+		}
+		
+		/**
+		Creates a new instance with a single key/value attribute pair
+		- parameter name name of the attribute to be set
+		- parameter value the value to be assigned to the attribute
+		*/
         public init(_ name: String, value: String) {
         
             self.name = name
-            self.parameters = [name: value]
+            self.values = [name: value]
         }
         
         public init(from decoder:Decoder) throws {
@@ -131,7 +156,7 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
                 default:
                     
                     do {
-                        self.parameters[key.stringValue] = try values.decode(String.self, forKey: key)
+                        self.values[key.stringValue] = try values.decode(String.self, forKey: key)
                     } catch {
                         print("operation details error: \(error.localizedDescription)")
                     }
@@ -151,7 +176,7 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
                 try container.encode(self.name, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: name!)!)
             }
             
-            for kv in self.parameters {
+            for kv in self.values {
                 try container.encode(kv.value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: kv.key)!)
 
             }

@@ -8,6 +8,9 @@
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Section/Other Classes" class="dashAnchor"></a>
@@ -16,6 +19,11 @@
       <div class="content-wrapper">
         <p><a href="index.html">Cumulocity Client library for macOS/iOS</a></p>
         <p class="header-right"><a href="https://github.com/johnpcarter/siesta"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -40,201 +48,10 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="High%20Level%20Access.html">High Level Access</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/JcGroupManager.html">JcGroupManager</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcGroupManager/APIAccessError.html">– APIAccessError</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcGroup.html">JcGroup</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcDevice.html">JcDevice</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcDevice/Status.html">– Status</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/JcGroupsManagerUpdateNotification.html">JcGroupsManagerUpdateNotification</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="c8y%20API%20Access.html">c8y API Access</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/JcCumulocityConnection.html">JcCumulocityConnection</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObjectsService.html">JcManagedObjectsService</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObjectsService/ManagedObjectNotFoundError.html">– ManagedObjectNotFoundError</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/JcManagedObjectQuery.html">JcManagedObjectQuery</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/JcManagedObjectQuery/Operator.html">– Operator</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/JcManagedObjectQuery.html#/s:25Cumulocity_Client_Library20JcManagedObjectQueryV0G0V">– Query</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcEventsService.html">JcEventsService</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcMeasurementsService.html">JcMeasurementsService</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcAlarmsService.html">JcAlarmsService</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="c8y%20API%20Access.html#/s:25Cumulocity_Client_Library18JcOperationServiceC">JcOperationService</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcBinariesService.html">JcBinariesService</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Data%20Models.html">Data Models</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html">JcManagedObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject/C8y_Connection_Status.html">– C8y_Connection_Status</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject/AvailabilityStatus.html">– AvailabilityStatus</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject/ChildReferences.html">– ChildReferences</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject/C8y_Status.html">– C8y_Status</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC16C8y_AvailabilityV">– C8y_Availability</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC12C8y_FirmwareV">– C8y_Firmware</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC22C8y_ActiveAlarmsStatusV">– C8y_ActiveAlarmsStatus</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC12C8y_IsDeviceV">– C8y_IsDevice</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC24C8y_RequiredAvailabilityV">– C8y_RequiredAvailability</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC14C8y_ConnectionV">– C8y_Connection</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC12C8y_PositionV">– C8y_Position</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC15C8y_LpwanDeviceV">– C8y_LpwanDevice</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcManagedObject.html#/s:25Cumulocity_Client_Library15JcManagedObjectC12C8y_HardwareV">– C8y_Hardware</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcExternalId.html">JcExternalId</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/JcDataPoints.html">JcDataPoints</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/JcDataPoints.html#/s:25Cumulocity_Client_Library12JcDataPointsV0E5PointV">– DataPoint</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/JcDataPoints.html#/s:25Cumulocity_Client_Library12JcDataPointsV0E10PointValueV">– DataPointValue</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcAlarm.html">JcAlarm</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcAlarm/Status.html">– Status</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcAlarm/Severity.html">– Severity</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcEvent.html">JcEvent</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcMeasurement.html">JcMeasurement</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcMeasurement/MeasurementValue.html">– MeasurementValue</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcMeasurementSeries.html">JcMeasurementSeries</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcMeasurementSeries/AggregateType.html">– AggregateType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcOperation.html">JcOperation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcPagedManagedObjects.html">JcPagedManagedObjects</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcPagedAlarms.html">JcPagedAlarms</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcPagedEvents.html">JcPagedEvents</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcPagedMeasurements.html">JcPagedMeasurements</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Custom%20Models.html">Custom Models</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Classes/JcAddress.html">JcAddress</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcContactInfo.html">JcContactInfo</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcPlanning.html">JcPlanning</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcLoRaDeviceInfo.html">JcLoRaDeviceInfo</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/JcLoRaNetworkInfo.html">JcLoRaNetworkInfo</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a href="Customising%20Managed%20Objects.html">Customising Managed Objects</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="customisation-overview.html">Customisation Overview</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/JcCustomAssetProcessor.html">JcCustomAssetProcessor</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/JcCustomAssetProcessor/AssetObjectKey.html">– AssetObjectKey</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Customising%20Managed%20Objects.html#/s:25Cumulocity_Client_Library20JcCustomAssetDecoderC">JcCustomAssetDecoder</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Customising%20Managed%20Objects.html#/s:25Cumulocity_Client_Library13JcCustomAssetC">JcCustomAsset</a>
               </li>
             </ul>
           </li>
@@ -257,10 +74,13 @@
                 <a href="Classes/JcConnectionRequest/Method.html">– Method</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/JcConnectionRequest/APIError.html">– APIError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/JCResponseStatus.html">JCResponseStatus</a>
               </li>
               <li class="nav-group-task">
-                <a href="API%20Tools.html#/s:25Cumulocity_Client_Library18JcEncodableContentC">JcEncodableContent</a>
+                <a href="API%20Tools.html#/s:25Cumulocity_Client_Library18JcEncodableContentP">JcEncodableContent</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/JcMultiPartContent.html">JcMultiPartContent</a>
@@ -282,7 +102,79 @@
             <a href="Other%20Classes.html">Other Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Other%20Classes.html#/s:25Cumulocity_Client_Library13JcExternalIdsC">JcExternalIds</a>
+                <a href="Classes/C8yAlarmsService.html">C8yAlarmsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yAssetCollection.html">C8yAssetCollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yAssetCollection/APIAccessError.html">– APIAccessError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yAssetCollection/GroupSummary.html">– GroupSummary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yBinariesService.html">C8yBinariesService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Classes.html#/s:25Cumulocity_Client_Library21C8yCustomAssetDecoderC">C8yCustomAssetDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yDeviceModelsReference.html">C8yDeviceModelsReference</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yDeviceModelsReference/SupplierModelsSummary.html">– SupplierModelsSummary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yEditableDevice.html">C8yEditableDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yEditableDevice/LookupResponse.html">– LookupResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yEditableGroup.html">C8yEditableGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yEventsService.html">C8yEventsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yManagedObjectsService.html">C8yManagedObjectsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yManagedObjectsService/ManagedObjectNotFoundError.html">– ManagedObjectNotFoundError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yMeasurementsService.html">C8yMeasurementsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yMockedAssetCollection.html">C8yMockedAssetCollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yMutableDevice.html">C8yMutableDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yMutableDevice/MeasurementSeries.html">– MeasurementSeries</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yMutableDevice/Measurement.html">– Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yNetworks.html">C8yNetworks</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yNetworks/UnknownNetworkTypeError.html">– UnknownNetworkTypeError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yOperationService.html">C8yOperationService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Classes.html#/s:25Cumulocity_Client_Library21C8yStringAssetDecoderC">C8yStringAssetDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JcRepeatingTimer.html">JcRepeatingTimer</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/JcRequestResponse.html">JcRequestResponse</a>
@@ -293,10 +185,88 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Other%20Global%20Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8Y_MEASUREMENT_BATTERYSSvp">C8Y_MEASUREMENT_BATTERY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library28C8Y_MEASUREMENT_BATTERY_TYPESSvp">C8Y_MEASUREMENT_BATTERY_TYPE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_COMMANDSSvp">C8Y_OPERATION_COMMAND</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library22C8Y_OPERATION_DOWNLOADSSvp">C8Y_OPERATION_DOWNLOAD</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library22C8Y_OPERATION_FIRMWARESSvp">C8Y_OPERATION_FIRMWARE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_LOG_REQSSvp">C8Y_OPERATION_LOG_REQ</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_MESSAGESSvp">C8Y_OPERATION_MESSAGE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library22C8Y_OPERATION_PROPERTYSSvp">C8Y_OPERATION_PROPERTY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library19C8Y_OPERATION_RELAYSSvp">C8Y_OPERATION_RELAY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library25C8Y_OPERATION_RELAY_STATESSvp">C8Y_OPERATION_RELAY_STATE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_RESTARTSSvp">C8Y_OPERATION_RESTART</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library20C8Y_OPERATION_UPLOADSSvp">C8Y_OPERATION_UPLOAD</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other%20Enums.html">Other Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/C8yDeviceCategory.html">C8yDeviceCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/C8yGroupCategory.html">C8yGroupCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/C8yNetworkType.html">C8yNetworkType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/C8yNoValidIdError.html">C8yNoValidIdError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/C8yOperationLevel.html">C8yOperationLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/C8yOrganisationCategory.html">C8yOrganisationCategory</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Other%20Extensions.html">Other Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Other%20Protocols.html">Other Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/C8yCustomAsset.html">C8yCustomAsset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/C8yObject.html">C8yObject</a>
               </li>
             </ul>
           </li>
@@ -304,10 +274,193 @@
             <a href="Other%20Structs.html">Other Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Other%20Structs.html#/s:25Cumulocity_Client_Library11JcGroupInfoV">JcGroupInfo</a>
+                <a href="Structs/AnyC8yObject.html">AnyC8yObject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Other%20Structs.html#/s:25Cumulocity_Client_Library26JcMultiPartRequestResponseV">JcMultiPartRequestResponse</a>
+                <a href="Structs/C8yAddress.html">C8yAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yAlarm.html">C8yAlarm</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yAlarm/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yAlarm/Severity.html">– Severity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yAssignedNetwork.html">C8yAssignedNetwork</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yContactInfo.html">C8yContactInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yCumulocityUser.html">C8yCumulocityUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yCustomAssetProcessor.html">C8yCustomAssetProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yCustomAssetProcessor/AssetObjectKey.html">– AssetObjectKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yDataPoints.html">C8yDataPoints</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yDataPoints/DataPoint.html">– DataPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yDataPoints/DataPointValue.html">– DataPointValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yDevice.html">C8yDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yDeviceNetworkInstance.html">C8yDeviceNetworkInstance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yDeviceNetworkProvider.html">C8yDeviceNetworkProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yEvent.html">C8yEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yExternalId.html">C8yExternalId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yExternalIds.html">C8yExternalIds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yGroup.html">C8yGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yGroupInfo.html">C8yGroupInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yLoRaNetworkInfo.html">C8yLoRaNetworkInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject.html">C8yManagedObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/ConnectionStatusType.html">– ConnectionStatusType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/AvailabilityStatus.html">– AvailabilityStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/SensorType.html">– SensorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/RelayStateType.html">– RelayStateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/ChildReferences.html">– ChildReferences</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/Availability.html">– Availability</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/Firmware.html">– Firmware</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/ActiveAlarmsStatus.html">– ActiveAlarmsStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/RequiredAvailability.html">– RequiredAvailability</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/ConnectionStatus.html">– ConnectionStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/Position.html">– Position</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/LpwanDevice.html">– LpwanDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObject/Hardware.html">– Hardware</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObjectQuery.html">C8yManagedObjectQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObjectQuery/Operator.html">– Operator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yManagedObjectQuery/Query.html">– Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yMeasurement.html">C8yMeasurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yMeasurement/MeasurementValue.html">– MeasurementValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yMeasurementSeries.html">C8yMeasurementSeries</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yMeasurementSeries/AggregateType.html">– AggregateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yMeasurementSeries/Series.html">– Series</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yMeasurementSeries/ValuesWrapper.html">– ValuesWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yMeasurementSeries/Values.html">– Values</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yModel.html">C8yModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yModels.html">C8yModels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yOperation.html">C8yOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yOperation/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yOperation/OperationDetails.html">– OperationDetails</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yPageStatistics.html">C8yPageStatistics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yPagedAlarms.html">C8yPagedAlarms</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yPagedEvents.html">C8yPagedEvents</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yPagedManagedObjects.html">C8yPagedManagedObjects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yPagedMeasurements.html">C8yPagedMeasurements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yPagedOperations.html">C8yPagedOperations</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yPlanning.html">C8yPlanning</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yStringWrapper.html">C8yStringWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8ySupplier.html">C8ySupplier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8ySuppliers.html">C8ySuppliers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/JcMultiPartRequestResponse.html">JcMultiPartRequestResponse</a>
               </li>
             </ul>
           </li>
@@ -383,9 +536,9 @@ via callbacks</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library13JcExternalIdsC"></a>
-                    <a name="//apple_ref/swift/Class/JcExternalIds" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library13JcExternalIdsC">JcExternalIds</a>
+                    <a name="/s:25Cumulocity_Client_Library16JcRepeatingTimerC"></a>
+                    <a name="//apple_ref/swift/Class/JcRepeatingTimer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16JcRepeatingTimerC">JcRepeatingTimer</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -393,14 +546,475 @@ via callbacks</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Wrapper for external id&rsquo;s that are used to reference <code><a href="Classes/JcManagedObject.html">JcManagedObject</a></code></p>
+                        <p>RepeatingTimer mimics the API of DispatchSourceTimer but in a way that prevents
+crashes that occur from calling resume multiple times on a timer that is
+already resumed (noted by <a href="https://github.com/SiftScience/sift-ios/issues/52">https://github.com/SiftScience/sift-ios/issues/52</a></p>
+
+                        <a href="Classes/JcRepeatingTimer.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">JcRepeatingTimer</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yAlarmsServiceC"></a>
+                    <a name="//apple_ref/swift/Class/C8yAlarmsService" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yAlarmsServiceC">C8yAlarmsService</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows alarms to fetched and posted to Cumulocity</p>
+
+<p>Refer to the <a href="https://cumulocity.com/guides/reference/alarms/">c8y API documentation</a> for more information</p>
+
+                        <a href="Classes/C8yAlarmsService.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yAlarmsService</span> <span class="p">:</span> <span class="kt"><a href="Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yBinariesServiceC"></a>
+                    <a name="//apple_ref/swift/Class/C8yBinariesService" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yBinariesServiceC">C8yBinariesService</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows binary attachments to be uploaded/downloaded to c8y for <code><a href="Structs/C8yManagedObject.html">C8yManagedObject</a></code></p>
+
+<p>Refer to the <a href="https://cumulocity.com/guides/reference/binaries/">c8y API documentation</a> for more information</p>
+
+                        <a href="Classes/C8yBinariesService.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yBinariesService</span> <span class="p">:</span> <span class="kt"><a href="Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library03C8yA10ConnectionC"></a>
+                    <a name="//apple_ref/swift/Class/C8yCumulocityConnection" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library03C8yA10ConnectionC">C8yCumulocityConnection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents a <em>stateless</em> connection to a Cumulocity tenant/instance</p>
+
+                        <a href="Classes/C8yCumulocityConnection.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yCumulocityConnection</span> <span class="p">:</span> <span class="kt"><a href="Classes/JcSimpleConnection.html">JcSimpleConnection</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEventsServiceC"></a>
+                    <a name="//apple_ref/swift/Class/C8yEventsService" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEventsServiceC">C8yEventsService</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows events related to <code><a href="Structs/C8yManagedObject.html">C8yManagedObject</a></code> to fetched and posted to Cumulocity</p>
+
+<p>Refer to the <a href="https://cumulocity.com/guides/reference/events/">c8y API documentation</a> for more information</p>
+
+                        <a href="Classes/C8yEventsService.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yEventsService</span> <span class="p">:</span> <span class="kt"><a href="Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC"></a>
+                    <a name="//apple_ref/swift/Class/C8yManagedObjectsService" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC">C8yManagedObjectsService</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Principal access point for all Cumulocity data represented as <code>ManagedObject</code>s such as devices and groups and implemented through the API endpoint <em>\/inventory/managedObjects</em>.</p>
+
+<p>Use this class to fetch, create, update and delete assets in c8y</p>
+
+<p>Refer to the <a href="https://cumulocity.com/guides/reference/inventory/">c8y API documentation</a> for more information</p>
+
+                        <a href="Classes/C8yManagedObjectsService.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yManagedObjectsService</span> <span class="p">:</span> <span class="kt"><a href="Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library22C8yMeasurementsServiceC"></a>
+                    <a name="//apple_ref/swift/Class/C8yMeasurementsService" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library22C8yMeasurementsServiceC">C8yMeasurementsService</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows measurements to be fetched and posted to Cumulocity.
+Leverages the underlying api at endpoint &lsquo;<em>\/measurement/measurements</em>&rsquo; and described <a href="https://cumulocity.com/guides/reference/measurements/">here</a></p>
+
+                        <a href="Classes/C8yMeasurementsService.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yMeasurementsService</span> <span class="p">:</span> <span class="kt"><a href="Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library19C8yOperationServiceC"></a>
+                    <a name="//apple_ref/swift/Class/C8yOperationService" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library19C8yOperationServiceC">C8yOperationService</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows devices to be remote controled via c8y</p>
+
+<p>Refer to the <a href="https://cumulocity.com/guides/reference/device-control/#device-control-api">c8y API documentation</a> for more information</p>
+
+                        <a href="Classes/C8yOperationService.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yOperationService</span> <span class="p">:</span> <span class="kt"><a href="Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library24C8yDeviceModelsReferenceC"></a>
+                    <a name="//apple_ref/swift/Class/C8yDeviceModelsReference" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library24C8yDeviceModelsReferenceC">C8yDeviceModelsReference</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/C8yDeviceModelsReference.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yDeviceModelsReference</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library11C8yNetworksC"></a>
+                    <a name="//apple_ref/swift/Class/C8yNetworks" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library11C8yNetworksC">C8yNetworks</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/C8yNetworks.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yNetworks</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC"></a>
+                    <a name="//apple_ref/swift/Class/C8yAssetCollection" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC">C8yAssetCollection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                        <a href="Classes/C8yAssetCollection.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yAssetCollection</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library17C8yEditableDeviceC"></a>
+                    <a name="//apple_ref/swift/Class/C8yEditableDevice" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library17C8yEditableDeviceC">C8yEditableDevice</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/C8yEditableDevice.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yEditableDevice</span> <span class="p">:</span> <span class="kt">ObservableObject</span><span class="p">,</span> <span class="kt">Equatable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC"></a>
+                    <a name="//apple_ref/swift/Class/C8yEditableGroup" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC">C8yEditableGroup</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/C8yEditableGroup.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yEditableGroup</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC"></a>
+                    <a name="//apple_ref/swift/Class/C8yMutableDevice" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC">C8yMutableDevice</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/C8yMutableDevice.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yMutableDevice</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library24C8yMockedAssetCollectionC"></a>
+                    <a name="//apple_ref/swift/Class/C8yMockedAssetCollection" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library24C8yMockedAssetCollectionC">C8yMockedAssetCollection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/C8yMockedAssetCollection.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yMockedAssetCollection</span> <span class="p">:</span> <span class="kt"><a href="Classes/C8yAssetCollection.html">C8yAssetCollection</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library21C8yCustomAssetDecoderC"></a>
+                    <a name="//apple_ref/swift/Class/C8yCustomAssetDecoder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library21C8yCustomAssetDecoderC">C8yCustomAssetDecoder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">JcExternalIds</span> <span class="p">:</span> <span class="kt"><a href="API%20Tools.html#/s:25Cumulocity_Client_Library18JcEncodableContentC">JcEncodableContent</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yCustomAssetDecoder</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library21C8yStringAssetDecoderC"></a>
+                    <a name="//apple_ref/swift/Class/C8yStringAssetDecoder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library21C8yStringAssetDecoderC">C8yStringAssetDecoder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yStringAssetDecoder</span> <span class="p">:</span> <span class="kt"><a href="Other%20Classes.html#/s:25Cumulocity_Client_Library21C8yCustomAssetDecoderC">C8yCustomAssetDecoder</a></span></code></pre>
 
                         </div>
                       </div>
@@ -412,8 +1026,8 @@ via callbacks</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="http://bustoutsolutions.com" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-04-24)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="http://bustoutsolutions.com" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-08)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

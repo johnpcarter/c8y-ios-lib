@@ -47,23 +47,23 @@ public class C8yStringAssetDecoder: C8yCustomAssetDecoder {
     }
 }
 
-struct C8yStringWrapper: C8yCustomAsset {
+public struct C8yStringWrapper: C8yCustomAsset {
    
-    var value: String
+    public var value: String
     
-    init(_ value: String) {
+    public init(_ value: String) {
        self.value = value
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         fatalError("init(from:) has not been implemented")
     }
     
-    mutating func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws {
+    public mutating func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws {
         fatalError("init(from:) has not been implemented")
     }
     
-    func encode(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
+    public func encode(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
 
         fatalError("init(from:) has not been implemented")
     }

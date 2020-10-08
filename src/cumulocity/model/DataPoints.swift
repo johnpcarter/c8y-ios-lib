@@ -10,6 +10,9 @@ import Foundation
 
 let C8Y_MANAGED_OBJECT_DATA_POINTS = "c8y_DataPoint"
 
+/**
+Defines a type of Measurement that will send from the associated Managed Object
+*/
 public struct C8yDataPoints: Codable {
 
     public let dataPoints: [DataPoint]

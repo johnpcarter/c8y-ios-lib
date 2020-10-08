@@ -43,19 +43,23 @@ public struct C8yAssignedNetwork: C8yCustomAsset, Equatable {
 
     public internal(set) var isProvisioned: Bool = false
     
-    enum LPWanCodingKeys: String, CodingKey {
-        case provisioned
-    }
-    
-    public init(_ isProvisioned: Bool?) {
+	public init() {
+		
+	}
+	
+    public init(isProvisioned: Bool?) {
     
         if (isProvisioned != nil) {
             self.isProvisioned = isProvisioned!
         }
     }
     
-    public init() {
-        
+	public init(type: String, provider: String, instance: String) {
+
+		self.type = type
+		self.provider = provider
+		self.instance = instance
+		self.isProvisioned = false
     }
     
     public mutating func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws {
@@ -77,7 +81,7 @@ public struct C8yAssignedNetwork: C8yCustomAsset, Equatable {
         case JC_MANAGED_OBJECT_NETWORK_CODEC:
             self.codec = try container.decode(String.self, forKey: forKey)
         case JC_MANAGED_OBJECT_NETWORK_LPWAN:
-            let l = try container.nestedContainer(keyedBy: LPWanCodingKeys.self, forKey: forKey)
+			let l = try container.nestedContainer(keyedBy: C8yManagedObject.LpwanDevice.LPWanCodingKeys.self, forKey: forKey)
             self.isProvisioned = try l.decode(Bool.self, forKey: .provisioned)
         default:
             break

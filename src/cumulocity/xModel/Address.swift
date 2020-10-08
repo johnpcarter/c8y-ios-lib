@@ -45,6 +45,28 @@ public struct C8yAddress: C8yCustomAsset {
         case phone = "xAddressPhone"
     }
     
+	public init(addressLine1: String, city: String, postCode: String, country: String) {
+		
+		self.addressLine1 = addressLine1
+		self.city = city
+		self.postCode = postCode
+		self.country = country
+		
+		self.addressSummary = addressLine1
+		
+		if (!city.isEmpty) {
+			self.addressSummary = self.addressSummary + ", " + city
+		}
+		
+		if (!postCode.isEmpty) {
+			self.addressSummary = self.addressSummary + ", " + postCode
+		}
+		
+		if (!country.isEmpty) {
+			self.addressSummary = self.addressSummary + ", " + country
+		}
+	}
+	
     public init(addressLine1: String, city: String, postCode: String, country: String, phone: String) {
         
         self.addressLine1 = addressLine1
@@ -53,8 +75,20 @@ public struct C8yAddress: C8yCustomAsset {
         self.country = country
         self.phone = phone
         
-        self.addressSummary = "\(addressLine1), \(city), \(postCode), \(country)"
-    }
+		self.addressSummary = addressLine1
+		
+		if (!city.isEmpty) {
+			self.addressSummary = self.addressSummary + ", " + city
+		}
+		
+		if (!postCode.isEmpty) {
+			self.addressSummary = self.addressSummary + ", " + postCode
+		}
+		
+		if (!country.isEmpty) {
+			self.addressSummary = self.addressSummary + ", " + country
+		}
+	}
     
     public init() {
         self.addressSummary = ""
@@ -97,15 +131,23 @@ public struct C8yAddress: C8yCustomAsset {
             case CodingKeys.addressSummary.stringValue:
                 self.addressSummary = try container.decode(String.self, forKey: forKey)
                 let addressBits = addressSummary.components(separatedBy: ",")
-                self.addressLine1 = addressBits[0].trimmingCharacters(in: .whitespacesAndNewlines)
-            
-                if (addressBits.count > 1) {
+				
+				if (!addressBits[0].isEmpty) {
+					self.addressLine1 = addressBits[0].trimmingCharacters(in: .whitespacesAndNewlines)
+				}
+				
+				if (addressBits.count > 1 && !addressBits[1].isEmpty) {
                     self.city = addressBits[1]
                 }
             
-                if (addressBits.count > 2) {
+				if (addressBits.count > 2 && !addressBits[2].isEmpty) {
                     self.postCode = addressBits[2]
                 }
+				
+				if (addressBits[0].isEmpty) {
+					self.addressSummary = ""
+				}
+				
             case CodingKeys.country.stringValue:
                 self.country = try container.decode(String.self, forKey: forKey)
             case CodingKeys.phone.stringValue:

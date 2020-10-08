@@ -30,10 +30,9 @@ public class C8yAlarmsService: JcConnectionRequest<C8yCumulocityConnection> {
     /**
      Retrieves the  `C8yAlarm` details for the given c8y internal id
   
-     - parameter id: c8y generated id
-     - parameter pageNum: The page to be fetched, total pages can be found in  via the statistics property `PageStatistics` of the returned `C8yPagedAlarms` object
-     - parameter completionHandler: the callback to be called with the given `C8yAlarm` or error 404 if not found
-     - returns: task thread of http request
+     - parameter id c8y generated id
+     - parameter pageNum The page to be fetched, total pages can be found in  via the statistics property `PageStatistics` of the returned `C8yPagedAlarms` object
+     - returns Publisher that will issue successful `C8yAlarm` object via `JcRequestResponse` indicating succes/failure
     */
     public func get(_ id: String, pageNum: Int) -> AnyPublisher<JcRequestResponse<C8yAlarm>, APIError> {
         
@@ -54,11 +53,10 @@ public class C8yAlarmsService: JcConnectionRequest<C8yCumulocityConnection> {
      
      # Notes: #
       Call the function repeatedly to receive the next page if the number of alarms is the same size as the pageSize
-     - parameter source: the c8y id of the managed object that is to be queried
-    - parameter status: Status of alarm type to fetch
-     - parameter pageNum: The page to be fetched, total pages can be found in  via the statistics property `PageStatistics` of the returned `C8yPagedAlarms` object
-     - parameter completionHandler: the callback to be called with the list of alarms
-     - returns: task thread of http request
+     - parameter source the c8y id of the managed object that is to be queried
+     - parameter status Status of alarm type to fetch
+     - parameter pageNum The page to be fetched, total pages can be found in  via the statistics property `PageStatistics` of the returned `C8yPagedAlarms` object
+     - returns Publisher that will issue `JcRequestResponse` indicating succes/failure and payload containing a page of alarms
     */
     public func get(source: String, status: C8yAlarm.Status, pageNum: Int) -> AnyPublisher<JcRequestResponse<C8yPagedAlarms>, APIError> {
         
@@ -77,10 +75,10 @@ public class C8yAlarmsService: JcConnectionRequest<C8yCumulocityConnection> {
     /**
     Creates a new `C8yAlarm` in Cumulocity
      
-     - parameter alarm: The `C8yAlarm` to be created in Cumulocity. id should be null
-     - parameter responder: the callback to be called with the updated alarm from Cumulocity i.e. will now include c8y id
-     - returns: task thread of http request
-     - throws: triggered in the alarm is missing mandatory data or references an invalid managed object
+     - parameter alarm The `C8yAlarm` to be created in Cumulocity. id should be null
+     - parameter responder the callback to be called with the updated alarm from Cumulocity i.e. will now include c8y id
+     - returns Publisher that will issue new created `C8yAlarm` object via `JcRequestResponse` indicating succes/failure
+     - throws triggered in the alarm is missing mandatory data or references an invalid managed object
     */
     public func post(_ alarm: C8yAlarm) throws -> AnyPublisher<JcRequestResponse<String?>, APIError> {
 
@@ -92,6 +90,11 @@ public class C8yAlarmsService: JcConnectionRequest<C8yCumulocityConnection> {
         }).eraseToAnyPublisher()
     }
     
+	/**
+	Used to update the status of an existing alarm. i.e. acknowledged, cleared etc.
+	- parameter alarm the alarm to be updated
+	- returns Publisher representing success or failure of update
+	*/
     public func put(_ alarm: C8yAlarm) throws -> AnyPublisher<JcRequestResponse<Bool>, APIError> {
 
         return try super._execute(method: JcConnectionRequest.Method.PUT, resourcePath: args(id: alarm.id!), contentType: "application/json", request: alarm.toJsonString(true)).map({ response in

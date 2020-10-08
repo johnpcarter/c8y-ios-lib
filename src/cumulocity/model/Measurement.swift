@@ -8,8 +8,11 @@
 
 import Foundation
 
+public let C8Y_MEASUREMENT_BATTERY = "c8y_Battery"
+public let C8Y_MEASUREMENT_BATTERY_TYPE = "percentage"
+
 /**
-Represents an c8y event, refer to [c8y API Reference Guide](https://cumulocity.com/guides/reference/measurements/#measurement) for more info
+Represents a collection of c8y measurements, refer to [c8y API Reference Guide](https://cumulocity.com/guides/reference/measurements/#measurement) for more info
 */
 public struct C8yMeasurement: Codable {
     
@@ -26,6 +29,11 @@ public struct C8yMeasurement: Codable {
         case id
     }
     
+	/**
+	Creates a new measurement wrapper for a set of measurements for the associated `C8yManagedObject`
+	- parameter forSource internal c8y id of the associated managed object/asset
+	- parameter type free form text to categorise the measurement type
+	*/
     public init(fromSource source: String, type: String) {
     
         self.source = source
@@ -84,6 +92,11 @@ public struct C8yMeasurement: Codable {
         }
     }
     
+	/**
+	Adds a measurement  value of the given type
+	- parameter values Array of measurements values
+	- parameter forType: free form text to categorise the given measurement values
+	*/
     public mutating func addValues(_ values: [MeasurementValue], forType type: String) {
         
         self.measurements![type] = values
@@ -140,6 +153,12 @@ public struct C8yMeasurement: Codable {
             }
         }
         
+		/**
+		Creates a new measurement value
+		- parameter value The value to be recorded
+		- parameter unit free form text describing the unit of measure
+		- parameter label free form text descrining what the value represents
+		*/
         public init(_ value: Double, unit: String, withLabel label: String) {
             
             self.label = label

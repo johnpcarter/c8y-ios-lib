@@ -33,9 +33,8 @@ public class C8yEventsService: JcConnectionRequest<C8yCumulocityConnection> {
     /**
      Retrieves the  `C8yEvent` details for the given c8y internal id
   
-     - parameter id: c8y generated id
-     - parameter completionHandler: the callback to be called with the given `C8yEvent` or error 404 if not found
-     - returns: task thread of http request
+     - parameter id c8y generated id
+     - returns Publisher that will issue fetched `C8yEvent` or error 404 if not found
      */
     public func get(_ id: String) -> AnyPublisher<JcRequestResponse<C8yEvent>, APIError> {
      
@@ -59,15 +58,14 @@ public class C8yEventsService: JcConnectionRequest<C8yCumulocityConnection> {
      It retreives the newest to oldest events first with a maximum number specified by `pageSize` in a single request. Call the method incrementing the page
      number to fetch older and older events if required.
      
-     - parameter source: internal c8y of the associated managed object
-     - parameter pageNum: The page to be fetched, total pages can be found in  via the statistics property `PageStatistics` of the returned `C8yPagedAlarms` object
-     - parameter completionHandler: the callback to be called with the given `C8yPagedEvents` instance
-     - returns: task thread of http request
+     - parameter source internal c8y of the associated managed object
+     - parameter pageNum The page to be fetched, total pages can be found in  via the statistics property `PageStatistics` of the returned `C8yPagedAlarms` object
+     - returns Publisher that will issue fetched events in a `C8yPagedEvents` instance
      */
     public func get(source: String, pageNum: Int) -> AnyPublisher<JcRequestResponse<C8yPagedEvents>, APIError> {
      
         self.revert = false
-        self.pageSize = 500
+        self.pageSize = 50
         
         return super._get(resourcePath: self.args(forSource: source, pageNum: pageNum)).tryMap({ response in
             try JcRequestResponse<C8yPagedEvents>(response, dateFormatter: C8yManagedObject.dateFormatter())
@@ -83,10 +81,9 @@ public class C8yEventsService: JcConnectionRequest<C8yCumulocityConnection> {
     
     /**
      Submits the `C8yEvent` to cumulocity for processing
-    - parameter event: A new event to be posted, c8y id must be null
-    - parameter completionHandler: the callback to be called with the c8y internal id of the logged event
-    - returns: task thread of http request
-    - throws: `C8yEvent` is invalid or associated `C8yManagedObject` does not exist in c8y
+	
+    - parameter event A new event to be posted, c8y id must be null
+	- returns Publisher that will issue fetched events in a `C8yPagedEvents` instance
      */
     public func post(_ event: C8yEvent) throws -> AnyPublisher<JcRequestResponse<String?>, APIError> {
 

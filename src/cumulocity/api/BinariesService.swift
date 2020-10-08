@@ -21,8 +21,8 @@ public class C8yBinariesService: JcConnectionRequest<C8yCumulocityConnection> {
     /**
      Fetch file contents using Cumulocity internal id of the file
      
-     - parameter id: internal id of the stored file
-     - parameter completionHandler: the callback to be called with the given `C8yMultiPartContent` or error 404 if not found
+     - parameter id internal id of the stored file
+	 - returns Publisher that will return response containing binary response
      */
     public func get(_ id: String) -> AnyPublisher<JcMultiPartRequestResponse, APIError> {
 
@@ -33,7 +33,7 @@ public class C8yBinariesService: JcConnectionRequest<C8yCumulocityConnection> {
             let name = String(disposition[disposition.index(disposition.firstIndex(of: "\"")!, offsetBy: 1)..<disposition.index(disposition.endIndex, offsetBy: -2)])
 
             var content = JcMultiPartContent()
-            _ = content.add(name, contentType: response.content?.parts[0].contentType, content: (response.content?.parts[0].content)!)
+            content.add(name, contentType: response.content?.parts[0].contentType, content: (response.content?.parts[0].content)!)
             
             return JcMultiPartRequestResponse(response, updatedContent: content)
         }).eraseToAnyPublisher()
@@ -42,10 +42,10 @@ public class C8yBinariesService: JcConnectionRequest<C8yCumulocityConnection> {
     /**
      Sends the file to Cumulocity to be stored
      
-     - parameter name: label of the file to be shown in Cumulocity -> Administration --> Management -> File Repository
-     - parameter contentType: content type representing the type of data to be stored
-     - parameter content:  ByteArray representing rawe data to be stored
-     - parameter completionHandler: the callback to be called with the updated `C8yMultiPartContent` including new internal c8y id
+     - parameter name label of the file to be shown in Cumulocity -> Administration --> Management -> File Repository
+     - parameter contentType content type representing the type of data to be stored
+     - parameter content ByteArray representing rawe data to be stored
+	 - response Publisher to issue succes/failure of upload
      */
     func post(name: String, contentType: String, content: Data) -> AnyPublisher<JcMultiPartRequestResponse, APIError> {
         

@@ -19,8 +19,8 @@ public class C8yCumulocityConnection : JcSimpleConnection {
     /**
      Establishes a connection to be used for the given c8y tenant and instance
      
-     - parameter tenant: The name of your c8y tenant (you can find it at the beginning of your url in the web browser after logging in e.g. https://#tenant#.cumulocity.com/..'
-     - parameter instance: The name of your c8y instance to use. Instances are provided for different regions e.g. 'cumulocity.com' or 'eu-cumulocity.com' etc.
+     - parameter tenant The name of your c8y tenant (you can find it at the beginning of your url in the web browser after logging in e.g. https://#tenant#.cumulocity.com/..'
+     - parameter instance The name of your c8y instance to use. Instances are provided for different regions e.g. 'cumulocity.com' or 'eu-cumulocity.com' etc.
      */
     public init(tenant: String, server: String) {
         
@@ -29,10 +29,9 @@ public class C8yCumulocityConnection : JcSimpleConnection {
     
     /**
      Will attempt to check the given credentials calling your callback with the results
-     - parameter user: User id to be used to authenticate
-     - parameter password: plain text password to be used to authenticate
-     - parameter completionHandler your call back function that will be invoked with the results
-     - returns: Http session task used to invoke request
+     - parameter user User id to be used to authenticate
+     - parameter password plain text password to be used to authenticate
+     - returns Publisher representing connection result including user properties
      */
     public func connect(user: String, password: String) -> AnyPublisher<JcRequestResponse<C8yCumulocityUser>, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
        
@@ -53,7 +52,7 @@ public class C8yCumulocityConnection : JcSimpleConnection {
         }).eraseToAnyPublisher()
     }
     
-    class Authenticator: JcConnectionRequest<C8yCumulocityConnection> {
+    private class Authenticator: JcConnectionRequest<C8yCumulocityConnection> {
                     
         func connect() -> AnyPublisher<JcRequestResponse<Data>, APIError> {
         

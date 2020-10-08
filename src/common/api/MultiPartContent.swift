@@ -179,22 +179,22 @@ public struct JcMultiPartRequestResponse {
      http response status, content will only be valid if code is
      200...201
      */
-    let httpStatus: Int
+	public let httpStatus: Int
     
     /**
      Optional http headers that are to be sent or were received
      */
-    let httpHeaders: [AnyHashable: Any]?
+	public let httpHeaders: [AnyHashable: Any]?
     
     /**
      Optional http response message returned from server, generally only provided in case of error
      */
-    let httpMessage: String?
+	public let httpMessage: String?
     
     /**
      Multipart content, might be nil if this is a response and the `httpStatus` is not 200...201
      */
-    let content: JcMultiPartContent?
+    public let content: JcMultiPartContent?
     
     /**
     Flags .SUCCESS or failure of request.
@@ -210,7 +210,7 @@ public struct JcMultiPartRequestResponse {
     # Notes: #
     Connection failures will not be reported here, as they are triggered immediately when making calls
     */
-    var status: JCResponseStatus {
+	public var status: JCResponseStatus {
         get {
             if (httpStatus >= 200 && httpStatus <= 300) {
                 if (content != nil) {
