@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		880B3D50246C3018009A8BFA /* MutableDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B3D4F246C3018009A8BFA /* MutableDevice.swift */; };
-		880B3D51246C3018009A8BFA /* MutableDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880B3D4F246C3018009A8BFA /* MutableDevice.swift */; };
 		88189CAF246421A800CED9EF /* JcRepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88189CAE246421A800CED9EF /* JcRepeatingTimer.swift */; };
 		88189CB0246421A800CED9EF /* JcRepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88189CAE246421A800CED9EF /* JcRepeatingTimer.swift */; };
 		882D9FD9245048DD004F5D06 /* EventsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D9FD8245048DD004F5D06 /* EventsService.swift */; };
@@ -26,10 +24,6 @@
 		88363E1B2448AC1000C018C6 /* Cumulocity_Client_Library.h in Headers */ = {isa = PBXBuildFile; fileRef = 88363E0D2448AC1000C018C6 /* Cumulocity_Client_Library.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8838BF4D245075A600A3AE87 /* MultiPartContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838BF4C245075A600A3AE87 /* MultiPartContent.swift */; };
 		8838BF4E245075A600A3AE87 /* MultiPartContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838BF4C245075A600A3AE87 /* MultiPartContent.swift */; };
-		8838BF8F2451E22200A3AE87 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838BF8E2451E22200A3AE87 /* Group.swift */; };
-		8838BF902451E22200A3AE87 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838BF8E2451E22200A3AE87 /* Group.swift */; };
-		8838BF922451E28F00A3AE87 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838BF912451E28F00A3AE87 /* Device.swift */; };
-		8838BF932451E28F00A3AE87 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838BF912451E28F00A3AE87 /* Device.swift */; };
 		8838BF952451E39C00A3AE87 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838BF942451E39C00A3AE87 /* Address.swift */; };
 		8838BF962451E39C00A3AE87 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838BF942451E39C00A3AE87 /* Address.swift */; };
 		88413C29244B866E007A52E0 /* EncodableContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88363E64244B432600C018C6 /* EncodableContent.swift */; };
@@ -86,35 +80,42 @@
 		8879AC4B2451FFDF00922E3B /* ManagedObjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88363E61244B3A9B00C018C6 /* ManagedObjectService.swift */; };
 		8879AC4C2451FFDF00922E3B /* ManageObjectQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88363E67244B60DF00C018C6 /* ManageObjectQuery.swift */; };
 		8879AC4F2452143800922E3B /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8879AC4E2452143800922E3B /* DateExtensions.swift */; };
-		887C14A3246729D100D7A31A /* EditableGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887C14A2246729D100D7A31A /* EditableGroup.swift */; };
-		887C14A4246729D100D7A31A /* EditableGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887C14A2246729D100D7A31A /* EditableGroup.swift */; };
 		888A32A824714831003F7D27 /* GroupLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A32A724714831003F7D27 /* GroupLoader.swift */; };
 		888A32A924714831003F7D27 /* GroupLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A32A724714831003F7D27 /* GroupLoader.swift */; };
-		888B65D8245D7A330003EAED /* EditableDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B65D7245D7A330003EAED /* EditableDevice.swift */; };
-		888B65D9245D7A330003EAED /* EditableDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B65D7245D7A330003EAED /* EditableDevice.swift */; };
-		888B65DE245D9E340003EAED /* DeviceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B65DD245D9E340003EAED /* DeviceModels.swift */; };
-		888B65DF245D9E340003EAED /* DeviceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B65DD245D9E340003EAED /* DeviceModels.swift */; };
 		888B65E1245D9FF90003EAED /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B65E0245D9FF90003EAED /* Model.swift */; };
 		888B65E2245D9FF90003EAED /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B65E0245D9FF90003EAED /* Model.swift */; };
 		888B65E4245DA2460003EAED /* Supplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B65E3245DA2460003EAED /* Supplier.swift */; };
 		888B65E5245DA2460003EAED /* Supplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888B65E3245DA2460003EAED /* Supplier.swift */; };
-		8898032E24605FBE008A9A57 /* MyGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898032D24605FBE008A9A57 /* MyGroups.swift */; };
-		88ACF09D249CD9580079C518 /* LoRaNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88ACF09C249CD9580079C518 /* LoRaNetworkService.swift */; };
 		88ACF09F249CE7CC0079C518 /* AssignedNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88ACF09E249CE7CC0079C518 /* AssignedNetwork.swift */; };
 		88ACF0A0249CE7CC0079C518 /* AssignedNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88ACF09E249CE7CC0079C518 /* AssignedNetwork.swift */; };
 		88ACF0A224A0D9750079C518 /* PagedOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88ACF0A124A0D9750079C518 /* PagedOperations.swift */; };
 		88ACF0A324A0D9750079C518 /* PagedOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88ACF0A124A0D9750079C518 /* PagedOperations.swift */; };
-		88BD6BF7246C9B8D0018D004 /* MockedMyGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BD6BF6246C9B8D0018D004 /* MockedMyGroups.swift */; };
-		88BD6BF8246C9B8D0018D004 /* MockedMyGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BD6BF6246C9B8D0018D004 /* MockedMyGroups.swift */; };
-		88BE30C42497560C00AAD712 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BE30C32497560C00AAD712 /* Network.swift */; };
-		88BE30C52497560C00AAD712 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BE30C32497560C00AAD712 /* Network.swift */; };
 		88CB713B2466E4120071620E /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CB713A2466E4120071620E /* StringExtensions.swift */; };
 		88CB713C2466E4120071620E /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CB713A2466E4120071620E /* StringExtensions.swift */; };
 		88F588A224556FC600E75D4F /* AnyC8yObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F588A124556FC600E75D4F /* AnyC8yObject.swift */; };
+		F0A7EC2D25344BCA00472615 /* AssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2725344BCA00472615 /* AssetCollection.swift */; };
+		F0A7EC2E25344BCA00472615 /* AssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2725344BCA00472615 /* AssetCollection.swift */; };
+		F0A7EC2F25344BCA00472615 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2825344BCA00472615 /* Device.swift */; };
+		F0A7EC3025344BCA00472615 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2825344BCA00472615 /* Device.swift */; };
+		F0A7EC3125344BCA00472615 /* EditableDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2925344BCA00472615 /* EditableDevice.swift */; };
+		F0A7EC3225344BCA00472615 /* EditableDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2925344BCA00472615 /* EditableDevice.swift */; };
+		F0A7EC3325344BCA00472615 /* EditableGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2A25344BCA00472615 /* EditableGroup.swift */; };
+		F0A7EC3425344BCA00472615 /* EditableGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2A25344BCA00472615 /* EditableGroup.swift */; };
+		F0A7EC3525344BCA00472615 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2B25344BCA00472615 /* Group.swift */; };
+		F0A7EC3625344BCA00472615 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2B25344BCA00472615 /* Group.swift */; };
+		F0A7EC3725344BCA00472615 /* MutableDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2C25344BCA00472615 /* MutableDevice.swift */; };
+		F0A7EC3825344BCA00472615 /* MutableDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC2C25344BCA00472615 /* MutableDevice.swift */; };
+		F0A7EC4125344BF600472615 /* DeviceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC3E25344BF600472615 /* DeviceModels.swift */; };
+		F0A7EC4225344BF600472615 /* DeviceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC3E25344BF600472615 /* DeviceModels.swift */; };
+		F0A7EC4325344BF600472615 /* LoRaNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC3F25344BF600472615 /* LoRaNetworkService.swift */; };
+		F0A7EC4425344BF600472615 /* LoRaNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC3F25344BF600472615 /* LoRaNetworkService.swift */; };
+		F0A7EC4525344BF600472615 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC4025344BF600472615 /* Network.swift */; };
+		F0A7EC4625344BF600472615 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC4025344BF600472615 /* Network.swift */; };
+		F0A7EC4C25344C3000472615 /* MockedAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC4B25344C3000472615 /* MockedAssetCollection.swift */; };
+		F0A7EC4D25344C3000472615 /* MockedAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC4B25344C3000472615 /* MockedAssetCollection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		880B3D4F246C3018009A8BFA /* MutableDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableDevice.swift; sourceTree = "<group>"; };
 		88189CAE246421A800CED9EF /* JcRepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JcRepeatingTimer.swift; sourceTree = "<group>"; };
 		882D9FD8245048DD004F5D06 /* EventsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsService.swift; sourceTree = "<group>"; };
 		882D9FDB24505006004F5D06 /* BinariesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinariesService.swift; sourceTree = "<group>"; };
@@ -144,8 +145,6 @@
 		88363E64244B432600C018C6 /* EncodableContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableContent.swift; sourceTree = "<group>"; };
 		88363E67244B60DF00C018C6 /* ManageObjectQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageObjectQuery.swift; sourceTree = "<group>"; };
 		8838BF4C245075A600A3AE87 /* MultiPartContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPartContent.swift; sourceTree = "<group>"; };
-		8838BF8E2451E22200A3AE87 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
-		8838BF912451E28F00A3AE87 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		8838BF942451E39C00A3AE87 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		88413C1D244B85BF007A52E0 /* Planning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planning.swift; sourceTree = "<group>"; };
 		88413C1F244B85BF007A52E0 /* CustomAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAsset.swift; sourceTree = "<group>"; };
@@ -160,20 +159,23 @@
 		88413C76244F55B9007A52E0 /* PagedAlarms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedAlarms.swift; sourceTree = "<group>"; };
 		8841B43E24609AD30095DCA1 /* RuntimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeError.swift; sourceTree = "<group>"; };
 		8879AC4E2452143800922E3B /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
-		887C14A2246729D100D7A31A /* EditableGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableGroup.swift; sourceTree = "<group>"; };
 		888A32A724714831003F7D27 /* GroupLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLoader.swift; sourceTree = "<group>"; };
-		888B65D7245D7A330003EAED /* EditableDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableDevice.swift; sourceTree = "<group>"; };
-		888B65DD245D9E340003EAED /* DeviceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModels.swift; sourceTree = "<group>"; };
 		888B65E0245D9FF90003EAED /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		888B65E3245DA2460003EAED /* Supplier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supplier.swift; sourceTree = "<group>"; };
-		8898032D24605FBE008A9A57 /* MyGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroups.swift; sourceTree = "<group>"; };
-		88ACF09C249CD9580079C518 /* LoRaNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoRaNetworkService.swift; sourceTree = "<group>"; };
 		88ACF09E249CE7CC0079C518 /* AssignedNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedNetwork.swift; sourceTree = "<group>"; };
 		88ACF0A124A0D9750079C518 /* PagedOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedOperations.swift; sourceTree = "<group>"; };
-		88BD6BF6246C9B8D0018D004 /* MockedMyGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedMyGroups.swift; sourceTree = "<group>"; };
-		88BE30C32497560C00AAD712 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		88CB713A2466E4120071620E /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		88F588A124556FC600E75D4F /* AnyC8yObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyC8yObject.swift; sourceTree = "<group>"; };
+		F0A7EC2725344BCA00472615 /* AssetCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetCollection.swift; sourceTree = "<group>"; };
+		F0A7EC2825344BCA00472615 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		F0A7EC2925344BCA00472615 /* EditableDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditableDevice.swift; sourceTree = "<group>"; };
+		F0A7EC2A25344BCA00472615 /* EditableGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditableGroup.swift; sourceTree = "<group>"; };
+		F0A7EC2B25344BCA00472615 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		F0A7EC2C25344BCA00472615 /* MutableDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutableDevice.swift; sourceTree = "<group>"; };
+		F0A7EC3E25344BF600472615 /* DeviceModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceModels.swift; sourceTree = "<group>"; };
+		F0A7EC3F25344BF600472615 /* LoRaNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoRaNetworkService.swift; sourceTree = "<group>"; };
+		F0A7EC4025344BF600472615 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		F0A7EC4B25344C3000472615 /* MockedAssetCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockedAssetCollection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,7 +207,7 @@
 		88363E002448AC1000C018C6 = {
 			isa = PBXGroup;
 			children = (
-				88363E272448AC8600C018C6 /* src */,
+				88363E272448AC8600C018C6 /* Sources */,
 				88363E0C2448AC1000C018C6 /* Cumulocity Client Library */,
 				88363E172448AC1000C018C6 /* Cumulocity Client LibraryTests */,
 				88363E0B2448AC1000C018C6 /* Products */,
@@ -241,24 +243,26 @@
 			path = "Cumulocity Client LibraryTests";
 			sourceTree = "<group>";
 		};
-		88363E272448AC8600C018C6 /* src */ = {
+		88363E272448AC8600C018C6 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				88363E2A2448AD2500C018C6 /* common */,
-				88363E282448AC9900C018C6 /* cumulocity */,
+				88363E282448AC9900C018C6 /* c8y-lib */,
 			);
-			path = src;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		88363E282448AC9900C018C6 /* cumulocity */ = {
+		88363E282448AC9900C018C6 /* c8y-lib */ = {
 			isa = PBXGroup;
 			children = (
+				F0A7EC5425344CBF00472615 /* common */,
+				F0A7EC3D25344BDA00472615 /* custom */,
+				F0A7EC2425344BA100472615 /* devices */,
 				88363E3B2448EEB700C018C6 /* api */,
 				88363E292448ACA600C018C6 /* model */,
-				88363E422449DA1F00C018C6 /* xModel */,
-				8838BF972451EAD400A3AE87 /* meta */,
+				8838BF972451EAD400A3AE87 /* priv */,
 			);
-			path = cumulocity;
+			path = "c8y-lib";
 			sourceTree = "<group>";
 		};
 		88363E292448ACA600C018C6 /* model */ = {
@@ -286,9 +290,6 @@
 		88363E2A2448AD2500C018C6 /* common */ = {
 			isa = PBXGroup;
 			children = (
-				88189CAD2464218300CED9EF /* core */,
-				8879AC4D2452140100922E3B /* extensions */,
-				88363E2B2448AD6300C018C6 /* api */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -320,10 +321,9 @@
 			path = api;
 			sourceTree = "<group>";
 		};
-		88363E422449DA1F00C018C6 /* xModel */ = {
+		88363E422449DA1F00C018C6 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				88363E5E244B1E4C00C018C6 /* CustomAssetProcesor.swift */,
 				88413C1F244B85BF007A52E0 /* CustomAsset.swift */,
 				88413C1D244B85BF007A52E0 /* Planning.swift */,
 				8838BF942451E39C00A3AE87 /* Address.swift */,
@@ -333,26 +333,18 @@
 				88363E4C2449F9E300C018C6 /* LoRaNetworkInfo.swift */,
 				88ACF09E249CE7CC0079C518 /* AssignedNetwork.swift */,
 			);
-			path = xModel;
+			path = model;
 			sourceTree = "<group>";
 		};
-		8838BF972451EAD400A3AE87 /* meta */ = {
+		8838BF972451EAD400A3AE87 /* priv */ = {
 			isa = PBXGroup;
 			children = (
-				8898032D24605FBE008A9A57 /* MyGroups.swift */,
-				88BE30C32497560C00AAD712 /* Network.swift */,
-				88ACF09C249CD9580079C518 /* LoRaNetworkService.swift */,
+				88363E5E244B1E4C00C018C6 /* CustomAssetProcesor.swift */,
+				F0A7EC4B25344C3000472615 /* MockedAssetCollection.swift */,
 				888A32A724714831003F7D27 /* GroupLoader.swift */,
-				880B3D4F246C3018009A8BFA /* MutableDevice.swift */,
-				888B65DD245D9E340003EAED /* DeviceModels.swift */,
-				888B65D7245D7A330003EAED /* EditableDevice.swift */,
-				887C14A2246729D100D7A31A /* EditableGroup.swift */,
 				88F588A124556FC600E75D4F /* AnyC8yObject.swift */,
-				8838BF8E2451E22200A3AE87 /* Group.swift */,
-				8838BF912451E28F00A3AE87 /* Device.swift */,
-				88BD6BF6246C9B8D0018D004 /* MockedMyGroups.swift */,
 			);
-			path = meta;
+			path = priv;
 			sourceTree = "<group>";
 		};
 		88413C4B244B8D28007A52E0 /* Frameworks */ = {
@@ -370,6 +362,40 @@
 				8841B43E24609AD30095DCA1 /* RuntimeError.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		F0A7EC2425344BA100472615 /* devices */ = {
+			isa = PBXGroup;
+			children = (
+				F0A7EC2725344BCA00472615 /* AssetCollection.swift */,
+				F0A7EC2825344BCA00472615 /* Device.swift */,
+				F0A7EC2925344BCA00472615 /* EditableDevice.swift */,
+				F0A7EC2A25344BCA00472615 /* EditableGroup.swift */,
+				F0A7EC2B25344BCA00472615 /* Group.swift */,
+				F0A7EC2C25344BCA00472615 /* MutableDevice.swift */,
+			);
+			path = devices;
+			sourceTree = "<group>";
+		};
+		F0A7EC3D25344BDA00472615 /* custom */ = {
+			isa = PBXGroup;
+			children = (
+				88363E422449DA1F00C018C6 /* model */,
+				F0A7EC3E25344BF600472615 /* DeviceModels.swift */,
+				F0A7EC3F25344BF600472615 /* LoRaNetworkService.swift */,
+				F0A7EC4025344BF600472615 /* Network.swift */,
+			);
+			path = custom;
+			sourceTree = "<group>";
+		};
+		F0A7EC5425344CBF00472615 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				88189CAD2464218300CED9EF /* core */,
+				8879AC4D2452140100922E3B /* extensions */,
+				88363E2B2448AD6300C018C6 /* api */,
+			);
+			path = common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -481,26 +507,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88413C29244B866E007A52E0 /* EncodableContent.swift in Sources */,
+				88413C2A244B866E007A52E0 /* Connection.swift in Sources */,
+				88413C2B244B866E007A52E0 /* ConnectionFactory.swift in Sources */,
+				88413C2C244B866E007A52E0 /* ConnectionRequest.swift in Sources */,
+				8838BF4D245075A600A3AE87 /* MultiPartContent.swift in Sources */,
 				8879AC4B2451FFDF00922E3B /* ManagedObjectService.swift in Sources */,
+				8879AC4F2452143800922E3B /* DateExtensions.swift in Sources */,
+				88CB713B2466E4120071620E /* StringExtensions.swift in Sources */,
+				8841B43F24609AD30095DCA1 /* RuntimeError.swift in Sources */,
+				88189CAF246421A800CED9EF /* JcRepeatingTimer.swift in Sources */,
 				88ACF09F249CE7CC0079C518 /* AssignedNetwork.swift in Sources */,
 				8879AC4C2451FFDF00922E3B /* ManageObjectQuery.swift in Sources */,
+				F0A7EC4325344BF600472615 /* LoRaNetworkService.swift in Sources */,
 				882D9FDC24505006004F5D06 /* BinariesService.swift in Sources */,
-				88ACF09D249CD9580079C518 /* LoRaNetworkService.swift in Sources */,
 				88413C2F244B872F007A52E0 /* PagedManagedObjects.swift in Sources */,
-				880B3D50246C3018009A8BFA /* MutableDevice.swift in Sources */,
+				F0A7EC4525344BF600472615 /* Network.swift in Sources */,
 				88413C30244B872F007A52E0 /* ManagedObject.swift in Sources */,
-				8838BF922451E28F00A3AE87 /* Device.swift in Sources */,
-				8898032E24605FBE008A9A57 /* MyGroups.swift in Sources */,
+				F0A7EC2D25344BCA00472615 /* AssetCollection.swift in Sources */,
 				88413C6E244F3081007A52E0 /* MeasurementSeries.swift in Sources */,
 				882D9FE224505A14004F5D06 /* PagedMeasurements.swift in Sources */,
-				8841B43F24609AD30095DCA1 /* RuntimeError.swift in Sources */,
 				88413C6B244F1650007A52E0 /* Measurement.swift in Sources */,
-				887C14A3246729D100D7A31A /* EditableGroup.swift in Sources */,
 				882D9FD9245048DD004F5D06 /* EventsService.swift in Sources */,
 				88F588A224556FC600E75D4F /* AnyC8yObject.swift in Sources */,
 				88413C31244B872F007A52E0 /* Alarm.swift in Sources */,
 				88ACF0A224A0D9750079C518 /* PagedOperations.swift in Sources */,
 				88413C32244B872F007A52E0 /* DataPoints.swift in Sources */,
+				F0A7EC4125344BF600472615 /* DeviceModels.swift in Sources */,
 				88413C33244B872F007A52E0 /* CustomAsset.swift in Sources */,
 				88413C74244F45E9007A52E0 /* AlarmsService.swift in Sources */,
 				882D9FDF245057E5004F5D06 /* MeasurementsService.swift in Sources */,
@@ -509,30 +542,23 @@
 				88413C35244B872F007A52E0 /* Planning.swift in Sources */,
 				888B65E4245DA2460003EAED /* Supplier.swift in Sources */,
 				88413C36244B872F007A52E0 /* CustomAssetProcesor.swift in Sources */,
-				88BE30C42497560C00AAD712 /* Network.swift in Sources */,
 				88413C71244F3D15007A52E0 /* Operation.swift in Sources */,
 				88413C68244F1332007A52E0 /* ExternalId.swift in Sources */,
 				888A32A824714831003F7D27 /* GroupLoader.swift in Sources */,
 				88413C62244F095E007A52E0 /* Event.swift in Sources */,
 				88413C37244B872F007A52E0 /* ContactInfo.swift in Sources */,
-				8879AC4F2452143800922E3B /* DateExtensions.swift in Sources */,
 				88413C38244B872F007A52E0 /* LoRaNetworkInfo.swift in Sources */,
-				88413C29244B866E007A52E0 /* EncodableContent.swift in Sources */,
-				88189CAF246421A800CED9EF /* JcRepeatingTimer.swift in Sources */,
-				888B65D8245D7A330003EAED /* EditableDevice.swift in Sources */,
 				882D9FE824506D08004F5D06 /* OperationService.swift in Sources */,
-				88413C2A244B866E007A52E0 /* Connection.swift in Sources */,
-				88BD6BF7246C9B8D0018D004 /* MockedMyGroups.swift in Sources */,
+				F0A7EC3125344BCA00472615 /* EditableDevice.swift in Sources */,
+				F0A7EC3325344BCA00472615 /* EditableGroup.swift in Sources */,
+				F0A7EC4C25344C3000472615 /* MockedAssetCollection.swift in Sources */,
+				F0A7EC3725344BCA00472615 /* MutableDevice.swift in Sources */,
 				88413C2E244B8688007A52E0 /* CumulocityUser.swift in Sources */,
-				888B65DE245D9E340003EAED /* DeviceModels.swift in Sources */,
-				88413C2B244B866E007A52E0 /* ConnectionFactory.swift in Sources */,
-				88413C2C244B866E007A52E0 /* ConnectionRequest.swift in Sources */,
+				F0A7EC2F25344BCA00472615 /* Device.swift in Sources */,
 				88413C2D244B867B007A52E0 /* CumulocityConnection.swift in Sources */,
-				8838BF4D245075A600A3AE87 /* MultiPartContent.swift in Sources */,
+				F0A7EC3525344BCA00472615 /* Group.swift in Sources */,
 				888B65E1245D9FF90003EAED /* Model.swift in Sources */,
-				8838BF8F2451E22200A3AE87 /* Group.swift in Sources */,
 				88413C77244F55B9007A52E0 /* PagedAlarms.swift in Sources */,
-				88CB713B2466E4120071620E /* StringExtensions.swift in Sources */,
 				8838BF952451E39C00A3AE87 /* Address.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -543,52 +569,54 @@
 			files = (
 				8838BF4E245075A600A3AE87 /* MultiPartContent.swift in Sources */,
 				8841B44024609AD30095DCA1 /* RuntimeError.swift in Sources */,
-				888B65DF245D9E340003EAED /* DeviceModels.swift in Sources */,
 				88413C4F244B91B2007A52E0 /* EncodableContent.swift in Sources */,
 				88189CB0246421A800CED9EF /* JcRepeatingTimer.swift in Sources */,
 				88413C6C244F1650007A52E0 /* Measurement.swift in Sources */,
 				88413C50244B91B2007A52E0 /* Connection.swift in Sources */,
 				88413C51244B91B2007A52E0 /* ConnectionFactory.swift in Sources */,
 				88413C52244B91B2007A52E0 /* ConnectionRequest.swift in Sources */,
-				88BE30C52497560C00AAD712 /* Network.swift in Sources */,
 				88ACF0A0249CE7CC0079C518 /* AssignedNetwork.swift in Sources */,
+				F0A7EC4625344BF600472615 /* Network.swift in Sources */,
 				888B65E5245DA2460003EAED /* Supplier.swift in Sources */,
 				88413C63244F095E007A52E0 /* Event.swift in Sources */,
 				88CB713C2466E4120071620E /* StringExtensions.swift in Sources */,
-				8838BF932451E28F00A3AE87 /* Device.swift in Sources */,
 				88413C53244B91B2007A52E0 /* CumulocityConnection.swift in Sources */,
 				88413C54244B91B2007A52E0 /* ManagedObjectService.swift in Sources */,
 				88413C55244B91B2007A52E0 /* ManageObjectQuery.swift in Sources */,
 				88413C56244B91B2007A52E0 /* CumulocityUser.swift in Sources */,
 				88413C69244F1332007A52E0 /* ExternalId.swift in Sources */,
-				887C14A4246729D100D7A31A /* EditableGroup.swift in Sources */,
 				882D9FE924506D08004F5D06 /* OperationService.swift in Sources */,
 				88413C78244F55B9007A52E0 /* PagedAlarms.swift in Sources */,
 				88413C6F244F3081007A52E0 /* MeasurementSeries.swift in Sources */,
-				888B65D9245D7A330003EAED /* EditableDevice.swift in Sources */,
-				880B3D51246C3018009A8BFA /* MutableDevice.swift in Sources */,
+				F0A7EC4425344BF600472615 /* LoRaNetworkService.swift in Sources */,
 				88413C57244B91B2007A52E0 /* PagedManagedObjects.swift in Sources */,
-				88BD6BF8246C9B8D0018D004 /* MockedMyGroups.swift in Sources */,
 				882D9FE0245057E5004F5D06 /* MeasurementsService.swift in Sources */,
 				88413C72244F3D15007A52E0 /* Operation.swift in Sources */,
+				F0A7EC4D25344C3000472615 /* MockedAssetCollection.swift in Sources */,
 				88413C58244B91B2007A52E0 /* ManagedObject.swift in Sources */,
 				88413C75244F45E9007A52E0 /* AlarmsService.swift in Sources */,
 				882D9FDD24505006004F5D06 /* BinariesService.swift in Sources */,
-				8838BF902451E22200A3AE87 /* Group.swift in Sources */,
+				F0A7EC3625344BCA00472615 /* Group.swift in Sources */,
 				8838BF962451E39C00A3AE87 /* Address.swift in Sources */,
 				88413C59244B91B2007A52E0 /* Alarm.swift in Sources */,
+				F0A7EC3225344BCA00472615 /* EditableDevice.swift in Sources */,
 				888A32A924714831003F7D27 /* GroupLoader.swift in Sources */,
+				F0A7EC2E25344BCA00472615 /* AssetCollection.swift in Sources */,
 				88413C5A244B91B2007A52E0 /* DataPoints.swift in Sources */,
+				F0A7EC3025344BCA00472615 /* Device.swift in Sources */,
 				88413C5B244B91B2007A52E0 /* CustomAsset.swift in Sources */,
 				888B65E2245D9FF90003EAED /* Model.swift in Sources */,
 				882D9FDA245048DD004F5D06 /* EventsService.swift in Sources */,
+				F0A7EC4225344BF600472615 /* DeviceModels.swift in Sources */,
 				882D9FE624505C91004F5D06 /* PageStatistics.swift in Sources */,
 				882D9FE324505A14004F5D06 /* PagedMeasurements.swift in Sources */,
 				88413C5D244B91B2007A52E0 /* Planning.swift in Sources */,
+				F0A7EC3825344BCA00472615 /* MutableDevice.swift in Sources */,
 				88413C5E244B91B2007A52E0 /* CustomAssetProcesor.swift in Sources */,
 				88413C5F244B91B2007A52E0 /* ContactInfo.swift in Sources */,
 				88413C66244F1287007A52E0 /* PagedEvents.swift in Sources */,
 				88ACF0A324A0D9750079C518 /* PagedOperations.swift in Sources */,
+				F0A7EC3425344BCA00472615 /* EditableGroup.swift in Sources */,
 				88413C60244B91B2007A52E0 /* LoRaNetworkInfo.swift in Sources */,
 				88413C4D244B8D55007A52E0 /* Cumulocity_Client_LibraryTests.swift in Sources */,
 			);

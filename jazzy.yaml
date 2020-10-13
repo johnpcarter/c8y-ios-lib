@@ -1,11 +1,11 @@
 title: Cumulocity Client library for macOS/iOS
 author: John Carter \(john.carter@softwareag.com\)
-author_url: http://bustoutsolutions.com
-github_url: https://github.com/johnpcarter/siesta
+author_url: http://johncarter.eu
+github_url: https://github.com/johnpcarter/c8y-ios-lib
 hide_documentation_coverage: true
 documentation: docs/include/docs/*.md
 abstract: docs/include/abstracts/*.md
-output: ./docs/generated
+output: ./docs/out
 
 custom_categories:
   - name: About
@@ -15,60 +15,78 @@ custom_categories:
 
   - name: High Level Access
     children:
-    - JcGroupManager
-    - JcGroup
-    - JcDevice
-    - JcGroupsManagerUpdateNotification
+    - C8yAssetCollection
+    - C8yGroup
+    - C8yDevice
+    - C8yMutableDevice
+    - C8yEditableDevice
+    - C8yEditableGroup
+    - AnyC8yObject
+    - C8yObject
+    - C8yGroupInfo
+    - C8yNetworks
 
-  - name: c8y API Access
+  - name: Custom Fragments
     children:
-    - JcCumulocityConnection
-    - JcManagedObjectsService
-    - JcManagedObjectQuery
-    - JcEventsService
-    - JcMeasurementsService
-    - JcAlarmsService
-    - JcOperationService
-    - JcBinariesService
+    - Customisation Overview
+    - C8yCustomAssetFactory
+    - C8yCustomAsset
+    - C8yStringWrapper
+    - C8yCustomAssetProcessor
+        
+  - name: Access/Update Objects
+    children:
+    - C8yCumulocityConnection
+    - C8yManagedObjectsService
+    - C8yManagedObjectQuery
+    - C8yEventsService
+    - C8yMeasurementsService
+    - C8yAlarmsService
+    - C8yOperationService
+    - C8yBinariesService
 
   - name: Data Models
     children:
-    - JcCumulocityUser
-    - JcManagedObject
-    - JcExternalId
-    - JcDataPoints
-    - JcAlarm
-    - JcEvent
-    - JcMeasurement
-    - JcMeasurementSeries
-    - JcOperation
-    - JcPagedManagedObjects
-    - JcPagedAlarms
-    - JcPagedEvents
-    - JcPagedMeasurements
+    - C8yCumulocityUser
+    - C8yManagedObject
+    - C8yExternalIds
+    - C8yExternalId
+    - C8yDataPoints
+    - C8yAlarm
+    - C8yEvent
+    - C8yMeasurement
+    - C8yMeasurementSeries
+    - C8yOperation
+    - C8yPagedManagedObjects
+    - C8yPagedAlarms
+    - C8yPagedEvents
+    - C8yPagedMeasurements
+    - C8yPagedOperations
+    - C8yPageStatistics
 
   - name: Custom Models
     children:
-    - JcAddress
-    - JcContactInfo
-    - JcPlanning
-    - JcLoRaDeviceInfo
-    - JcLoRaNetworkInfo
-
-  - name: Customising Managed Objects
-    children:
-    - Customisation Overview
-    - JcCustomAssetProcessor
-    - JcCustomAssetDecoder
-    - JcCustomAsset
+    - C8yAddress
+    - C8yContactInfo
+    - C8yPlanning
+    - C8ySuppliers
+    - C8ySupplier
+    - C8yModel
+    - C8yModels
+    - C8yLoRaDeviceInfo
+    - C8yLoRaNetworkInfo
+    - C8yDeviceModelsReference
+    - C8yAssignedNetwork
+    - C8yDeviceNetworkProvider
+    - C8yDeviceNetworkInstance
 
   - name: API Tools
     children:
-    - JcConnectionFactory
+    - JCConnectionFactory
     - JcConnection
     - JcCredentials
     - JcConnectionRequest
-    - JCResponseStatus
+    - JcResponseStatus
     - JcEncodableContent
     - JcMultiPartContent
 

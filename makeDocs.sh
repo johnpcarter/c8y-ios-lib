@@ -1,3 +1,3 @@
 #!/bin/sh
 
-jazzy --config jazzy.yaml - /docs/generated
+jazzy --exclude=/*/common,Jc* --config jazzy.yaml - /docs/out

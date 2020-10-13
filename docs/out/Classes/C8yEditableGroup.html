@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>C8yEditableGroup Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/C8yEditableGroup" class="dashAnchor"></a>
+    <a title="C8yEditableGroup Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Cumulocity Client library for macOS/iOS</a></p>
+        <p class="header-right"><a href="https://github.com/johnpcarter/c8y-ios-lib"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        C8yEditableGroup Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../About.html">About</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../installation.html">Installation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../quick-use-guide.html">Quick Use Guide</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../High%20Level%20Access.html">High Level Access</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/C8yAssetCollection.html">C8yAssetCollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yGroup.html">C8yGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDevice.html">C8yDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMutableDevice.html">C8yMutableDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMutableDevice/MeasurementSeries.html">– MeasurementSeries</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMutableDevice/Measurement.html">– Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yEditableDevice.html">C8yEditableDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yEditableGroup.html">C8yEditableGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyC8yObject.html">AnyC8yObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyC8yObject/WrappedType.html">– WrappedType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/C8yObject.html">C8yObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yGroupInfo.html">C8yGroupInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yNetworks.html">C8yNetworks</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yNetworks/UnknownNetworkTypeError.html">– UnknownNetworkTypeError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Custom%20Fragments.html">Custom Fragments</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../customisation-overview.html">Customisation Overview</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Custom%20Fragments.html#/s:25Cumulocity_Client_Library21C8yCustomAssetFactoryC">C8yCustomAssetFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/C8yCustomAsset.html">C8yCustomAsset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yStringWrapper.html">C8yStringWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yCustomAssetProcessor.html">C8yCustomAssetProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yCustomAssetProcessor/AssetObjectKey.html">– AssetObjectKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Access%2FUpdate%20Objects.html">Access/Update Objects</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yManagedObjectsService.html">C8yManagedObjectsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yManagedObjectsService/ManagedObjectNotFoundError.html">– ManagedObjectNotFoundError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObjectQuery.html">C8yManagedObjectQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObjectQuery/Operator.html">– Operator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObjectQuery/Query.html">– Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yEventsService.html">C8yEventsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMeasurementsService.html">C8yMeasurementsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yAlarmsService.html">C8yAlarmsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yOperationService.html">C8yOperationService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yBinariesService.html">C8yBinariesService</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Data%20Models.html">Data Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/C8yCumulocityUser.html">C8yCumulocityUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject.html">C8yManagedObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/ConnectionStatusType.html">– ConnectionStatusType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/AvailabilityStatus.html">– AvailabilityStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/SensorType.html">– SensorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/RelayStateType.html">– RelayStateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/ChildReferences.html">– ChildReferences</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Availability.html">– Availability</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Firmware.html">– Firmware</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/ActiveAlarmsStatus.html">– ActiveAlarmsStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/RequiredAvailability.html">– RequiredAvailability</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/ConnectionStatus.html">– ConnectionStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Position.html">– Position</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/LpwanDevice.html">– LpwanDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Hardware.html">– Hardware</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yExternalIds.html">C8yExternalIds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yExternalId.html">C8yExternalId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDataPoints.html">C8yDataPoints</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDataPoints/DataPoint.html">– DataPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDataPoints/DataPointValue.html">– DataPointValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAlarm.html">C8yAlarm</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAlarm/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAlarm/Severity.html">– Severity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yEvent.html">C8yEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurement.html">C8yMeasurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurement/MeasurementValue.html">– MeasurementValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries.html">C8yMeasurementSeries</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries/AggregateType.html">– AggregateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries/Series.html">– Series</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries/ValuesWrapper.html">– ValuesWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries/Values.html">– Values</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yOperation.html">C8yOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yOperation/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yOperation/OperationDetails.html">– OperationDetails</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedManagedObjects.html">C8yPagedManagedObjects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedAlarms.html">C8yPagedAlarms</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedEvents.html">C8yPagedEvents</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedMeasurements.html">C8yPagedMeasurements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedOperations.html">C8yPagedOperations</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPageStatistics.html">C8yPageStatistics</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Custom%20Models.html">Custom Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAddress.html">C8yAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yContactInfo.html">C8yContactInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPlanning.html">C8yPlanning</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8ySuppliers.html">C8ySuppliers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8ySupplier.html">C8ySupplier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yModel.html">C8yModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yModels.html">C8yModels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yLoRaNetworkInfo.html">C8yLoRaNetworkInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yDeviceModelsReference.html">C8yDeviceModelsReference</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yDeviceModelsReference/SupplierModelsSummary.html">– SupplierModelsSummary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAssignedNetwork.html">C8yAssignedNetwork</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDeviceNetworkProvider.html">C8yDeviceNetworkProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDeviceNetworkInstance.html">C8yDeviceNetworkInstance</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../API%20Tools.html">API Tools</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/JcConnection.html">JcConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../API%20Tools.html#/s:25Cumulocity_Client_Library13JcCredentialsC">JcCredentials</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcConnectionRequest/Method.html">– Method</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcConnectionRequest/APIError.html">– APIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../API%20Tools.html#/s:25Cumulocity_Client_Library18JcEncodableContentP">JcEncodableContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/JcMultiPartContent.html">JcMultiPartContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/JcMultiPartContent/ContentPart.html">– ContentPart</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMockedAssetCollection.html">C8yMockedAssetCollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Classes.html#/s:25Cumulocity_Client_Library21C8yStringAssetDecoderC">C8yStringAssetDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcConnectionFactory.html">JcConnectionFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcRepeatingTimer.html">JcRepeatingTimer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcRequestResponse.html">JcRequestResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcSimpleConnection.html">JcSimpleConnection</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Global%20Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8Y_MEASUREMENT_BATTERYSSvp">C8Y_MEASUREMENT_BATTERY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library28C8Y_MEASUREMENT_BATTERY_TYPESSvp">C8Y_MEASUREMENT_BATTERY_TYPE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_COMMANDSSvp">C8Y_OPERATION_COMMAND</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library22C8Y_OPERATION_DOWNLOADSSvp">C8Y_OPERATION_DOWNLOAD</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library22C8Y_OPERATION_FIRMWARESSvp">C8Y_OPERATION_FIRMWARE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_LOG_REQSSvp">C8Y_OPERATION_LOG_REQ</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_MESSAGESSvp">C8Y_OPERATION_MESSAGE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library22C8Y_OPERATION_PROPERTYSSvp">C8Y_OPERATION_PROPERTY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library19C8Y_OPERATION_RELAYSSvp">C8Y_OPERATION_RELAY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library25C8Y_OPERATION_RELAY_STATESSvp">C8Y_OPERATION_RELAY_STATE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_RESTARTSSvp">C8Y_OPERATION_RESTART</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library20C8Y_OPERATION_UPLOADSSvp">C8Y_OPERATION_UPLOAD</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Enums.html">Other Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/C8yDeviceCategory.html">C8yDeviceCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yGroupCategory.html">C8yGroupCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yNetworkType.html">C8yNetworkType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yNoValidIdError.html">C8yNoValidIdError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yOperationLevel.html">C8yOperationLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yOrganisationCategory.html">C8yOrganisationCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/JCResponseStatus.html">JCResponseStatus</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/JcMultiPartRequestResponse.html">JcMultiPartRequestResponse</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>C8yEditableGroup</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yEditableGroup</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC13GROUP_ID_TYPESSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/GROUP_ID_TYPE" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC13GROUP_ID_TYPESSvpZ">GROUP_ID_TYPE</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">GROUP_ID_TYPE</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC5c8yIdSSvp"></a>
+                    <a name="//apple_ref/swift/Property/c8yId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC5c8yIdSSvp">c8yId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC10externalIdSSvp"></a>
+                    <a name="//apple_ref/swift/Property/externalId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC10externalIdSSvp">externalId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">externalId</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC4nameSSvp"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC4nameSSvp">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC8categoryAA0dF8CategoryOvp"></a>
+                    <a name="//apple_ref/swift/Property/category" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC8categoryAA0dF8CategoryOvp">category</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">category</span><span class="p">:</span> <span class="kt"><a href="../Enums/C8yGroupCategory.html">C8yGroupCategory</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC7orgNameSSvp"></a>
+                    <a name="//apple_ref/swift/Property/orgName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC7orgNameSSvp">orgName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">orgName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC13contactPersonSSvp"></a>
+                    <a name="//apple_ref/swift/Property/contactPerson" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC13contactPersonSSvp">contactPerson</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">contactPerson</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC12contactEmailSSvp"></a>
+                    <a name="//apple_ref/swift/Property/contactEmail" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC12contactEmailSSvp">contactEmail</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">contactEmail</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC12contactPhoneSSvp"></a>
+                    <a name="//apple_ref/swift/Property/contactPhone" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC12contactPhoneSSvp">contactPhone</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">contactPhone</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC12addressLine1SSvp"></a>
+                    <a name="//apple_ref/swift/Property/addressLine1" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC12addressLine1SSvp">addressLine1</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">addressLine1</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC12addressLine2SSvp"></a>
+                    <a name="//apple_ref/swift/Property/addressLine2" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC12addressLine2SSvp">addressLine2</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">addressLine2</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC4citySSvp"></a>
+                    <a name="//apple_ref/swift/Property/city" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC4citySSvp">city</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">city</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC8postCodeSSvp"></a>
+                    <a name="//apple_ref/swift/Property/postCode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC8postCodeSSvp">postCode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">postCode</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC7countrySSvp"></a>
+                    <a name="//apple_ref/swift/Property/country" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC7countrySSvp">country</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">country</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC5notesSSvp"></a>
+                    <a name="//apple_ref/swift/Property/notes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC5notesSSvp">notes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">notes</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC3latSdvp"></a>
+                    <a name="//apple_ref/swift/Property/lat" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC3latSdvp">lat</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">lat</span><span class="p">:</span> <span class="kt">Double</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC3lngSdvp"></a>
+                    <a name="//apple_ref/swift/Property/lng" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC3lngSdvp">lng</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">lng</span><span class="p">:</span> <span class="kt">Double</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC3altSdvp"></a>
+                    <a name="//apple_ref/swift/Property/alt" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC3altSdvp">alt</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">alt</span><span class="p">:</span> <span class="kt">Double</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC5isNewSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isNew" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC5isNewSbvp">isNew</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isNew</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC11haveChangesSbvp"></a>
+                    <a name="//apple_ref/swift/Property/haveChanges" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC11haveChangesSbvp">haveChanges</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">haveChanges</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC13readyToDeploySbvp"></a>
+                    <a name="//apple_ref/swift/Property/readyToDeploy" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC13readyToDeploySbvp">readyToDeploy</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">readyToDeploy</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC9didChange7Combine19CurrentValueSubjectCySSs5NeverOGvp"></a>
+                    <a name="//apple_ref/swift/Property/didChange" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC9didChange7Combine19CurrentValueSubjectCySSs5NeverOGvp">didChange</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">didChange</span><span class="p">:</span> <span class="kt">CurrentValueSubject</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC8onChange7Combine12AnyPublisherVyACs5NeverOGvp"></a>
+                    <a name="//apple_ref/swift/Property/onChange" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC8onChange7Combine12AnyPublisherVyACs5NeverOGvp">onChange</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onChange</span><span class="p">:</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">C8yEditableGroup</span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupCACycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupCACycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC04withF0AcA0dF0V_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(withGroup:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC04withF0AcA0dF0V_tcfc">init(withGroup:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">withGroup</span> <span class="nv">group</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC5clearyyF"></a>
+                    <a name="//apple_ref/swift/Method/clear()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC5clearyyF">clear()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">clear</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC02toF0yAA0dF0VSSSgF"></a>
+                    <a name="//apple_ref/swift/Method/toGroup(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC02toF0yAA0dF0VSSSgF">toGroup(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">toGroup</span><span class="p">(</span><span class="n">_</span> <span class="nv">parentGroupName</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yEditableGroupC02toF0yAA0dF0VAFF"></a>
+                    <a name="//apple_ref/swift/Method/toGroup(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yEditableGroupC02toF0yAA0dF0VAFF">toGroup(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">toGroup</span><span class="p">(</span><span class="n">_</span> <span class="nv">originalGroup</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-12)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

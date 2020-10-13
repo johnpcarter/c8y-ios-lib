@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>C8yAssetCollection Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/C8yAssetCollection" class="dashAnchor"></a>
+    <a title="C8yAssetCollection Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Cumulocity Client library for macOS/iOS</a></p>
+        <p class="header-right"><a href="https://github.com/johnpcarter/c8y-ios-lib"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        C8yAssetCollection Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../About.html">About</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../installation.html">Installation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../quick-use-guide.html">Quick Use Guide</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../High%20Level%20Access.html">High Level Access</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/C8yAssetCollection.html">C8yAssetCollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yGroup.html">C8yGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDevice.html">C8yDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMutableDevice.html">C8yMutableDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMutableDevice/MeasurementSeries.html">– MeasurementSeries</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMutableDevice/Measurement.html">– Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yEditableDevice.html">C8yEditableDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yEditableGroup.html">C8yEditableGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyC8yObject.html">AnyC8yObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyC8yObject/WrappedType.html">– WrappedType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/C8yObject.html">C8yObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yGroupInfo.html">C8yGroupInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yNetworks.html">C8yNetworks</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yNetworks/UnknownNetworkTypeError.html">– UnknownNetworkTypeError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Custom%20Fragments.html">Custom Fragments</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../customisation-overview.html">Customisation Overview</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Custom%20Fragments.html#/s:25Cumulocity_Client_Library21C8yCustomAssetFactoryC">C8yCustomAssetFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/C8yCustomAsset.html">C8yCustomAsset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yStringWrapper.html">C8yStringWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yCustomAssetProcessor.html">C8yCustomAssetProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yCustomAssetProcessor/AssetObjectKey.html">– AssetObjectKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Access%2FUpdate%20Objects.html">Access/Update Objects</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yManagedObjectsService.html">C8yManagedObjectsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yManagedObjectsService/ManagedObjectNotFoundError.html">– ManagedObjectNotFoundError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObjectQuery.html">C8yManagedObjectQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObjectQuery/Operator.html">– Operator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObjectQuery/Query.html">– Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yEventsService.html">C8yEventsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMeasurementsService.html">C8yMeasurementsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yAlarmsService.html">C8yAlarmsService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yOperationService.html">C8yOperationService</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yBinariesService.html">C8yBinariesService</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Data%20Models.html">Data Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/C8yCumulocityUser.html">C8yCumulocityUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject.html">C8yManagedObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/ConnectionStatusType.html">– ConnectionStatusType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/AvailabilityStatus.html">– AvailabilityStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/SensorType.html">– SensorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/RelayStateType.html">– RelayStateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/ChildReferences.html">– ChildReferences</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Availability.html">– Availability</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Firmware.html">– Firmware</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/ActiveAlarmsStatus.html">– ActiveAlarmsStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/RequiredAvailability.html">– RequiredAvailability</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/ConnectionStatus.html">– ConnectionStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Position.html">– Position</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/LpwanDevice.html">– LpwanDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yManagedObject/Hardware.html">– Hardware</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yExternalIds.html">C8yExternalIds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yExternalId.html">C8yExternalId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDataPoints.html">C8yDataPoints</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDataPoints/DataPoint.html">– DataPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDataPoints/DataPointValue.html">– DataPointValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAlarm.html">C8yAlarm</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAlarm/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAlarm/Severity.html">– Severity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yEvent.html">C8yEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurement.html">C8yMeasurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurement/MeasurementValue.html">– MeasurementValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries.html">C8yMeasurementSeries</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries/AggregateType.html">– AggregateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries/Series.html">– Series</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries/ValuesWrapper.html">– ValuesWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yMeasurementSeries/Values.html">– Values</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yOperation.html">C8yOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yOperation/Status.html">– Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yOperation/OperationDetails.html">– OperationDetails</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedManagedObjects.html">C8yPagedManagedObjects</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedAlarms.html">C8yPagedAlarms</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedEvents.html">C8yPagedEvents</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedMeasurements.html">C8yPagedMeasurements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPagedOperations.html">C8yPagedOperations</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPageStatistics.html">C8yPageStatistics</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Custom%20Models.html">Custom Models</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAddress.html">C8yAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yContactInfo.html">C8yContactInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yPlanning.html">C8yPlanning</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8ySuppliers.html">C8ySuppliers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8ySupplier.html">C8ySupplier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yModel.html">C8yModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yModels.html">C8yModels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yLoRaNetworkInfo.html">C8yLoRaNetworkInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yDeviceModelsReference.html">C8yDeviceModelsReference</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yDeviceModelsReference/SupplierModelsSummary.html">– SupplierModelsSummary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yAssignedNetwork.html">C8yAssignedNetwork</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDeviceNetworkProvider.html">C8yDeviceNetworkProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDeviceNetworkInstance.html">C8yDeviceNetworkInstance</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../API%20Tools.html">API Tools</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/JcConnection.html">JcConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../API%20Tools.html#/s:25Cumulocity_Client_Library13JcCredentialsC">JcCredentials</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcConnectionRequest/Method.html">– Method</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcConnectionRequest/APIError.html">– APIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../API%20Tools.html#/s:25Cumulocity_Client_Library18JcEncodableContentP">JcEncodableContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/JcMultiPartContent.html">JcMultiPartContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/JcMultiPartContent/ContentPart.html">– ContentPart</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Classes.html">Other Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMockedAssetCollection.html">C8yMockedAssetCollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Classes.html#/s:25Cumulocity_Client_Library21C8yStringAssetDecoderC">C8yStringAssetDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcConnectionFactory.html">JcConnectionFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcRepeatingTimer.html">JcRepeatingTimer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcRequestResponse.html">JcRequestResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JcSimpleConnection.html">JcSimpleConnection</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Global%20Variables.html">Other Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8Y_MEASUREMENT_BATTERYSSvp">C8Y_MEASUREMENT_BATTERY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library28C8Y_MEASUREMENT_BATTERY_TYPESSvp">C8Y_MEASUREMENT_BATTERY_TYPE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_COMMANDSSvp">C8Y_OPERATION_COMMAND</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library22C8Y_OPERATION_DOWNLOADSSvp">C8Y_OPERATION_DOWNLOAD</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library22C8Y_OPERATION_FIRMWARESSvp">C8Y_OPERATION_FIRMWARE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_LOG_REQSSvp">C8Y_OPERATION_LOG_REQ</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_MESSAGESSvp">C8Y_OPERATION_MESSAGE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library22C8Y_OPERATION_PROPERTYSSvp">C8Y_OPERATION_PROPERTY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library19C8Y_OPERATION_RELAYSSvp">C8Y_OPERATION_RELAY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library25C8Y_OPERATION_RELAY_STATESSvp">C8Y_OPERATION_RELAY_STATE</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library21C8Y_OPERATION_RESTARTSSvp">C8Y_OPERATION_RESTART</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library20C8Y_OPERATION_UPLOADSSvp">C8Y_OPERATION_UPLOAD</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Enums.html">Other Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/C8yDeviceCategory.html">C8yDeviceCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yGroupCategory.html">C8yGroupCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yNetworkType.html">C8yNetworkType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yNoValidIdError.html">C8yNoValidIdError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yOperationLevel.html">C8yOperationLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/C8yOrganisationCategory.html">C8yOrganisationCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/JCResponseStatus.html">JCResponseStatus</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Extensions.html">Other Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Other%20Structs.html">Other Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/JcMultiPartRequestResponse.html">JcMultiPartRequestResponse</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>C8yAssetCollection</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">C8yAssetCollection</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Class to allow you to manage an abritary collection of groups or devices from the users device
+e.g.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">myCollection</span> <span class="o">=</span> <span class="kt">C8yAssetCollection</span><span class="p">()</span>
+
+<span class="k">do</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="n">myCollection</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="nv">c8yReferencesToLoad</span><span class="p">:</span> <span class="p">[</span><span class="s">"9403"</span><span class="p">,</span> <span class="s">"9102"</span><span class="p">,</span> <span class="s">"2323"</span><span class="p">],</span> <span class="nv">includeSubGroups</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+        <span class="o">.</span><span class="nf">receive</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="kt">RunLoop</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+        <span class="o">.</span><span class="nf">sink</span><span class="p">(</span><span class="nv">receiveCompletion</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">completion</span><span class="p">)</span> <span class="k">in</span>
+
+                <span class="nf">print</span><span class="p">(</span><span class="s">"&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; SINK LOAD ENDED"</span><span class="p">)</span>
+            <span class="p">},</span> <span class="nv">receiveValue</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">objects</span><span class="p">)</span> <span class="k">in</span>
+
+                <span class="c1">// both devices and group, which can also be referenced via myColletion.objects, which in turn is a Published attribute and hence can</span>
+                <span class="c1">// be referenced directly from a swiftui View if myCollection is defined either as a @StateObject or @ObservedObject</span>
+
+                <span class="k">let</span> <span class="nv">devicesAndGroup</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyC8yObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">objects</span>
+
+               <span class="o">...</span>
+        <span class="p">})</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+    <span class="nf">print</span> <span class="p">(</span><span class="s">"load failed </span><span class="se">\(</span><span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre>
+
+<p>Devices and groups can be added to the collection using either the <code>add(_:)</code> or <code>addGroupReference(c8yId:includeSubGroups:completionHandler:)</code> methods e.g.</p>
+<pre class="highlight swift"><code><span class="n">myCollection</span><span class="o">.</span><span class="nf">add</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">myCollection</span><span class="o">.</span><span class="nf">addGroupReference</span><span class="p">(</span><span class="nv">c8yId</span><span class="p">:</span> <span class="s">"4343"</span><span class="p">,</span> <span class="nv">includeSubgroups</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="k">in</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">group</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// success, group represents the managed object that has been fetched from c8y and added to your collection</span>
+        <span class="o">...</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// lookup failed, probably due to invalid reference, refer to error object for precision</span>
+        <span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>You can reference the devices and groups via the <code>objects</code> attribute directly from your SwiftUI views. Ensure that you prefix
+the reference to you collection attribute with @ObservedObject or @StateObject to ensure that the view automatically updates
+if your collection changes e.g.</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">MyAssetsView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+
+    <span class="kd">@Binding</span> <span class="k">var</span> <span class="nv">conn</span><span class="p">:</span> <span class="kt">C8yCumulocityConnection</span>
+    <span class="kd">@Binding</span> <span class="k">var</span> <span class="nv">referenecs</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+
+    <span class="kd">@StateObject</span> <span class="k">var</span> <span class="nv">myCollection</span><span class="p">:</span><span class="kt">C8yAssetCollection</span> <span class="o">=</span> <span class="kt">C8yAssetCollection</span><span class="p">()</span>
+    <span class="kd">@State</span> <span class="k">var</span> <span class="nv">isLoading</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span>
+
+    <span class="k">var</span> <span class="nv">body</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">VStack</span> <span class="p">{</span>
+            <span class="kt">ForEach</span><span class="p">(</span><span class="n">myCollection</span><span class="o">.</span><span class="n">objects</span><span class="p">)</span> <span class="p">{</span> <span class="n">r</span> <span class="k">in</span>
+                <span class="kt">Text</span><span class="p">(</span><span class="s">"asset is </span><span class="se">\(</span><span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">onAppear</span> <span class="p">{</span>
+            <span class="n">myCollection</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">conn</span><span class="p">,</span> <span class="nv">c8yReferencesToLoad</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">references</span><span class="p">,</span> <span class="nv">includeSubGroups</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+                <span class="o">.</span><span class="nf">sink</span><span class="p">(</span><span class="nv">receiveCompletion</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">completion</span><span class="p">)</span> <span class="k">in</span>
+                    <span class="k">self</span><span class="o">.</span><span class="n">isLoading</span> <span class="o">=</span> <span class="kc">false</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC7objectsSayAA03AnyD6ObjectVGvp"></a>
+                    <a name="//apple_ref/swift/Property/objects" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC7objectsSayAA03AnyD6ObjectVGvp">objects</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Objects that published from this collection. Devices and Groups are wrapped in an <code><a href="../Structs/AnyC8yObject.html">AnyC8yObject</a></code> instance to avoid collection
+ambiguity errors.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/AnyC8yObject.html">AnyC8yObject</a></span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC10connectionAA0dA10ConnectionCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/connection" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC10connectionAA0dA10ConnectionCSgvp">connection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The connection reference that was last used to load the collection via <code>load(:c8yReferencesToLoad:includeSubGroups)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">connection</span><span class="p">:</span> <span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC8networksAA0D8NetworksCvp"></a>
+                    <a name="//apple_ref/swift/Property/networks" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC8networksAA0D8NetworksCvp">networks</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>List of available network providers</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">networks</span><span class="p">:</span> <span class="kt"><a href="../Classes/C8yNetworks.html">C8yNetworks</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC10groupCountSivp"></a>
+                    <a name="//apple_ref/swift/Property/groupCount" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC10groupCountSivp">groupCount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">groupCount</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC11deviceCountSivp"></a>
+                    <a name="//apple_ref/swift/Property/deviceCount" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC11deviceCountSivp">deviceCount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">deviceCount</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionCACycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionCACycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default constructor, use from SwiftUI Views with the prefix @StateObject.
+You will need to call the <code>load(:c8yReferencesToLoad:includeSubGroups)</code> method to populate the collection</p>
+<h1 id='warning' class='heading'>WARNING</h1>
+
+<p>Do not invoke the load() method from a SwiftUI View constructor as this will introduce severe performance issues, due to the
+fact the constructor can be called many times by SwiftUI. Instead invoke the method from the View&rsquo;s onAppear lifecycle event emitter
+to ensure that it will only be called once.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC10setRefresh_16includeSubGroupsySd_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/setRefresh(_:includeSubGroups:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC10setRefresh_16includeSubGroupsySd_SbtF">setRefresh(_:<wbr>includeSubGroups:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Established a background thread to automatically refresh all of the assets in the collection i.e. detect
+changes made in Cumulocity automatically.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setRefresh</span><span class="p">(</span><span class="n">_</span> <span class="nv">interval</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">includeSubGroups</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>interval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Interval in seconds</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>includeSubGroups</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>if true, sub groups are treated as unique entities, if false all subgroups are flattened
+i.e. any assets found in sub group will be added to top level group and sub group references ignored.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC11stopRefreshyyF"></a>
+                    <a name="//apple_ref/swift/Method/stopRefresh()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC11stopRefreshyyF">stopRefresh()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Disables background refresh thread
+Only applicable if the thread was started via <code>setRefresh(:includeSubGroups:)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopRefresh</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC07refreshE0yyxAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/refreshAsset(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC07refreshE0yyxAA0D6ObjectRzlF">refreshAsset(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Force refresh the given asset, i.e. retrieve latest version from Cumulocity
+If the asset doesn&rsquo;t yet exist in the collection it will added after the fetch</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">refreshAsset</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">asset</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>asset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>device or group to be refreshed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC9doRefresh16includeSubGroups17completionHandlerySb_yyctF"></a>
+                    <a name="//apple_ref/swift/Method/doRefresh(includeSubGroups:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC9doRefresh16includeSubGroups17completionHandlerySb_yyctF">doRefresh(includeSubGroups:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Force a refresh of all assets in the collection</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">doRefresh</span><span class="p">(</span><span class="nv">includeSubGroups</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>includeSubGroups</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>if true, sub groups are treated as unique entities, if false all subgroups are flattened</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called once refresh has been completed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC4load_19c8yReferencesToLoad16includeSubGroups7Combine12AnyPublisherVySayAA0pD6ObjectVGAA19JcConnectionRequestC8APIErrorVyAA0daT0C_GGARSg_SaySSGSbtKF"></a>
+                    <a name="//apple_ref/swift/Method/load(_:c8yReferencesToLoad:includeSubGroups:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC4load_19c8yReferencesToLoad16includeSubGroups7Combine12AnyPublisherVySayAA0pD6ObjectVGAA19JcConnectionRequestC8APIErrorVyAA0daT0C_GGARSg_SaySSGSbtKF">load(_:<wbr>c8yReferencesToLoad:<wbr>includeSubGroups:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Call this method to populate your collection with the required assets.
+You can add and remove assets afterwards using the methods <code>add(:)</code>, <code>addGroupReference(c8yId:includeSubgroups:)</code>  or <code><a href="../Classes/C8yAssetCollection.html#/s:25Cumulocity_Client_Library18C8yAssetCollectionC6remove5c8yIdSbSS_tF">remove(c8yId:)</a></code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="n">_</span> <span class="nv">conn</span><span class="p">:</span> <span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="p">?,</span> <span class="nv">c8yReferencesToLoad</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">],</span> <span class="nv">includeSubGroups</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/AnyC8yObject.html">AnyC8yObject</a></span><span class="p">],</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>conn</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Connection to be used to used to download assets with</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yReferencesToLoad</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>String array of c8y internal id&rsquo;s to be fetched, can refresent either devices or group</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>includeSubGroups</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>if true, sub groups are treated as unique entities, if false all subgroups are flattened i.e. any sub-assets are added to top level group and sub group is ignored</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC6reload_16includeSubGroups7Combine12AnyPublisherVySayAA0lD6ObjectVGAA19JcConnectionRequestC8APIErrorVyAA0daP0C_GGSgSaySSG_SbtKF"></a>
+                    <a name="//apple_ref/swift/Method/reload(_:includeSubGroups:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC6reload_16includeSubGroups7Combine12AnyPublisherVySayAA0lD6ObjectVGAA19JcConnectionRequestC8APIErrorVyAA0daP0C_GGSgSaySSG_SbtKF">reload(_:<wbr>includeSubGroups:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Similar to <code>load(:c8yReferencesToLoad:includeSubGroups)</code> call this method to repopulate your collection with the required assets.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">reload</span><span class="p">(</span><span class="n">_</span> <span class="nv">c8yReferencesToLoad</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">],</span> <span class="nv">includeSubGroups</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/AnyC8yObject.html">AnyC8yObject</a></span><span class="p">],</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yReferencesToLoad</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>String array of c8y internal id&rsquo;s to be fetched, can refresent either devices or group</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>includeSubGroups</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>if true, sub groups are treated as unique entities, if false all subgroups are flattened i.e. any sub-assets are added to top level group and sub group is ignored</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC5clearyyF"></a>
+                    <a name="//apple_ref/swift/Method/clear()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC5clearyyF">clear()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Clears out the collection, all assets will be removed locally</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">clear</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC04isInF0ySbAA0D5GroupVF"></a>
+                    <a name="//apple_ref/swift/Method/isInCollection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC04isInF0ySbAA0D5GroupVF">isInCollection(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns true if the given group is referenced in the collection at the top-level</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isInCollection</span><span class="p">(</span><span class="n">_</span> <span class="nv">group</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>group</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The group to be looked up</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if the group is referenced</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC04isInF0ySbSSF"></a>
+                    <a name="//apple_ref/swift/Method/isInCollection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC04isInF0ySbSSF">isInCollection(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns true if an asset with the given id is referenced in the collection at the top-level</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isInCollection</span><span class="p">(</span><span class="n">_</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>c8y internal id of the asset</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if asset is referenced</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC8groupFor5c8yIdAA0D5GroupVSgSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/groupFor(c8yId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC8groupFor5c8yIdAA0D5GroupVSgSS_tF">groupFor(c8yId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the group for the given id, or nil if not found.
+The group can be a sub-group of one of the referenced groups.</p>
+
+<p><em>NOTE</em> - Only checks the local cache, if you want to look up devices in cumulocity use one of the <code><a href="../Classes/C8yAssetCollection.html#/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup5c8yId17completionHandlerySS_yAA0dH0VSg_s5Error_pSgtctF">lookupGroup(c8yId:completionHandler:)</a></code> methods</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">groupFor</span><span class="p">(</span><span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>c8y internal id of the group to be found.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the group object or nil if not found</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC9deviceForyAA0D6DeviceVSgSSF"></a>
+                    <a name="//apple_ref/swift/Method/deviceFor(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC9deviceForyAA0D6DeviceVSgSSF">deviceFor(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the device for the given id, or nil if not found.
+The device can be in a sub-group somewhere of one of the referenced groups.</p>
+
+<p><em>NOTE</em> - Only checks the local cache, if you want to look up devices in cumulocity use one of the <code><a href="../Classes/C8yAssetCollection.html#/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice5c8yId17completionHandlerySS_yAA0dH0VSg_s5Error_pSgtctF">lookupDevice(c8yId:completionHandler:)</a></code> methods</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deviceFor</span><span class="p">(</span><span class="n">_</span> <span class="nv">ref</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>c8y internal id of the device to be found.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the device object or nil if not found</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC9deviceFor10externalId6ofTypeAA0D6DeviceVSgSS_SStF"></a>
+                    <a name="//apple_ref/swift/Method/deviceFor(externalId:ofType:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC9deviceFor10externalId6ofTypeAA0D6DeviceVSgSS_SStF">deviceFor(externalId:<wbr>ofType:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the device for the given external id, or nil if not found.
+The device can be in a sub-group somewhere of one of the referenced groups.</p>
+
+<p><em>NOTE</em> - Only checks the local cache, if you want to look up devices in cumulocity use one of the <code><a href="../Classes/C8yAssetCollection.html#/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice5c8yId17completionHandlerySS_yAA0dH0VSg_s5Error_pSgtctF">lookupDevice(c8yId:completionHandler:)</a></code> methods</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deviceFor</span><span class="p">(</span><span class="nv">externalId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">ofType</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>externalId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>externall id of the device to be found.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>code descrbing external id type e.g. &lsquo;c8y_Serial&rsquo;</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the device object or nil if not found</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC9objectForySaySSGSg4path_AA03AnyD6ObjectVSg0G0tSSF"></a>
+                    <a name="//apple_ref/swift/Method/objectFor(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC9objectForySaySSGSg4path_AA03AnyD6ObjectVSg0G0tSSF">objectFor(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the asset for the given id, or nil if not found.
+The asset can be in a sub-group somewhere of one of the referenced groups.
+Currently two asset types are supported, namely devices or groups. In either
+case the returned object is contained in a <code>AnyCV8yObject</code> object.</p>
+
+<p><em>NOTE</em> - Only checks the local cache, if you want to look up assets in cumulocity use one of the <code><a href="../Classes/C8yAssetCollection.html#/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice5c8yId17completionHandlerySS_yAA0dH0VSg_s5Error_pSgtctF">lookupDevice(c8yId:completionHandler:)</a></code>  or <code><a href="../Classes/C8yAssetCollection.html#/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup5c8yId17completionHandlerySS_yAA0dH0VSg_s5Error_pSgtctF">lookupGroup(c8yId:completionHandler:)</a></code>methods</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">objectFor</span><span class="p">(</span><span class="n">_</span> <span class="nv">ref</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?,</span> <span class="nv">object</span><span class="p">:</span> <span class="kt"><a href="../Structs/AnyC8yObject.html">AnyC8yObject</a></span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>c8y internal id of the asset to be found.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>the asset object or nil if not found</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC16replaceObjectForySbxAA0dH0RzlF"></a>
+                    <a name="//apple_ref/swift/Method/replaceObjectFor(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC16replaceObjectForySbxAA0dH0RzlF">replaceObjectFor(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Replaces an existing asset with the given asset using the object c8y internal id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">replaceObjectFor</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The asset to be replaced</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>If the asset is not found, no change is effected and false is returned.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC3addyyxAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/add(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC3addyyxAA0D6ObjectRzlF">add(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds an asset to the collection
+<em>NOTE</em> - This has no impact on the back-end, assumption is that the asset already exists, otherwise use the <code>create(:completionHandler:)</code> method</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">add</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The asset to be added to the collection.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC6remove5c8yIdSbSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/remove(c8yId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC6remove5c8yIdSbSS_tF">remove(c8yId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes the asset from the local collection.
+<em>NOTE</em> - This has no impact on the back-end,  use the <code>delete(:completionHandler:)</code> method if you want to really delete the asset from cumulocity</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">remove</span><span class="p">(</span><span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the c8y internal id of the asset to removed from the local collection.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC17addGroupReference5c8yId16includeSubGroups17completionHandlerySS_SbyAA0dH0VSg_s5Error_pSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/addGroupReference(c8yId:includeSubGroups:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC17addGroupReference5c8yId16includeSubGroups17completionHandlerySS_SbyAA0dH0VSg_s5Error_pSgtctF">addGroupReference(c8yId:<wbr>includeSubGroups:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds a group asset to the local collection using its c8y Internal id.
+Will call back end to fetch necessary dsata in order to create a new <code><a href="../Structs/C8yGroup.html">C8yGroup</a></code> object before then inserting into the local collection.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addGroupReference</span><span class="p">(</span><span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">includeSubGroups</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the c8y internal id of the group to be added to the local collection.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>includeSubGroups</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>if true, sub groups are treated as unique entities, if false all subgroups are flattened i.e. any found sub-assets will be added to the top level group and sub group is ignored</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called once fetch has completed, includes either group object if fetched successfully or the error description if it failed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC6create_17completionHandleryx_yxSg_s5Error_pSgtctKAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/create(_:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC6create_17completionHandleryx_yxSg_s5Error_pSgtctKAA0D6ObjectRzlF">create(_:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates the new asset in Cumulocity and then adds it to the local collection if successful
+Creation might fail if connection access rights are insufficient or a mandatory attribute is missing.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Invalid object i.e. mandatory field missing
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">create</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The cumulocity asset to be created and then referenced locally</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called once insert has completed, includes either asset object if insert successful or the error description if it failed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC10saveObject_17completionHandleryx_ySb_s5Error_pSgtctKAA0dH0RzlF"></a>
+                    <a name="//apple_ref/swift/Method/saveObject(_:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC10saveObject_17completionHandleryx_ySb_s5Error_pSgtctKAA0dH0RzlF">saveObject(_:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Saves any changes to the asset in Cumulocity</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Invalid object i.e. mandatory field missing
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">saveObject</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Bool</span><span class="p">,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The cumulocity asset to be created and then referenced locally</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called once save has completed, returns a boolean indicating if save was successful.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC6delete_17completionHandleryx_ySbctAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/delete(_:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC6delete_17completionHandleryx_ySbctAA0D6ObjectRzlF">delete(_:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deletes the existing asset from Cumulocity and then removed it from the local collection if necessary
+Deletion might fail if either the asset doesn&rsquo;t exist or connection access rights are insufficient</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">delete</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The cumulocity asset to be deleted</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called once delete has completed, returns true if delete was done, false if not</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC10addToGroup_05c8yOfI017completionHandleryx_SSyxSg_s5Error_pSgtctKAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/addToGroup(_:c8yOfGroup:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC10addToGroup_05c8yOfI017completionHandleryx_SSyxSg_s5Error_pSgtctKAA0D6ObjectRzlF">addToGroup(_:<wbr>c8yOfGroup:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience method that allows a new device or group to be created and then added to an existing group or sub-group. Following which, it then ensures that the local collection is updated
+to reflect any changes.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Invalid object i.e. mandatory field missing
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">addToGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">c8yOfGroup</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The asset to be created in Cumulocity</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yOfGroup</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The group to which it should be assigned once the object has been created.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completinoHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called when operation has been completed to indicate success or failure</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC13assignToGroup_05c8yOfI017completionHandleryx_SSyxSg_s5Error_pSgtctAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/assignToGroup(_:c8yOfGroup:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC13assignToGroup_05c8yOfI017completionHandleryx_SSyxSg_s5Error_pSgtctAA0D6ObjectRzlF">assignToGroup(_:<wbr>c8yOfGroup:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience method that allows an existing device or group to be added to an existing group or sub-group. Following which, it then ensures that the local collection is updated
+to reflect any changes.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">assignToGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">c8yOfGroup</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The asset to be created in Cumulocity</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yOfGroup</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The group to which it should be assigned once the object has been created.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completinoHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called when operation has been completed to indicate success or failure</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup5c8yId17completionHandlerySS_yAA0dH0VSg_s5Error_pSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/lookupGroup(c8yId:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup5c8yId17completionHandlerySS_yAA0dH0VSg_s5Error_pSgtctF">lookupGroup(c8yId:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the group for the given  c8y internal id, or nil if not found. It first checks in the local cache and if not found queries the back-end cumulocity tenant
+The group is NOT added to the local collection if not found locally.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lookupGroup</span><span class="p">(</span><span class="n">c8yId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>c8y internal id of the group to be found.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>callback that received the fetched group or error if failed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice5c8yId17completionHandlerySS_yAA0dH0VSg_s5Error_pSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/lookupDevice(c8yId:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice5c8yId17completionHandlerySS_yAA0dH0VSg_s5Error_pSgtctF">lookupDevice(c8yId:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the device for the given c8y internal id, or nil if not found. It first checks in the local cache and if not found queries the back-end cumulocity tenant
+The device is NOT added to the local collection if not found locally.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lookupDevice</span><span class="p">(</span><span class="n">c8yId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>c8y internal id of the device to be found.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>callback that received the fetched device or error if failed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice13forExternalId6ofType17completionHandlerySS_SSyAA0dH0VSg_AA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/lookupDevice(forExternalId:ofType:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice13forExternalId6ofType17completionHandlerySS_SSyAA0dH0VSg_AA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GSgtctF">lookupDevice(forExternalId:<wbr>ofType:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the device for the given external id and type, or nil if not found. It first checks in the local cache and if not found queries the back-end cumulocity tenant
+The device is NOT added to the local collection if not found locally.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lookupDevice</span><span class="p">(</span><span class="n">forExternalId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">ofType</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">?,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>external id of the device to be found.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>code descrbing external id type e.g. &lsquo;c8y_Serial&rsquo;</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>callback that received the fetched device or error if failed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup13forExternalId4type17completionHandlerySS_SSyAA0dH0VSg_s5Error_pSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/lookupGroup(forExternalId:type:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup13forExternalId4type17completionHandlerySS_SSyAA0dH0VSg_s5Error_pSgtctF">lookupGroup(forExternalId:<wbr>type:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the group for the given external id and type, or nil if not found. It first checks in the local cache and if not found queries the back-end cumulocity tenant
+The group is NOT added to the local collection if not found locally.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lookupGroup</span><span class="p">(</span><span class="n">forExternalId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>external id of the group to be found.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>code descrbing external id type e.g. &lsquo;c8y_Serial&rsquo;</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>callback that received the fetched group or error if failed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-12)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
