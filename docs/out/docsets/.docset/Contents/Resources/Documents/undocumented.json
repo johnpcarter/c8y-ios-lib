@@ -176,48 +176,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/common/core/RepeatingTimer.swift",
-      "line": 16,
-      "symbol": "JcRepeatingTimer.timeInterval",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/common/core/RepeatingTimer.swift",
-      "line": 18,
-      "symbol": "JcRepeatingTimer.init(timeInterval:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/common/core/RepeatingTimer.swift",
-      "line": 31,
-      "symbol": "JcRepeatingTimer.eventHandler",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/common/core/RepeatingTimer.swift",
-      "line": 51,
-      "symbol": "JcRepeatingTimer.resume()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/common/core/RepeatingTimer.swift",
-      "line": 58,
-      "symbol": "JcRepeatingTimer.resume(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/common/core/RepeatingTimer.swift",
-      "line": 75,
-      "symbol": "JcRepeatingTimer.suspend()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/common/extensions/DateExtensions.swift",
       "line": 13,
       "symbol": "Date.dateString(_:)",
