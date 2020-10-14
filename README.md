@@ -12,7 +12,7 @@ Install the library direct from [github]() or as a swift package in a xcode proj
 
 Using Xcode 11 go to File > Swift Packages > Add Package Dependency
 Paste the project URL: https://github.com/johnpcarter/c8y-ios-lib
-Click on next and select the project target
+Click on next and select the project target, set minimum version to latest branch
 
 Now you can import your dependencies e.g.:
 ```
