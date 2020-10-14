@@ -9,8 +9,6 @@
 import Foundation
 import Combine
 
-//import SwiftUI
-
 /**
 Class to allow you to manage an abritary collection of groups or devices from the users device
 e.g.

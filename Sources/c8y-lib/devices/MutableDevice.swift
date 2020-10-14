@@ -13,10 +13,8 @@ import CoreLocation
 
 /**
 Presents a `C8Device` device that can be observed for changed within in a SwiftUI View directly.
-Static device data is still available via the wrapped `device` attribute. In addition it provides dynamic data that can be observed for changes
-
-Dynamic data is mostly related to dynamically updated metrics, gps position, etc.
-You can also choose to continuously update a preferred metric and obtain the latest battery level if applicable.
+Static device data is still available via the wrapped `device` attribute.
+In addition it provides dynamic data such as gps position, battery level, measurements etc  that can be observed for changes
 
 Use the `EditableDevice` class if you want to provide a view to allow a user to edit a device.
 */
@@ -387,15 +385,13 @@ public class C8yMutableDevice: ObservableObject  {
 	- returns: Publisher with updated device
 	- throws: If network is invalid or not recognised
 	*/
-	public func provision() throws -> AnyPublisher<C8yDevice,CommError> {
+	public func provision() throws -> AnyPublisher<C8yDevice, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
     
 		return try C8yNetworks.provision(device, conn: self.conn!)
 			.receive(on: RunLoop.main)
 			.map({device -> C8yDevice in
 				self.device = device
 				return device
-			}).mapError({ error -> CommError in
-				return CommError(reason: error.localizedDescription)
 			}).eraseToAnyPublisher()
     }
     
@@ -408,15 +404,13 @@ public class C8yMutableDevice: ObservableObject  {
 	- returns: Publisher with updated device
 	- throws: If network is invalid or not recognised
 	*/
-	public func deprovision()throws -> AnyPublisher<C8yDevice,CommError> {
+	public func deprovision()throws -> AnyPublisher<C8yDevice, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
     
 		return try C8yNetworks.deprovision(device, conn: self.conn!)
 			.receive(on: RunLoop.main)
 			.map({device -> C8yDevice in
 				self.device = device
 				return device
-			}).mapError({ error -> CommError in
-				return CommError(reason: error.localizedDescription)
 			}).eraseToAnyPublisher()
     }
     
@@ -428,7 +422,7 @@ public class C8yMutableDevice: ObservableObject  {
 	- returns: Publisher with cumulocity internal id of new operation.
 	- throws: Invalid operation
 	*/
-    public func runOperation(_ op: C8yOperation) throws -> AnyPublisher<String, CommError> {
+    public func runOperation(_ op: C8yOperation) throws -> AnyPublisher<String, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
     		
         try C8yOperationService(self.conn!).post(operation: op)
 			.receive(on: RunLoop.main)
@@ -437,9 +431,6 @@ public class C8yMutableDevice: ObservableObject  {
 				let nop = response.content
 				self.operationHistory.insert(nop!, at: 0)
 				return nop!.id!
-				
-			}).mapError({ error -> CommError in
-				return CommError(reason: error.localizedDescription)
 			}).eraseToAnyPublisher()
     }
 	
@@ -453,7 +444,7 @@ public class C8yMutableDevice: ObservableObject  {
 	- returns: Publisher with new cumulocity alarm
 	- throws: Invalid alarm
 	*/
-	public func postNewAlarm(type: String, severity: C8yAlarm.Severity, text: String) throws -> AnyPublisher<C8yAlarm, CommError> {
+	public func postNewAlarm(type: String, severity: C8yAlarm.Severity, text: String) throws -> AnyPublisher<C8yAlarm, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
 		
 		var alarm = C8yAlarm(forSource: self.device.c8yId!, type: type, description: text, status: C8yAlarm.Status.ACTIVE, severity: severity)
 		
@@ -468,8 +459,6 @@ public class C8yMutableDevice: ObservableObject  {
 
 			return alarm
 			
-		}).mapError({ error -> CommError in
-			return CommError(reason: error.localizedDescription)
 		}).eraseToAnyPublisher()
 	}
 	
@@ -480,7 +469,7 @@ public class C8yMutableDevice: ObservableObject  {
 	- returns: Publisher with updated cumulocity alarm
 	- throws: Invalid alarm
 	*/
-	public func updateAlarm(_ alarm: C8yAlarm) throws -> AnyPublisher<C8yAlarm, CommError> {
+	public func updateAlarm(_ alarm: C8yAlarm) throws -> AnyPublisher<C8yAlarm, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
 	
 		return try C8yAlarmsService(self.conn!).put(alarm)
 			.receive(on: RunLoop.main)
@@ -495,8 +484,6 @@ public class C8yMutableDevice: ObservableObject  {
 				self.device.alarms = self.alarmSummary(self.alarms)
 				
 				return alarm
-			}).mapError({ error -> CommError in
-				return CommError(reason: error.localizedDescription)
 			}).eraseToAnyPublisher()
 	}
     
@@ -1066,10 +1053,5 @@ public class C8yMutableDevice: ObservableObject  {
 		}
 		
 		return C8yManagedObject.ActiveAlarmsStatus(warning: w, minor: mr, major: mj, critical: c)
-	}
-	
-	public struct CommError: Error {
-		
-		public var reason: String?
 	}
 }

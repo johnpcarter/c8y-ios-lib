@@ -75,9 +75,6 @@
                 <a href="../Classes/C8yMutableDevice/Measurement.html">– Measurement</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/C8yMutableDevice/CommError.html">– CommError</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/C8yEditableDevice.html">C8yEditableDevice</a>
               </li>
               <li class="nav-group-task">
@@ -482,10 +479,8 @@
                 </div>
               </div>
             <p>Presents a <code>C8Device</code> device that can be observed for changed within in a SwiftUI View directly.
-Static device data is still available via the wrapped <code>device</code> attribute. In addition it provides dynamic data that can be observed for changes</p>
-
-<p>Dynamic data is mostly related to dynamically updated metrics, gps position, etc.
-You can also choose to continuously update a preferred metric and obtain the latest battery level if applicable.</p>
+Static device data is still available via the wrapped <code>device</code> attribute.
+In addition it provides dynamic data such as gps position, battery level, measurements etc  that can be observed for changes</p>
 
 <p>Use the <code>EditableDevice</code> class if you want to provide a view to allow a user to edit a device.</p>
 
@@ -1277,9 +1272,9 @@ Calling this method if already in maintenance mode sets the requiredResponseInte
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC9provision7Combine12AnyPublisherVyAA0dF0VAC9CommErrorVGyKF"></a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC9provision7Combine12AnyPublisherVyAA0dF0VAA19JcConnectionRequestC8APIErrorVyAA0daL0C_GGyKF"></a>
                     <a name="//apple_ref/swift/Method/provision()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC9provision7Combine12AnyPublisherVyAA0dF0VAC9CommErrorVGyKF">provision()</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC9provision7Combine12AnyPublisherVyAA0dF0VAA19JcConnectionRequestC8APIErrorVyAA0daL0C_GGyKF">provision()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1302,7 +1297,7 @@ The implementation is provided via the appropriate network type <code>C8yNetwork
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">provision</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">provision</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1316,9 +1311,9 @@ The implementation is provided via the appropriate network type <code>C8yNetwork
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC11deprovision7Combine12AnyPublisherVyAA0dF0VAC9CommErrorVGyKF"></a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC11deprovision7Combine12AnyPublisherVyAA0dF0VAA19JcConnectionRequestC8APIErrorVyAA0daL0C_GGyKF"></a>
                     <a name="//apple_ref/swift/Method/deprovision()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC11deprovision7Combine12AnyPublisherVyAA0dF0VAC9CommErrorVGyKF">deprovision()</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC11deprovision7Combine12AnyPublisherVyAA0dF0VAA19JcConnectionRequestC8APIErrorVyAA0daL0C_GGyKF">deprovision()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1341,7 +1336,7 @@ The implementation is provided via the appropriate network type <code>C8yNetwork
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deprovision</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deprovision</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1355,9 +1350,9 @@ The implementation is provided via the appropriate network type <code>C8yNetwork
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC12runOperationy7Combine12AnyPublisherVySSAC9CommErrorVGAA0dH0VKF"></a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC12runOperationy7Combine12AnyPublisherVySSAA19JcConnectionRequestC8APIErrorVyAA0daM0C_GGAA0dH0VKF"></a>
                     <a name="//apple_ref/swift/Method/runOperation(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12runOperationy7Combine12AnyPublisherVySSAC9CommErrorVGAA0dH0VKF">runOperation(_:<wbr>)</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12runOperationy7Combine12AnyPublisherVySSAA19JcConnectionRequestC8APIErrorVyAA0daM0C_GGAA0dH0VKF">runOperation(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1378,7 +1373,7 @@ The operation will have an initial status of PENDING</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">runOperation</span><span class="p">(</span><span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yOperation.html">C8yOperation</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">runOperation</span><span class="p">(</span><span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yOperation.html">C8yOperation</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1411,9 +1406,9 @@ The operation will have an initial status of PENDING</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC12postNewAlarm4type8severity4text7Combine12AnyPublisherVyAA0dI0VAC9CommErrorVGSS_AL8SeverityOSStKF"></a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC12postNewAlarm4type8severity4text7Combine12AnyPublisherVyAA0dI0VAA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GGSS_AL8SeverityOSStKF"></a>
                     <a name="//apple_ref/swift/Method/postNewAlarm(type:severity:text:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12postNewAlarm4type8severity4text7Combine12AnyPublisherVyAA0dI0VAC9CommErrorVGSS_AL8SeverityOSStKF">postNewAlarm(type:<wbr>severity:<wbr>text:<wbr>)</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12postNewAlarm4type8severity4text7Combine12AnyPublisherVyAA0dI0VAA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GGSS_AL8SeverityOSStKF">postNewAlarm(type:<wbr>severity:<wbr>text:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1434,7 +1429,7 @@ The alarm will have an initial status of ACTIVE</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">postNewAlarm</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">severity</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="o">.</span><span class="kt">Severity</span><span class="p">,</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">postNewAlarm</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">severity</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="o">.</span><span class="kt">Severity</span><span class="p">,</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1491,9 +1486,9 @@ The alarm will have an initial status of ACTIVE</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC11updateAlarmy7Combine12AnyPublisherVyAA0dH0VAC9CommErrorVGAIKF"></a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC11updateAlarmy7Combine12AnyPublisherVyAA0dH0VAA19JcConnectionRequestC8APIErrorVyAA0daM0C_GGAIKF"></a>
                     <a name="//apple_ref/swift/Method/updateAlarm(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC11updateAlarmy7Combine12AnyPublisherVyAA0dH0VAC9CommErrorVGAIKF">updateAlarm(_:<wbr>)</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC11updateAlarmy7Combine12AnyPublisherVyAA0dH0VAA19JcConnectionRequestC8APIErrorVyAA0daM0C_GGAIKF">updateAlarm(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1513,7 +1508,7 @@ The alarm will have an initial status of ACTIVE</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateAlarm</span><span class="p">(</span><span class="n">_</span> <span class="nv">alarm</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateAlarm</span><span class="p">(</span><span class="n">_</span> <span class="nv">alarm</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2289,34 +2284,6 @@ and the device&rsquo;s <code>C8ytDevice.attachments</code> attribute</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Measurement</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC9CommErrorV"></a>
-                    <a name="//apple_ref/swift/Struct/CommError" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC9CommErrorV">CommError</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="../Classes/C8yMutableDevice/CommError.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CommError</span> <span class="p">:</span> <span class="kt">Error</span></code></pre>
 
                         </div>
                       </div>

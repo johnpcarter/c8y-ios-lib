@@ -47,7 +47,7 @@ public class C8yBinariesService: JcConnectionRequest<C8yCumulocityConnection> {
      - parameter content ByteArray representing rawe data to be stored
 	 - response Publisher to issue succes/failure of upload
      */
-    func post(name: String, contentType: String, content: Data) -> AnyPublisher<JcMultiPartRequestResponse, APIError> {
+    public func post(name: String, contentType: String, content: Data) -> AnyPublisher<JcMultiPartRequestResponse, APIError> {
         
         return super._execute(method: JcConnectionRequest.Method.POST, resourcePath: C8Y_BINARIES_API, request: makeRequest(name, contentType: contentType, data: content)).map( {response in
             
