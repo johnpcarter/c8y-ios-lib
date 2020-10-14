@@ -49,7 +49,7 @@ public struct C8yModel: C8yCustomAsset, Hashable {
     
     public private(set) var id: String = ""
     public private(set) var name: String = ""
-    public private(set) var category: C8yDeviceCategory = .Unknown
+    public private(set) var category: C8yDevice.DeviceCategory = .Unknown
 	public private(set) var description: String? = nil
     public private(set) var link: String? = ""
 	internal private(set) var imageId: String? = nil
@@ -64,7 +64,7 @@ public struct C8yModel: C8yCustomAsset, Hashable {
 		case imageId
     }
     
-	init(_ id: String, name: String, category: C8yDeviceCategory, link: String?, description: String? = nil, image: UIImage? = nil) {
+	init(_ id: String, name: String, category: C8yDevice.DeviceCategory, link: String?, description: String? = nil, image: UIImage? = nil) {
         
         self.id = id
         self.name = name
@@ -83,7 +83,7 @@ public struct C8yModel: C8yCustomAsset, Hashable {
         self.link = try container.decode(String.self, forKey: .link)
 
         if (container.contains(.category)) {
-            self.category = try C8yDeviceCategory(rawValue: container.decode(String.self, forKey: .category))!
+            self.category = try C8yDevice.DeviceCategory(rawValue: container.decode(String.self, forKey: .category))!
         }
     }
     

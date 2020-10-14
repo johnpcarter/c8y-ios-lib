@@ -47,27 +47,27 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
 	
     public func testDevice() -> C8yDevice {
         
-        return saintJaques!.device(forId: "D0001")!
+        return saintJaques!.device(withC8yId: "D0001")!
     }
 
     public func testDevice2() -> C8yDevice {
         
-        return saintJaques!.device(forId: "D0002")!
+        return saintJaques!.device(withC8yId: "D0002")!
     }
     
     public func testDevice3() -> C8yDevice {
 
-        return saintJaques!.device(forId: "D0003")!
+        return saintJaques!.device(withC8yId: "D0003")!
     }
 
     public func testDevice4() -> C8yDevice {
 
-        return saintJaques!.device(forId: "D0003")!
+        return saintJaques!.device(withC8yId: "D0003")!
     }
 
     public func testDevice7() -> C8yDevice {
 
-        return shop!.device(forId: "D0007")!
+        return shop!.device(withC8yId: "D0007")!
     }
     
     public func testGroup() -> C8yGroup {
@@ -197,7 +197,7 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         return newGroup
     }
     
-    private func makeDevice(_ c8yId: String?, name: String, model: String, category: C8yDeviceCategory, status: C8yManagedObject.AvailabilityStatus, criticalAlarms: Int, majorAlarms: Int, minorAlarms: Int, warningAlarms: Int) -> C8yDevice {
+    private func makeDevice(_ c8yId: String?, name: String, model: String, category: C8yDevice.DeviceCategory, status: C8yManagedObject.AvailabilityStatus, criticalAlarms: Int, majorAlarms: Int, minorAlarms: Int, warningAlarms: Int) -> C8yDevice {
            
         var device: C8yDevice = C8yDevice(c8yId, serialNumber: "123456789", withName: name, type: "c8y_device", supplier: "apple", model: model, notes: "Mocked device, how now now brown cow", requiredResponseInterval: 30, revision: "1.1.1", category: category)
             

@@ -14,7 +14,7 @@ import CoreImage.CIFilterBuiltins
 let C8Y_MANAGED_OBJECTS_XORG_CATEGORY = "xOrgCategory"
 let C8Y_MANAGED_OBJECTS_XORG_NAME = "xOrgName"
 let C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY = "xGroupCategory"
-let C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY = "xDeviceCategory"
+let C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY = "xC8yDeviceCategory"
 
 /**
 Wrapper to allow objects deviced from `C8yObject` to managed as a collection.
@@ -133,7 +133,7 @@ public protocol C8yObject: Identifiable, Equatable {
     
     var groupCategory: C8yGroupCategory { get }
     var orgCategory: C8yOrganisationCategory { get }
-    var deviceCategory: C8yDeviceCategory { get }
+    var deviceCategory: C8yDevice.DeviceCategory { get }
 
     var operationalLevel: C8yOperationLevel { get }
     var status: C8yManagedObject.AvailabilityStatus { get }
@@ -266,7 +266,7 @@ extension C8yObject {
         
     }
     
-    public var deviceCategory: C8yDeviceCategory {
+    public var deviceCategory: C8yDevice.DeviceCategory {
         get {
             return .Group
         }

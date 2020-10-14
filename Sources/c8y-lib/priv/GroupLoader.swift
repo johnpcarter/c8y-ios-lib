@@ -138,7 +138,7 @@ class GroupLoader {
     
     func processDeviceObject(_ m: C8yManagedObject) {
                            
-        var device = C8yDevice(m, location: self._path ?? "")
+        var device = C8yDevice(m, hierachy: self._path ?? "")
            
         C8yManagedObjectsService(_conn).externalIDsForManagedObject(device.wrappedManagedObject.id!).sink(receiveCompletion: { completion in
           

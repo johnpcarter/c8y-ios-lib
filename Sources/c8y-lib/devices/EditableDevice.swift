@@ -129,7 +129,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         }
     }
     
-    @Published public var category: C8yDeviceCategory = .Unknown {
+    @Published public var category: C8yDevice.DeviceCategory = .Unknown {
         didSet {
             self.emitDidChange(self.category.rawValue)
         }
@@ -215,7 +215,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         _deviceWrapper = deviceWrapper
     }
     
-    public init(_ id: String, name: String, supplierName: String?, modelName: String, category: C8yDeviceCategory, operations: [String], revision: String?, firmware: String?,  requiredResponseInterval: Int) {
+    public init(_ id: String, name: String, supplierName: String?, modelName: String, category: C8yDevice.DeviceCategory, operations: [String], revision: String?, firmware: String?,  requiredResponseInterval: Int) {
         
         self.externalId = id
         self.externalIdType = "UUID"

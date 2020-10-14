@@ -218,7 +218,7 @@ public class C8yEditableGroup: ObservableObject {
            
 		var group = C8yGroup(self.c8yId, name: self.name, category: self.category, parentGroupName: parentGroupName, notes: notes.isEmpty ? nil : notes)
            
-		group.info = C8yGroupInfo(orgName: self.orgName, subName: nil, address: nil, contact: nil, planning: nil)
+		group.info = C8yGroup.Info(orgName: self.orgName, subName: nil, address: nil, contact: nil, planning: nil)
 		
         if (self.lat != 0 && self.lng != 0) {
             group.position = C8yManagedObject.Position(lat: self.lat, lng: self.lng, alt: self.alt)
@@ -245,7 +245,7 @@ public class C8yEditableGroup: ObservableObject {
 		group.groupCategory = self.category
 		//group.orgCategory = self.orgCategory
 		
-		group.info = C8yGroupInfo(orgName: self.orgName, subName: nil, address: nil, contact: nil, planning: nil)
+		group.info = C8yGroup.Info(orgName: self.orgName, subName: nil, address: nil, contact: nil, planning: nil)
 		
 		if (self.lat != 0 && self.lng != 0) {
 			group.position = C8yManagedObject.Position(lat: self.lat, lng: self.lng, alt: self.alt)

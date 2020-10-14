@@ -253,12 +253,13 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
     public func post(_ object: C8yManagedObject) throws -> AnyPublisher<JcRequestResponse<C8yManagedObject>, APIError> {
     
         return try super._execute(method: JcConnectionRequest.Method.POST, resourcePath: C8Y_MANAGED_OBJECTS_API, contentType: "application/json", request: object).map({ (response) -> JcRequestResponse<C8yManagedObject> in
-                let location: String = response.httpHeaders![JC_HEADER_LOCATION] as! String
-                let id = String(location[location.index(location.lastIndex(of: "/")!, offsetBy: 1)...])
-                var updatedObject = object
-                updatedObject.updateId(id)
                 
-                return JcRequestResponse<C8yManagedObject>(response, content: updatedObject)
+			let location: String = response.httpHeaders![JC_HEADER_LOCATION] as! String
+			let id = String(location[location.index(location.lastIndex(of: "/")!, offsetBy: 1)...])
+			var updatedObject = object
+			updatedObject.updateId(id)
+                
+			return JcRequestResponse<C8yManagedObject>(response, content: updatedObject)
         }).eraseToAnyPublisher()
     }
     

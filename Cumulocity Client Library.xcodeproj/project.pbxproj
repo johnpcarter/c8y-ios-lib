@@ -369,10 +369,10 @@
 			children = (
 				F0A7EC2725344BCA00472615 /* AssetCollection.swift */,
 				F0A7EC2825344BCA00472615 /* Device.swift */,
+				F0A7EC2C25344BCA00472615 /* MutableDevice.swift */,
 				F0A7EC2925344BCA00472615 /* EditableDevice.swift */,
 				F0A7EC2A25344BCA00472615 /* EditableGroup.swift */,
 				F0A7EC2B25344BCA00472615 /* Group.swift */,
-				F0A7EC2C25344BCA00472615 /* MutableDevice.swift */,
 			);
 			path = devices;
 			sourceTree = "<group>";
