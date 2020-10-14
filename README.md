@@ -20,4 +20,6 @@ import Combine
 import Cumulocity_Client_Library
 ```
 
+#SDK Documentation#
+
 Full documentation can be viewed [here](https://raw.githack.com/johnpcarter/c8y-ios-lib/master/docs/out/index.html)
