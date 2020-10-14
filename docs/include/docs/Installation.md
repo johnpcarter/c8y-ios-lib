@@ -12,5 +12,6 @@ Click on next and select the project target
 
 Now you can import your dependencies e.g.:
 ```
-#import <Cumulocity_Client_Library/Cumulocity_Client_Library.h>
+import Combine
+import Cumulocity_Client_Library
 ```

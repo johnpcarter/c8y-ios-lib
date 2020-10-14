@@ -6,8 +6,8 @@ You will need to add the following imports to use the library from each of your 
 that need to reference the library or any of its assets.
 
 ```
-#import Combine
-#import <Cumulocity_Client_Library/Cumulocity_Client_Library.h>
+import Combine
+import Cumulocity_Client_Library
 ```
 
 The Combine import is required because the API's use the swift framework Combine, refer to [Combine Framework](https://developer.apple.com/documentation/combine) for more information about using Combine.
