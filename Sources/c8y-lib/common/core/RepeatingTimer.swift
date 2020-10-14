@@ -13,9 +13,9 @@ import Foundation
 /// already resumed (noted by https://github.com/SiftScience/sift-ios/issues/52
 public class JcRepeatingTimer {
 
-    var timeInterval: TimeInterval
+    public var timeInterval: TimeInterval
     
-    init(timeInterval: TimeInterval) {
+    public init(timeInterval: TimeInterval) {
         self.timeInterval = timeInterval
     }
     
@@ -28,7 +28,7 @@ public class JcRepeatingTimer {
         return t
     }()
 
-    var eventHandler: (() -> Void)?
+    public var eventHandler: (() -> Void)?
 
     private enum State {
         case suspended
@@ -48,11 +48,14 @@ public class JcRepeatingTimer {
         eventHandler = nil
     }
 
-    func resume() {
+    public func resume() {
+        
+        self.eventHandler?()
+
         self.resume(self.timeInterval)
     }
     
-    func resume(_ timeInterval: TimeInterval) {
+    public func resume(_ timeInterval: TimeInterval) {
         
         if (timeInterval != self.timeInterval) {
             // not sure this is allowed
@@ -69,7 +72,7 @@ public class JcRepeatingTimer {
         timer.resume()
     }
 
-    func suspend() {
+    public func suspend() {
         if state == .suspended {
             return
         }
