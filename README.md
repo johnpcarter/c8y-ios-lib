@@ -19,5 +19,3 @@ Now you can import your dependencies e.g.:
 #import Combine
 #import <Cumulocity_Client_Library/Cumulocity_Client_Library.h>
 ```
-
-see the section on `Installation` for more information

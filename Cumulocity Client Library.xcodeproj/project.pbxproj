@@ -113,6 +113,7 @@
 		F0A7EC4625344BF600472615 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC4025344BF600472615 /* Network.swift */; };
 		F0A7EC4C25344C3000472615 /* MockedAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC4B25344C3000472615 /* MockedAssetCollection.swift */; };
 		F0A7EC4D25344C3000472615 /* MockedAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC4B25344C3000472615 /* MockedAssetCollection.swift */; };
+		F0A7EC862537031C00472615 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EC852537031C00472615 /* Package.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -176,6 +177,7 @@
 		F0A7EC3F25344BF600472615 /* LoRaNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoRaNetworkService.swift; sourceTree = "<group>"; };
 		F0A7EC4025344BF600472615 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		F0A7EC4B25344C3000472615 /* MockedAssetCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockedAssetCollection.swift; sourceTree = "<group>"; };
+		F0A7EC852537031C00472615 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +209,7 @@
 		88363E002448AC1000C018C6 = {
 			isa = PBXGroup;
 			children = (
+				F0A7EC852537031C00472615 /* Package.swift */,
 				88363E272448AC8600C018C6 /* Sources */,
 				88363E0C2448AC1000C018C6 /* Cumulocity Client Library */,
 				88363E172448AC1000C018C6 /* Cumulocity Client LibraryTests */,
@@ -555,6 +558,7 @@
 				F0A7EC3725344BCA00472615 /* MutableDevice.swift in Sources */,
 				88413C2E244B8688007A52E0 /* CumulocityUser.swift in Sources */,
 				F0A7EC2F25344BCA00472615 /* Device.swift in Sources */,
+				F0A7EC862537031C00472615 /* Package.swift in Sources */,
 				88413C2D244B867B007A52E0 /* CumulocityConnection.swift in Sources */,
 				F0A7EC3525344BCA00472615 /* Group.swift in Sources */,
 				888B65E1245D9FF90003EAED /* Model.swift in Sources */,
