@@ -57,8 +57,7 @@ let conn: C8yCumulocityConnection = C8yCumulocityConnection(tenant: "<mytenant>"
 ```
 
 The above first verifies the connection and uses the `C8yManagedObjectsService` class to fetch a page of `C8yManagedObject` objects. The connection object does not carry state and
-the connect method is only useful to verify the credentials and also gather information about the user `C8yUserProfile`. Each call via the Service classes reconnects via the connection
-credentials and stateless.
+the connect method is only useful to verify the credentials and also gather information about the user `C8yUserProfile`. Each call via the Service classes reconnects via the connection credentials and is stateless.
 
 Refer to the official [c8y Documentation](https://cumulocity.com/guides/about-doc/intro-documentation/) to better grips to the IoT and c8y concepts.
 

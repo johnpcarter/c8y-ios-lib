@@ -56,7 +56,13 @@
                 <a href="Structs/C8yGroup.html">C8yGroup</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/C8yGroup/Info.html">– Info</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/C8yDevice.html">C8yDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yDevice/DeviceCategory.html">– DeviceCategory</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/C8yMutableDevice.html">C8yMutableDevice</a>
@@ -66,6 +72,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/C8yMutableDevice/Measurement.html">– Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yMutableDevice/CommError.html">– CommError</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/C8yEditableDevice.html">C8yEditableDevice</a>
@@ -81,9 +90,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/C8yObject.html">C8yObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/C8yGroupInfo.html">C8yGroupInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/C8yNetworks.html">C8yNetworks</a>
@@ -423,9 +429,6 @@
             <a href="Other%20Enums.html">Other Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Enums/C8yDeviceCategory.html">C8yDeviceCategory</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/C8yGroupCategory.html">C8yGroupCategory</a>
               </li>
               <li class="nav-group-task">
@@ -484,19 +487,64 @@
 
 <p>Using Xcode 11 go to File &gt; Swift Packages &gt; Add Package Dependency
 Paste the project URL: <a href="https://github.com/johnpcarter/c8y-ios-lib">https://github.com/johnpcarter/c8y-ios-lib</a>
-Click on next and select the project target</p>
+Click on next and select the project target, choose latest branch</p>
 
-<p>Now you can import your dependencies e.g.:</p>
-<pre class="highlight plaintext"><code>#import Combine
-#import &lt;Cumulocity_Client_Library/Cumulocity_Client_Library.h&gt;
+<p>Now you can import your dependencies e.g.</p>
+<pre class="highlight plaintext"><code>import Combine
+import Cumulocity_Client_Library
+</code></pre>
+<h2 id='connectivity-and-basic-usage' class='heading'>Connectivity and basic usage</h2>
+
+<p>You first need to create a Connection object and then one of the API Service classes to interact with you Cumulocity tenant, e.g.</p>
+<pre class="highlight plaintext"><code>let conn: C8yCumulocityConnection = C8yCumulocityConnection(tenant: "&lt;mytenant&gt;", server: "cumulocity.com")
+
+        conn.connect(user: "john", password: "appleseed").sink(receiveCompletion: { (completion) in
+                switch completion {
+                case .failure(let error):
+                    print("Connection refused! - \(error.localizedDescription)")
+                default:
+                    print("Connection Success")
+
+                    // Now that we have tested the connections, lets fetch some managed objects
+
+                    C8yManagedObjectsService(conn).get(pageNum: 0).sink(receiveCompletion: { (completion) in
+
+                        switch completion {
+                        case .failure(let error):
+                            print("Get Failed \(error.localizedDescription)")
+                        default:
+                            print("Get Completed")
+                        }
+
+                    }, receiveValue: { results in
+
+                        if (results.status == .SUCCESS) {
+
+                            print("page \(results.content!.statistics.currentPage) of \(results.content!.statistics.totalPages!), size \(results.content!.statistics.pageSize)")
+
+                            for object in results.content!.objects {
+                                    print("\(String(describing: object.id))")
+                            }
+                        }
+                    }).store(in: &amp;self._cancellableSet)
+                }
+        }, receiveValue: ({ userInfo in
+
+            print("User name is \(userInfo)")
+
+        })).store(in: &amp;self._cancellableSet)
 </code></pre>
 
-<p>see the section on <code><a href="installation.html">Installation</a></code> for more information</p>
+<p>The above first verifies the connection and uses the <code><a href="Classes/C8yManagedObjectsService.html">C8yManagedObjectsService</a></code> class to fetch a page of <code><a href="Structs/C8yManagedObject.html">C8yManagedObject</a></code> objects. The connection object does not carry state and
+the connect method is only useful to verify the credentials and also gather information about the user <code>C8yUserProfile</code>. Each call via the Service classes reconnects via the connection credentials and is stateless.</p>
+<h2 id='sdk-documentation' class='heading'>SDK Documentation</h2>
+
+<p>Full documentation can be viewed <a href="https://raw.githack.com/johnpcarter/c8y-ios-lib/master/docs/out/index.html">here</a></p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-12)</p>
+          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-14)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

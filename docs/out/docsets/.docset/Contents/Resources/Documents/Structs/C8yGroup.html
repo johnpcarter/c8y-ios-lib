@@ -57,7 +57,13 @@
                 <a href="../Structs/C8yGroup.html">C8yGroup</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/C8yGroup/Info.html">– Info</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/C8yDevice.html">C8yDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDevice/DeviceCategory.html">– DeviceCategory</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/C8yMutableDevice.html">C8yMutableDevice</a>
@@ -67,6 +73,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/C8yMutableDevice/Measurement.html">– Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMutableDevice/CommError.html">– CommError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/C8yEditableDevice.html">C8yEditableDevice</a>
@@ -82,9 +91,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/C8yObject.html">C8yObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/C8yGroupInfo.html">C8yGroupInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/C8yNetworks.html">C8yNetworks</a>
@@ -424,9 +430,6 @@
             <a href="../Other%20Enums.html">Other Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Enums/C8yDeviceCategory.html">C8yDeviceCategory</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Enums/C8yGroupCategory.html">C8yGroupCategory</a>
               </li>
               <li class="nav-group-task">
@@ -478,7 +481,9 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Encapsulates a c8y <code><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></code> managed object and treats it as a group exposing attributes and methods typically attributed to managing a group.</p>
+
+<p>Also includes a number of custom atributes to better categorise devices such as <code>groupCategory</code>, <code>info</code> etc.</p>
 
           </section>
           <section class="section task-group-section">
@@ -487,9 +492,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library9C8yObjectP2idSSvp"></a>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV2idSSvp"></a>
                     <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library9C8yObjectP2idSSvp">id</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV2idSSvp">id</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -497,7 +502,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>client side id, required by SwiftUI for display purposes</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -523,7 +529,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Dictionary of all related external id&rsquo;s.
+Not populated by default, unless you use the class <code><a href="../Classes/C8yAssetCollection.html">C8yAssetCollection</a></code> to manage your groups and devices</p>
 
                       </div>
                       <div class="declaration">
@@ -531,32 +538,6 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">externalIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt"><a href="../Structs/C8yExternalId.html">C8yExternalId</a></span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
-                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">C8yGroup</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">C8yGroup</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -576,7 +557,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Implemented in accordance to protocol <code><a href="../Protocols/C8yObject.html">C8yObject</a></code> in order to categorise the type of group
+e.g. physical building, room etc. or logical folder, division etc.</p>
 
                       </div>
                       <div class="declaration">
@@ -603,7 +585,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>String representing the hierachy in which group belongs, i.e. list the parent group in which device is nested.
+This is only provided if you used <code><a href="../Classes/C8yAssetCollection.html">C8yAssetCollection</a></code> to fetch the device</p>
 
                       </div>
                       <div class="declaration">
@@ -620,9 +603,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV4infoAA0dE4InfoVvp"></a>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV4infoAC4InfoVvp"></a>
                     <a name="//apple_ref/swift/Property/info" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV4infoAA0dE4InfoVvp">info</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV4infoAC4InfoVvp">info</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -630,14 +613,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Custom attribute to locate the group if it represents a physical category such as Site, Building or Room.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">info</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yGroupInfo.html">C8yGroupInfo</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">info</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yGroup/Info.html">Info</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -657,7 +640,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns a list of all the subgroups associated with this group</p>
 
                       </div>
                       <div class="declaration">
@@ -684,7 +667,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns a list of all the subgroups and devices associated with this group</p>
 
                       </div>
                       <div class="declaration">
@@ -738,7 +721,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Represents the wrapped Managed Object that defines this group</p>
 
                       </div>
                       <div class="declaration">
@@ -746,33 +729,6 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">wrappedManagedObject</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupVyACSScfc"></a>
-                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupVyACSScfc">init(_:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -792,7 +748,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Constructor to create a group for the given c8y managed object</p>
 
                       </div>
                       <div class="declaration">
@@ -800,6 +756,32 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">C8yGroup</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">C8yGroup</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -819,7 +801,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Convenience method to determine if the given group matches all of the same attributes as this group</p>
 
                       </div>
                       <div class="declaration">
@@ -846,7 +828,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Convenience method to determine if the given device matches on of the devices associated with this group</p>
 
                       </div>
                       <div class="declaration">
@@ -873,7 +855,11 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns a string representing the default external id and type if provided or if not the c8y internal id.</p>
+
+<p>Format is key=&lsquo;value&rsquo; e.g.
+    c8y_Serial=122434344
+    c8y_Id=9393</p>
 
                       </div>
                       <div class="declaration">
@@ -900,7 +886,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns the default external id if provided or if not the c8y internal id.</p>
 
                       </div>
                       <div class="declaration">
@@ -927,7 +913,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns a UIImage representing a QR code of the default id of this device</p>
 
                       </div>
                       <div class="declaration">
@@ -937,6 +923,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">generateQRCodeImage</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>UIImage representing a QR code</p>
                       </div>
                     </section>
                   </div>
@@ -971,33 +961,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV8containsySbSSF"></a>
-                    <a name="//apple_ref/swift/Method/contains(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV8containsySbSSF">contains(_:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">contains</span><span class="p">(</span><span class="n">_</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:25Cumulocity_Client_Library8C8yGroupV5match13forExternalId4typeSbSS_SSSgtF"></a>
                     <a name="//apple_ref/swift/Method/match(forExternalId:type:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV5match13forExternalId4typeSbSS_SSSgtF">match(forExternalId:<wbr>type:<wbr>)</a>
@@ -1008,7 +971,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns true if the given external id matches one for this group</p>
 
                       </div>
                       <div class="declaration">
@@ -1019,59 +982,40 @@
 
                         </div>
                       </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV05addToE0yyxAA0D6ObjectRzlF"></a>
-                    <a name="//apple_ref/swift/Method/addToGroup(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV05addToE0yyxAA0D6ObjectRzlF">addToGroup(_:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>forExternalId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the value, must match the value for the associated type</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>describes external id, must match a type given in <code><a href="../Structs/C8yGroup.html#/s:25Cumulocity_Client_Library8C8yGroupV11externalIdsSDySSAA0D10ExternalIdVGvp">externalIds</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">addToGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV05addToE0010c8yIdOfSubE06objectSbSS_xtAA0D6ObjectRzlF"></a>
-                    <a name="//apple_ref/swift/Method/addToGroup(c8yIdOfSubGroup:object:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV05addToE0010c8yIdOfSubE06objectSbSS_xtAA0D6ObjectRzlF">addToGroup(c8yIdOfSubGroup:<wbr>object:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">addToGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c8yIdOfSubGroup</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
-
-                        </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if a match is found, false otherwise</p>
                       </div>
                     </section>
                   </div>
@@ -1079,9 +1023,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV010removeFromE0ySbSSF"></a>
-                    <a name="//apple_ref/swift/Method/removeFromGroup(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV010removeFromE0ySbSSF">removeFromGroup(_:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV8containsySbSSF"></a>
+                    <a name="//apple_ref/swift/Method/contains(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV8containsySbSSF">contains(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1089,97 +1033,39 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns true if a sub-asset with the given internal id is found in this group or one its children</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">removeFromGroup</span><span class="p">(</span><span class="n">_</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">contains</span><span class="p">(</span><span class="n">_</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV09replaceInE0ySbxAA0D6ObjectRzlF"></a>
-                    <a name="//apple_ref/swift/Method/replaceInGroup(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV09replaceInE0ySbxAA0D6ObjectRzlF">replaceInGroup(_:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>internal id of the asset to check for</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">replaceInGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV6device5forIdAA0D6DeviceVSgSSSg_tF"></a>
-                    <a name="//apple_ref/swift/Method/device(forId:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV6device5forIdAA0D6DeviceVSgSSSg_tF">device(forId:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">device</span><span class="p">(</span><span class="n">forId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV6device13forExternalId6ofTypeAA0D6DeviceVSgSS_SStF"></a>
-                    <a name="//apple_ref/swift/Method/device(forExternalId:ofType:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV6device13forExternalId6ofTypeAA0D6DeviceVSgSS_SStF">device(forExternalId:<wbr>ofType:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">device</span><span class="p">(</span><span class="n">forExternalId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">ofType</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">?</span></code></pre>
-
-                        </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if found somewhere in groups children</p>
                       </div>
                     </section>
                   </div>
@@ -1197,7 +1083,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>returns the sub-group matching the given external id in this group or one of its children</p>
 
                       </div>
                       <div class="declaration">
@@ -1208,15 +1094,358 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ref</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>either name or internal id of asset for which we want to find its parent</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>parent group of sub-asset or nil if the asset does not exist</p>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV20indexOfManagedObjectySiAA0dhI0VF"></a>
-                    <a name="//apple_ref/swift/Method/indexOfManagedObject(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV20indexOfManagedObjectySiAA0dhI0VF">indexOfManagedObject(_:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV6device04withD2IdAA0D6DeviceVSgSSSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/device(withC8yId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV6device04withD2IdAA0D6DeviceVSgSSSg_tF">device(withC8yId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>returns the device within this group or one of its children for the given id</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">device</span><span class="p">(</span><span class="n">withC8yId</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>internal id of the device or group to be searched for</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Found device or nil if not found</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV6device13forExternalId6ofTypeAA0D6DeviceVSgSS_SStF"></a>
+                    <a name="//apple_ref/swift/Method/device(forExternalId:ofType:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV6device13forExternalId6ofTypeAA0D6DeviceVSgSS_SStF">device(forExternalId:<wbr>ofType:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>returns the device within this group or one of its children for the given external id</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">device</span><span class="p">(</span><span class="n">forExternalId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">ofType</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>forExternalId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the value, must match the value for the associated type</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>describes external id, must match a type given in <code><a href="../Structs/C8yGroup.html#/s:25Cumulocity_Client_Library8C8yGroupV11externalIdsSDySSAA0D10ExternalIdVGvp">externalIds</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if a match is found, false otherwise</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV05addToE0yyxAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/addToGroup(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV05addToE0yyxAA0D6ObjectRzlF">addToGroup(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds the given asset to the group</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">addToGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>asset to be added to the group</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV05addToE0010c8yIdOfSubE06objectSbSS_xtAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/addToGroup(c8yIdOfSubGroup:object:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV05addToE0010c8yIdOfSubE06objectSbSS_xtAA0D6ObjectRzlF">addToGroup(c8yIdOfSubGroup:<wbr>object:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds the given asset to the sub-group within this group one of its children</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">addToGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c8yIdOfSubGroup</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yIdOfSubGroup</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>internal id of the sub group</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>asset to be added to the group</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if the sub group was found and the asset added, false if the sub group cannot be found</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV010removeFromE0ySbSSF"></a>
+                    <a name="//apple_ref/swift/Method/removeFromGroup(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV010removeFromE0ySbSSF">removeFromGroup(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes the specified asset from the group or sub group of one of its children</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">removeFromGroup</span><span class="p">(</span><span class="n">_</span> <span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c8yId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>id of the asset to be removed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if the asset was found and removed</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV09replaceInE0ySbxAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/replaceInGroup(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV09replaceInE0ySbxAA0D6ObjectRzlF">replaceInGroup(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Replaces the current asset in the group or sub group of one of its children</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="n">replaceInGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object to be replaced</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if the asset was found and replaced, false if not</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV4InfoV"></a>
+                    <a name="//apple_ref/swift/Struct/Info" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV4InfoV">Info</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1226,12 +1455,13 @@
                       <div class="abstract">
                         <p>Undocumented</p>
 
+                        <a href="../Structs/C8yGroup/Info.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">indexOfManagedObject</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Info</span></code></pre>
 
                         </div>
                       </div>
@@ -1243,7 +1473,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-12)</p>
+          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-14)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

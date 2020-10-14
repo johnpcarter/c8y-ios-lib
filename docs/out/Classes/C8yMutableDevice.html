@@ -57,7 +57,13 @@
                 <a href="../Structs/C8yGroup.html">C8yGroup</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/C8yGroup/Info.html">– Info</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/C8yDevice.html">C8yDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/C8yDevice/DeviceCategory.html">– DeviceCategory</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/C8yMutableDevice.html">C8yMutableDevice</a>
@@ -67,6 +73,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/C8yMutableDevice/Measurement.html">– Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/C8yMutableDevice/CommError.html">– CommError</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/C8yEditableDevice.html">C8yEditableDevice</a>
@@ -82,9 +91,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/C8yObject.html">C8yObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/C8yGroupInfo.html">C8yGroupInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/C8yNetworks.html">C8yNetworks</a>
@@ -424,9 +430,6 @@
             <a href="../Other%20Enums.html">Other Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Enums/C8yDeviceCategory.html">C8yDeviceCategory</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Enums/C8yGroupCategory.html">C8yGroupCategory</a>
               </li>
               <li class="nav-group-task">
@@ -478,7 +481,13 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Presents a <code>C8Device</code> device that can be observed for changed within in a SwiftUI View directly.
+Static device data is still available via the wrapped <code>device</code> attribute. In addition it provides dynamic data that can be observed for changes</p>
+
+<p>Dynamic data is mostly related to dynamically updated metrics, gps position, etc.
+You can also choose to continuously update a preferred metric and obtain the latest battery level if applicable.</p>
+
+<p>Use the <code>EditableDevice</code> class if you want to provide a view to allow a user to edit a device.</p>
 
           </section>
           <section class="section task-group-section">
@@ -497,7 +506,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Wrapped device to which we want to add dynamic data</p>
 
                       </div>
                       <div class="declaration">
@@ -525,7 +534,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Current GPS location of device</p>
 
                       </div>
                       <div class="declaration">
@@ -553,7 +562,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set to true if you want to load latest metrics for the device, value will reset back to false once reload has completed</p>
 
                       </div>
                       <div class="declaration">
@@ -581,7 +590,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set to true if you want to load latest logs for the device, value will reset back to false once reload has completed</p>
 
                       </div>
                       <div class="declaration">
@@ -609,7 +618,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set to true if you want to load latest alarms for the device, value will reset back to false once reload has completed</p>
 
                       </div>
                       <div class="declaration">
@@ -637,7 +646,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set to true if you want to load latest operations history for the device, value will reset back to false once reload has completed</p>
 
                       </div>
                       <div class="declaration">
@@ -665,7 +674,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns the current battery level if available (returns -2 if not applicable)</p>
 
                       </div>
                       <div class="declaration">
@@ -693,7 +702,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns the primary metric for this device e.g. Temperature, ambiance etc.
+This attribute is not observable as it can change too frequently, instead use the method <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH015refreshInterval7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SdtF">primaryMetricPublisher(preferredMetric:refreshInterval:)</a></code>
+along with the &lsquo;onReceive&rsquo; SwiftUI event to ensure you can update your view fragment efficiently e.g.</p>
+<pre class="highlight swift"><code><span class="kt">VStack</span><span class="p">(</span><span class="nv">alignment</span><span class="p">:</span> <span class="o">.</span><span class="n">leading</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">Text</span><span class="p">(</span><span class="s">"termperature is </span><span class="se">\(</span><span class="k">self</span><span class="o">.</span><span class="err">$</span><span class="n">primaryMeasurement</span><span class="o">.</span><span class="n">min</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span><span class="o">.</span><span class="nf">onReceive</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">deviceWrapper</span><span class="o">.</span><span class="nf">primaryMetricPublisher</span><span class="p">(</span><span class="nv">preferredMetric</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">preferredMetric</span><span class="p">,</span> <span class="nv">refreshInterval</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">deviceRefreshInterval</span><span class="p">))</span> <span class="p">{</span> <span class="n">v</span> <span class="k">in</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="s">"received measurement: </span><span class="se">\(</span><span class="n">v</span><span class="se">)</span><span class="s"> for </span><span class="se">\(</span><span class="k">self</span><span class="o">.</span><span class="n">deviceWrapper</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">name</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">primaryMeasurement</span> <span class="o">=</span> <span class="n">v</span>
+<span class="p">}</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -720,7 +739,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns the primary metric history</p>
 
                       </div>
                       <div class="declaration">
@@ -748,7 +767,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns all available measurements captured by Cumulocity for this device</p>
 
                       </div>
                       <div class="declaration">
@@ -776,7 +795,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns all the latest events received by Cumulocity for the device</p>
 
                       </div>
                       <div class="declaration">
@@ -804,7 +823,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns all the latest alarms received by Cumulocity for the device</p>
 
                       </div>
                       <div class="declaration">
@@ -832,7 +851,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns a list of all operations that are pending or completed that have been submitted to Cumulocity for this device</p>
 
                       </div>
                       <div class="declaration">
@@ -860,7 +879,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Indicates whether there is currently a background thread in place to periodically fetch the latest preferred metric and battery level
+Use the method <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC28startMonitorForPrimaryMetric_15refreshIntervalySSSg_SdtF">startMonitorForPrimaryMetric(_:refreshInterval:)</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -887,7 +907,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Convenience attribute to try and detect if a device is currently being restarted, i.e. someone submitted a &lsquo;c8y_Restart&rsquo; operation
+that is now flagged in Cumulocity as in the state &lsquo;PENDING&rsquo; or &lsquo;EXECUTING&rsquo;, in which case this attribute returns true.
+Will be false once we receive an operation update for &lsquo;c8y_Restart&rsquo; in <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC16operationHistorySayAA0D9OperationVGvp">operationHistory</a></code> with an ulterior date and the state of either &lsquo;COMPLETED&rsquo; or &lsquo;FAILED&rsquo;</p>
 
                       </div>
                       <div class="declaration">
@@ -915,7 +937,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Convenience attribute that caches the last binary file associated with the device that was fetched from Cumulocity
+via the method <code>attachmentForId(id)</code> or posted via the method <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC13addAttachment8filename8fileType7content7Combine12AnyPublisherVySSAA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GGSS_SS10Foundation4DataVtF">addAttachment(filename:fileType:content:)</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -942,7 +965,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Associated Cumulocity connection info that allows this object to fetch/post data</p>
 
                       </div>
                       <div class="declaration">
@@ -969,7 +992,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Default constructor representing a new <code><a href="../Structs/C8yDevice.html">C8yDevice</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -996,7 +1019,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Constructor to create a mutable device for the give device</p>
 
                       </div>
                       <div class="declaration">
@@ -1006,6 +1029,37 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">device</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">,</span> <span class="nv">connection</span><span class="p">:</span> <span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Device to which we want to fetch mutable data</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Connection details in order to connect to Cumulocity</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -1023,7 +1077,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Provides a publisher that can be used to listen for periodic updates to primary metric</p>
 
                       </div>
                       <div class="declaration">
@@ -1033,6 +1087,41 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">primaryMetricPublisher</span><span class="p">(</span><span class="nv">preferredMetric</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">refreshInterval</span><span class="p">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yMutableDevice/Measurement.html">Measurement</a></span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>preferredMetric</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>label of the measurement to periodically fetched requires both name and series separated by a dot &lsquo;.&rsquo; e.g. &lsquo;Temperature.T&rsquo;</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>refreshInterval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>period in seconds in which to refresh values</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher that will issue updated metrics periodically</p>
                       </div>
                     </section>
                   </div>
@@ -1050,7 +1139,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Submits an operation to Cumulocity to ask the device to restart
+<em>NOTE</em> This will only work if supported by the device and its agent and might take several minutes or even hours before it is enacted</p>
 
                       </div>
                       <div class="declaration">
@@ -1077,7 +1167,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the device&rsquo;s requiredResponseInterval to -1 to trigger Cumulocity&rsquo;s maintenance mode.
+Maintenance mode deactivates all of the devices alarms to avoid false flags.
+Calling this method if already in maintenance mode sets the requiredResponseInterval back to the last know value or 30 minutes if not known.</p>
 
                       </div>
                       <div class="declaration">
@@ -1104,7 +1196,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Submits an operation to switch the relay and also synchronises the device relay attribute <code><a href="../Structs/C8yDevice.html#/s:25Cumulocity_Client_Library9C8yDeviceV10relayStateAA0D13ManagedObjectV05RelayG4TypeOSgvp">C8yDevice.relayState</a></code>.
+<em>NOTE</em> - Only applicable if the device or agent supports it.</p>
 
                       </div>
                       <div class="declaration">
@@ -1131,7 +1224,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Updates the server side Cumulocity Managed Object based on the properties provided here.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Invalid key/value pair
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -1142,15 +1240,46 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withKey</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>name of the managed object attribute to updated/added</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The value to be assigned</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC9provision17completionHandleryys5Error_pSgc_tF"></a>
-                    <a name="//apple_ref/swift/Method/provision(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC9provision17completionHandleryys5Error_pSgc_tF">provision(completionHandler:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC9provision7Combine12AnyPublisherVyAA0dF0VAC9CommErrorVGyKF"></a>
+                    <a name="//apple_ref/swift/Method/provision()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC9provision7Combine12AnyPublisherVyAA0dF0VAC9CommErrorVGyKF">provision()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1158,16 +1287,28 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Provisions the netwok connection for the device.
+The implementation is provided via the appropriate network type <code>C8yNetworks.provision(_:conn)</code></p>
+
+<p>This method does nothing If no specific network type is specified i.e. the device connects over standard ip public network</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    If network is invalid or not recognised
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">provision</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">provision</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher with updated device</p>
                       </div>
                     </section>
                   </div>
@@ -1175,9 +1316,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC11deprovision17completionHandleryys5Error_pSgc_tF"></a>
-                    <a name="//apple_ref/swift/Method/deprovision(completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC11deprovision17completionHandleryys5Error_pSgc_tF">deprovision(completionHandler:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC11deprovision7Combine12AnyPublisherVyAA0dF0VAC9CommErrorVGyKF"></a>
+                    <a name="//apple_ref/swift/Method/deprovision()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC11deprovision7Combine12AnyPublisherVyAA0dF0VAC9CommErrorVGyKF">deprovision()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1185,16 +1326,28 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Deprovisions the netwok connection from the device.
+The implementation is provided via the appropriate network type <code>C8yNetworks.deprovision(_:conn)</code></p>
+
+<p>This method does nothing If no specific network type is specified i.e. the device connects over standard ip public network</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    If network is invalid or not recognised
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deprovision</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deprovision</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher with updated device</p>
                       </div>
                     </section>
                   </div>
@@ -1202,9 +1355,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC12runOperationy7Combine12AnyPublisherVySSSgs5NeverOGAA0dH0VKF"></a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC12runOperationy7Combine12AnyPublisherVySSAC9CommErrorVGAA0dH0VKF"></a>
                     <a name="//apple_ref/swift/Method/runOperation(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12runOperationy7Combine12AnyPublisherVySSSgs5NeverOGAA0dH0VKF">runOperation(_:<wbr>)</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12runOperationy7Combine12AnyPublisherVySSAC9CommErrorVGAA0dH0VKF">runOperation(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1212,16 +1365,45 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Submits the given operation to Cumulocity and records it in <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC16operationHistorySayAA0D9OperationVGvp">operationHistory</a></code>
+The operation will have an initial status of PENDING</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Invalid operation
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">runOperation</span><span class="p">(</span><span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yOperation.html">C8yOperation</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt">Never</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">runOperation</span><span class="p">(</span><span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yOperation.html">C8yOperation</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>operation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The operation to be posted to Cumulocity for eventual execution by the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher with cumulocity internal id of new operation.</p>
                       </div>
                     </section>
                   </div>
@@ -1229,9 +1411,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC12postNewAlarm4type8severity4text17completionHandlerySS_AA0dI0V8SeverityOSSyAJSgctKF"></a>
-                    <a name="//apple_ref/swift/Method/postNewAlarm(type:severity:text:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12postNewAlarm4type8severity4text17completionHandlerySS_AA0dI0V8SeverityOSSyAJSgctKF">postNewAlarm(type:<wbr>severity:<wbr>text:<wbr>completionHandler:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC12postNewAlarm4type8severity4text7Combine12AnyPublisherVyAA0dI0VAC9CommErrorVGSS_AL8SeverityOSStKF"></a>
+                    <a name="//apple_ref/swift/Method/postNewAlarm(type:severity:text:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12postNewAlarm4type8severity4text7Combine12AnyPublisherVyAA0dI0VAC9CommErrorVGSS_AL8SeverityOSStKF">postNewAlarm(type:<wbr>severity:<wbr>text:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1239,16 +1421,69 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Submits the new alarm to Cumulocity and records it in <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC6alarmsSayAA0D5AlarmVGvp">alarms</a></code>
+The alarm will have an initial status of ACTIVE</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Invalid alarm
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">postNewAlarm</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">severity</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="o">.</span><span class="kt">Severity</span><span class="p">,</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">postNewAlarm</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">severity</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="o">.</span><span class="kt">Severity</span><span class="p">,</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Describes the type of alarm being submitted.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>severity</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Either CRITICAL, MAJOR, MINOR or WARNING</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>text</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Detailed description of alarm</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher with new cumulocity alarm</p>
                       </div>
                     </section>
                   </div>
@@ -1256,9 +1491,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC11updateAlarm_17completionHandleryAA0dH0V_ySbctKF"></a>
-                    <a name="//apple_ref/swift/Method/updateAlarm(_:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC11updateAlarm_17completionHandleryAA0dH0V_ySbctKF">updateAlarm(_:<wbr>completionHandler:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC11updateAlarmy7Combine12AnyPublisherVyAA0dH0VAC9CommErrorVGAIKF"></a>
+                    <a name="//apple_ref/swift/Method/updateAlarm(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC11updateAlarmy7Combine12AnyPublisherVyAA0dH0VAC9CommErrorVGAIKF">updateAlarm(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1266,16 +1501,44 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Updates the existing alarm to Cumulocity and the copy in <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC6alarmsSayAA0D5AlarmVGvp">alarms</a></code></p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Invalid alarm
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateAlarm</span><span class="p">(</span><span class="n">_</span> <span class="nv">alarm</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateAlarm</span><span class="p">(</span><span class="n">_</span> <span class="nv">alarm</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/C8yMutableDevice/CommError.html">CommError</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>alarm</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Alarm to be updated in Cumulocity</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher with updated cumulocity alarm</p>
                       </div>
                     </section>
                   </div>
@@ -1293,7 +1556,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Convenience method to create a Managed Object containing only the device&rsquo;s GPS position</p>
 
                       </div>
                       <div class="declaration">
@@ -1303,6 +1566,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">toDevicePositionUpdate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Returns a <code><a href="../Structs/C8yDevice.html">C8yDevice</a></code> instance referencing only the device internal id and it&rsquo;s GPS position</p>
                       </div>
                     </section>
                   </div>
@@ -1320,7 +1587,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Fetches latest device metrics, views will be updated automatically via published  attribute <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12measurementsSDySSSayAA0D11MeasurementVGGvp">measurements</a></code>
+You must ensure that your SwiftUI View references this class object either as a @ObservedObject or @StateObject</p>
 
                       </div>
                       <div class="declaration">
@@ -1347,7 +1615,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Fetches latest device metrics from Cumulocity</p>
 
                       </div>
                       <div class="declaration">
@@ -1357,6 +1625,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchAllMetricsForToday</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/C8yMeasurement.html">C8yMeasurement</a></span><span class="p">]],</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher containing latest device measurements</p>
                       </div>
                     </section>
                   </div>
@@ -1374,7 +1646,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Fetches latest device event logs, views will be updated automatically via published  attribute <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC6eventsSayAA0D5EventVGvp">events</a></code>
+You must ensure that your SwiftUI View references this class object either as a @ObservedObject or @StateObject</p>
 
                       </div>
                       <div class="declaration">
@@ -1401,7 +1674,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Fetches latest device events from Cumulocity</p>
 
                       </div>
                       <div class="declaration">
@@ -1411,6 +1684,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchEventLogsForToday</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/C8yEvent.html">C8yEvent</a></span><span class="p">],</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher containing latest device events</p>
                       </div>
                     </section>
                   </div>
@@ -1428,7 +1705,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Fetches latest device operation history, views will be updated automatically via published  attribute <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC16operationHistorySayAA0D9OperationVGvp">operationHistory</a></code>
+You must ensure that your SwiftUI View references this class object either as a @ObservedObject or @StateObject</p>
 
                       </div>
                       <div class="declaration">
@@ -1455,7 +1733,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Fetches latest device operation history from Cumulocity</p>
 
                       </div>
                       <div class="declaration">
@@ -1465,6 +1743,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchOperationHistory</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/C8yOperation.html">C8yOperation</a></span><span class="p">],</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher containing latest operation history</p>
                       </div>
                     </section>
                   </div>
@@ -1482,7 +1764,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Fetches latest device alarms,  views will be updated automatically via published  attribute <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC6alarmsSayAA0D5AlarmVGvp">alarms</a></code>
+You must ensure that your SwiftUI View references this class object either as a @ObservedObject or @StateObject</p>
 
                       </div>
                       <div class="declaration">
@@ -1509,7 +1792,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Fetches latest device alarms from Cumulocity</p>
 
                       </div>
                       <div class="declaration">
@@ -1519,6 +1802,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchActiveAlarmsForToday</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/C8yAlarm.html">C8yAlarm</a></span><span class="p">],</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher containing latest alarms</p>
                       </div>
                     </section>
                   </div>
@@ -1536,7 +1823,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Fetches latest device prefered metric from Cumulocity</p>
 
                       </div>
                       <div class="declaration">
@@ -1546,6 +1833,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchMostRecentPrimaryMetric</span><span class="p">(</span><span class="n">_</span> <span class="nv">preferredMetric</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">C8yMutableDevice</span><span class="o">.</span><span class="kt"><a href="../Classes/C8yMutableDevice/Measurement.html">Measurement</a></span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher containing latest preferred metric</p>
                       </div>
                     </section>
                   </div>
@@ -1563,7 +1854,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Initiates a background thread to periodically refetch the preferred metric from Cumulocity.
+Changes will be issued via the publisher returned from the method <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH015refreshInterval7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SdtF">primaryMetricPublisher(preferredMetric:refreshInterval:)</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -1573,6 +1865,37 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startMonitorForPrimaryMetric</span><span class="p">(</span><span class="n">_</span> <span class="nv">preferredMetric</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">refreshInterval</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>preferredMetric</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>label of the measurement to periodically fetched requires both name and series separated by a dot &lsquo;.&rsquo; e.g. &lsquo;Temperature.T&rsquo;, if not provided will attempt to use first data point in <code>dataPoints</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>refreshInterval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>period in seconds in which to refresh values</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -1590,7 +1913,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Stops the background thread for the preferred metric refresh and operation history. The thread must have been started by either <code>startMonitorForPrimaryMetric(_:refreshInterval)</code> or
+<code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH015refreshInterval7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SdtF">primaryMetricPublisher(preferredMetric:refreshInterval:)</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -1617,7 +1941,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Starts a background thread to refresh operation history periodically</p>
 
                       </div>
                       <div class="declaration">
@@ -1627,6 +1951,25 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startMonitoringForOperationHistory</span><span class="p">(</span><span class="n">_</span> <span class="nv">interval</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>refreshInterval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>period in seconds in which to refresh values</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -1644,7 +1987,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Returns the current status for given operation type, Will return only latest valeu if multiple operations exist for the same type</p>
 
                       </div>
                       <div class="declaration">
@@ -1654,6 +1997,29 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">statusForOperation</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/C8yOperation.html">C8yOperation</a></span><span class="p">?</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The type of operation to be queried</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The latest operation for the given type or nil if none found</p>
                       </div>
                     </section>
                   </div>
@@ -1671,7 +2037,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Downloads a binary attachment with the given id from Cumolocity and also caches the result in <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC14lastAttachmentAA18JcMultiPartContentV0lK0VSgvp">lastAttachment</a></code></p>
+
+<p>You can obtain a list of attachments related to this device via the attribute<code><a href="../Structs/C8yDevice.html#/s:25Cumulocity_Client_Library9C8yDeviceV11attachmentsSaySSGvp">C8yDevice.attachments</a></code>, If the attachment was uploaded via <code>addAttachment(filename:fileType:content)</code></p>
 
                       </div>
                       <div class="declaration">
@@ -1682,15 +2050,38 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>c8y Internal id of binary attachment to be downloaded</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher containing binary data</p>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC13addAttachment8filename8fileType7content7Combine12AnyPublisherVyAA18JcMultiPartContentV0sR0VAA0P17ConnectionRequestC8APIErrorVyAA0daT0C_GGSS_SS10Foundation4DataVtF"></a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC13addAttachment8filename8fileType7content7Combine12AnyPublisherVySSAA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GGSS_SS10Foundation4DataVtF"></a>
                     <a name="//apple_ref/swift/Method/addAttachment(filename:fileType:content:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC13addAttachment8filename8fileType7content7Combine12AnyPublisherVyAA18JcMultiPartContentV0sR0VAA0P17ConnectionRequestC8APIErrorVyAA0daT0C_GGSS_SS10Foundation4DataVtF">addAttachment(filename:<wbr>fileType:<wbr>content:<wbr>)</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC13addAttachment8filename8fileType7content7Combine12AnyPublisherVySSAA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GGSS_SS10Foundation4DataVtF">addAttachment(filename:<wbr>fileType:<wbr>content:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1698,16 +2089,64 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Uploads the given binary content to Cumulocity and updates the managed object associated with this device to record the resulting binary attachment id.
+The resulting id can be referenced via the string list attribute <code><a href="../Structs/C8yDevice.html#/s:25Cumulocity_Client_Library9C8yDeviceV11attachmentsSaySSGvp">C8yDevice.attachments</a></code>, which in turn is stored in Cumulocity via the attribute <code>C8Y_MANAGED_OBJECTS_ATTACHMENTS</code></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addAttachment</span><span class="p">(</span><span class="nv">filename</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">fileType</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">content</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/JcMultiPartContent.html">JcMultiPartContent</a></span><span class="o">.</span><span class="kt">ContentPart</span><span class="p">,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addAttachment</span><span class="p">(</span><span class="nv">filename</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">fileType</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">content</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>filename</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>name of file from which data originated</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fileType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>content type e.g. application/json or application/png</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>content</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Binary data encoded in a Data object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher with cumulocity internal id associated with uploaded binary data</p>
                       </div>
                     </section>
                   </div>
@@ -1725,7 +2164,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Replaces the existing attachment reference and uploades the content to  Cumulocity. The existing attachment reference is replaced with the new one.
+It does delete the existing binary attachment from Cumulocity only the reference to existing attachment contained in the managed object attrbiute <code>C8Y_MANAGED_OBJECTS_ATTACHMENTS</code>
+and the device&rsquo;s <code>C8ytDevice.attachments</code> attribute</p>
 
                       </div>
                       <div class="declaration">
@@ -1735,6 +2176,65 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">replaceAttachment</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">filename</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">fileType</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">content</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/JcMultiPartContent.html">JcMultiPartContent</a></span><span class="o">.</span><span class="kt">ContentPart</span><span class="p">?,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Index into array <code><a href="../Structs/C8yDevice.html#/s:25Cumulocity_Client_Library9C8yDeviceV11attachmentsSaySSGvp">C8yDevice.attachments</a></code> to indicate which attachment should be replaced.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>filename</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>name of file from which data originated</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fileType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>content type e.g. application/json or application/png</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>content</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Binary data encoded in a Data object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher with cumulocity internal id associated with uploaded binary data</p>
                       </div>
                     </section>
                   </div>
@@ -1795,12 +2295,40 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC9CommErrorV"></a>
+                    <a name="//apple_ref/swift/Struct/CommError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC9CommErrorV">CommError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="../Classes/C8yMutableDevice/CommError.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CommError</span> <span class="p">:</span> <span class="kt">Error</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-12)</p>
+          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-14)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

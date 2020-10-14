@@ -57,7 +57,13 @@
                 <a href="Structs/C8yGroup.html">C8yGroup</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/C8yGroup/Info.html">– Info</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/C8yDevice.html">C8yDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/C8yDevice/DeviceCategory.html">– DeviceCategory</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/C8yMutableDevice.html">C8yMutableDevice</a>
@@ -67,6 +73,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/C8yMutableDevice/Measurement.html">– Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/C8yMutableDevice/CommError.html">– CommError</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/C8yEditableDevice.html">C8yEditableDevice</a>
@@ -82,9 +91,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/C8yObject.html">C8yObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/C8yGroupInfo.html">C8yGroupInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/C8yNetworks.html">C8yNetworks</a>
@@ -424,9 +430,6 @@
             <a href="Other%20Enums.html">Other Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Enums/C8yDeviceCategory.html">C8yDeviceCategory</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/C8yGroupCategory.html">C8yGroupCategory</a>
               </li>
               <li class="nav-group-task">
@@ -581,7 +584,9 @@ if your collection changes e.g.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Encapsulates a c8y <code><a href="Structs/C8yManagedObject.html">C8yManagedObject</a></code> managed object and treats it as a group exposing attributes and methods typically attributed to managing a group.</p>
+
+<p>Also includes a number of custom atributes to better categorise devices such as <code>groupCategory</code>, <code>info</code> etc.</p>
 
                         <a href="Structs/C8yGroup.html" class="slightly-smaller">See more</a>
                       </div>
@@ -609,7 +614,10 @@ if your collection changes e.g.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Encapsulates a c8y <code><a href="Structs/C8yManagedObject.html">C8yManagedObject</a></code> managed object and treats it as a device exposing attributes and methods typically attributed to a device
+such as <code>serialNumber</code>, <code>model</code></p>
+
+<p>Also includes a number of custom atributes to better categorise devices such as <code>deviceCategory</code>, <code>attachments</code>  and  <code>relayState</code></p>
 
                         <a href="Structs/C8yDevice.html" class="slightly-smaller">See more</a>
                       </div>
@@ -637,7 +645,13 @@ if your collection changes e.g.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Presents a <code>C8Device</code> device that can be observed for changed within in a SwiftUI View directly.
+Static device data is still available via the wrapped <code>device</code> attribute. In addition it provides dynamic data that can be observed for changes</p>
+
+<p>Dynamic data is mostly related to dynamically updated metrics, gps position, etc.
+You can also choose to continuously update a preferred metric and obtain the latest battery level if applicable.</p>
+
+<p>Use the <code>EditableDevice</code> class if you want to provide a view to allow a user to edit a device.</p>
 
                         <a href="Classes/C8yMutableDevice.html" class="slightly-smaller">See more</a>
                       </div>
@@ -773,34 +787,6 @@ objects to managed together.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library12C8yGroupInfoV"></a>
-                    <a name="//apple_ref/swift/Struct/C8yGroupInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library12C8yGroupInfoV">C8yGroupInfo</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Structs/C8yGroupInfo.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">C8yGroupInfo</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:25Cumulocity_Client_Library11C8yNetworksC"></a>
                     <a name="//apple_ref/swift/Class/C8yNetworks" class="dashAnchor"></a>
                     <a class="token" href="#/s:25Cumulocity_Client_Library11C8yNetworksC">C8yNetworks</a>
@@ -831,7 +817,7 @@ objects to managed together.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-12)</p>
+          <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-14)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
