@@ -8,15 +8,46 @@
 
 import Foundation
 import Combine
+import CoreLocation
 
+/**
+Use this class directly from a SwiftUI Form View to allow the wrapped device to be edited.
+
+Changes to fields are published to the attribute `onChange` and can be acted on in your View with the following code.
+Duplicates are removed and changes are debounced into 1 event every 3 seconds, this means you could automatically
+persist changes to Cumulocity via the method `C8yAssetCollection.saveObject(_)` without having it called
+on each key press made by the user.
+
+```
+VStack {
+	...
+}.onReceive(self.editableDevice.onChange) { editableDevice in
+	
+	do {
+		try self.assetCollection.saveObject(editableDevice.toDevice()) { success, error in
+	
+		}
+	} catch {
+		print("error \(error.localizedDescription)")
+	}
+}
+```
+*/
 public class C8yEditableDevice: ObservableObject, Equatable {
         
     public static func == (lhs: C8yEditableDevice, rhs: C8yEditableDevice) -> Bool {
         return lhs.c8yId == rhs.c8yId
     }
     
-    public private(set) var haveChanges: Bool = false
+	/**
+	true if changes have been made to any of the attributes, you will need to set it back to false explicitly once changed
+	e.g. after saving changes via the `onChange` publisher
+	*/
+    public var haveChanges: Bool = false
     
+	/**
+	external id to be modified.
+	*/
     @Published public var externalId: String = "" {
         didSet {
             if (!self._ignoreChanges) {
@@ -25,6 +56,9 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         }
     }
     
+	/**
+	associated external id type of external id
+	*/
     @Published public var externalIdType: String = "c8y_Serial" {
         didSet {
             if (!self._ignoreChanges) {
@@ -33,14 +67,24 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         }
     }
     
-    @Published public var c8yId: String = ""
+	/**
+	Read only copy of Cumulocity internal id for device, empty String if editing a new device that has not yet been
+	submitted to Cumulocity
+	*/
+    @Published public private(set) var c8yId: String = ""
     
+	/**
+	Name of the device to be edited
+	*/
     @Published public var name: String = "" {
         didSet {
             self.emitDidChange(self.name)
         }
     }
     
+	/**
+	The device type
+	*/
     @Published public var type: String = "" {
         didSet {
             self.emitDidChange(self.type)
@@ -66,9 +110,16 @@ public class C8yEditableDevice: ObservableObject, Equatable {
     }
     
     //@Published
+	private var _prevModel: String = ""
     public var model: String = "" {
+		willSet {
+			self._prevModel = self.model
+		}
         didSet {
-            self.emitDidChange(self.model)
+			
+			if (self._prevModel != self.model) {
+				self.emitDidChange(self.model)
+			}
         }
     }
     
@@ -83,24 +134,11 @@ public class C8yEditableDevice: ObservableObject, Equatable {
             self.emitDidChange(String(self.requiredResponseInterval))
         }
     }
-    
-    @Published public var operations: [String] = [] {
-        didSet {
-            //self.emitDidChange(self.operations)
-        }
-    }
-    
-    @Published public var dataPoints: C8yDataPoints? {
-        didSet {
-            //self.emitDidChange(self.dataPoints as Any)
-        }
-    }
 
     // extras
     
     @Published public var networkType: C8yNetworkType = .none {
         didSet {
-            
             self.emitDidChange(self.networkType.rawValue)
         }
     }
@@ -134,41 +172,55 @@ public class C8yEditableDevice: ObservableObject, Equatable {
             self.emitDidChange(self.category.rawValue)
         }
     }
-	
-    public var isDeployed: Bool {
-        get {
-            if (self._deviceWrapper != nil) {
-                return self._deviceWrapper!.device.isDeployed
-            } else {
-                return self.networkType == .none || self.networkInstance.count > 0
-            }
-        }
-    }
     
-    @Published public var webLink: String = ""
+    @Published public var webLink: String = "" {
+		didSet {
+			self.emitDidChange(self.webLink)
+		}
+	}
         
-    public var group: C8yGroup? = nil
-    
+	private var _isDeployed: Bool = false
+	
+	/**
+	Returns whether the device has been via the associated network. This field reflects last status from Cumulocity unless the network settings change
+	*/
+	public var isDeployed: Bool {
+		if (self._networkTypeOriginal != self.networkType.rawValue || self._networkProviderOriginal != self.networkProvider || self._networkInstanceOriginal != self.networkInstance) {
+			return self.networkType == .none ? true : false
+		} else {
+			return _isDeployed
+		}
+	}
+	
+	/**
+	Returns true if this device has not been saved to Cumulocity
+	*/
     public var isNew: Bool {
         get {
             return c8yId.isEmpty
         }
     }
     
-    public let idChanged = PassthroughSubject<String, Never>()
-
+	/**
+	Use this publisher to listen for changes to the external id, removes duplicates and debounces to minimise events to maximum 1 every 3 seconds
+	*/
     public var externalIdChanged: AnyPublisher<String, Never> {
         return self.idChanged
+			.debounce(for: .milliseconds(3000), scheduler: RunLoop.main)
             .removeDuplicates()
             .map { input in
                 return self.externalId
             }.eraseToAnyPublisher()
     }
         
-	public let didChange = CurrentValueSubject<String, Never>("")
-
+	/**
+	Use this publisher to listen for changes to any of device attribute, removes duplicates and debounces to minimise events to maximum 1 every 3 seconds.
+	*/
     public var onChange: AnyPublisher<C8yEditableDevice, Never> {
         return self.didChange
+		.drop(while: { v in
+			return !self.haveChanges
+		 })
         .debounce(for: .milliseconds(3000), scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
@@ -176,29 +228,48 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         }.eraseToAnyPublisher()
     }
     
+	private let idChanged = PassthroughSubject<String, Never>()
+	private let didChange = CurrentValueSubject<String, Never>("")
+
     private var _ignoreChanges: Bool = false
-    private var _deviceWrapper: C8yMutableDevice? = nil
-    
-    private var _lastMessage: Date? = nil
-    private var _lastUpdated: Date? = nil
-    private var _lastStatus: C8yManagedObject.AvailabilityStatus?
     private var _lastPosition: C8yManagedObject.Position?
-    
+	private var _externalIds: [String:C8yExternalId] = [:]
+	private var _networkTypeOriginal: String = ""
+	private var _networkProviderOriginal: String = ""
+	private var _networkInstanceOriginal: String = ""
+	private var _cachedPos: C8yManagedObject.Position? = nil
+
+	private var _deviceWrapper: C8yMutableDevice? = nil
+	
+	/**
+	Default constructor to manage a new blank editable device
+	*/
     public init() {
-    
     }
     
-    public convenience init(group: C8yGroup?) {
-        self.init()
-        self.group = group
-    }
-    
+	/**
+	Constructor to allow an existing device to be edited.
+	*/
+	public convenience init(deviceWrapper: C8yMutableDevice) {
+		self.init(deviceWrapper.device)
+		self._deviceWrapper = deviceWrapper
+	}
+	
+	/**
+	Constructor to allow an existing device to be edited.
+	*/
     public convenience init(_ device: C8yDevice) {
         
         self.init()
         
         self.mergeDevices(device)
         
+		self._externalIds = device.externalIds
+		self._isDeployed = device.isDeployed
+		self._networkTypeOriginal = device.network.type ?? ""
+		self._networkProviderOriginal = device.network.provider ?? ""
+		self._networkInstanceOriginal = device.network.instance ?? ""
+		
         if (device.externalIds.count > 0) {
             self.externalId = device.externalIds.values.first!.externalId
             self.externalIdType = device.externalIds.values.first!.type
@@ -207,14 +278,10 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         }
     }
     
-    public convenience init(group: C8yGroup?, deviceWrapper: C8yMutableDevice) {
-        
-        self.init(deviceWrapper.device)
-        self.group = group
-        
-        _deviceWrapper = deviceWrapper
-    }
-    
+	/**
+	Constructor for new device with the given attributes
+	
+	*/
     public init(_ id: String, name: String, supplierName: String?, modelName: String, category: C8yDevice.DeviceCategory, operations: [String], revision: String?, firmware: String?,  requiredResponseInterval: Int) {
         
         self.externalId = id
@@ -222,12 +289,11 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         self.name = name
         
         if (supplierName != nil) {
-            self.supplier = supplierName!//C8ySupplier(supplierId, name: supplierName, networkType: networkType, site: supplierWebSite)
+            self.supplier = supplierName!
         }
         
-        self.model = modelName//C8yModel(modelId, name: modelName, category: category, link: modelWebLink)
+        self.model = modelName
         self.category = category
-        self.operations = operations
         self.requiredResponseInterval = requiredResponseInterval
         
         if (revision != nil) {
@@ -239,19 +305,20 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         }
     }
     
+	/**
+	Clears all of the editable fields without triggering change event publishers
+	*/
     public func clear() {
             
         self._ignoreChanges = true
         
         self.externalId = ""
         self.c8yId = ""
-        self.dataPoints = C8yDataPoints()
         self.notes = ""
         self.webLink = ""
         self.name = ""
         self.supplier = ""
         self.model = ""
-        self.operations = []
         self.revision = ""
         self.firmware = ""
         self.networkType = .none
@@ -263,36 +330,39 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         self._ignoreChanges = false
     }
     
+	/**
+	Returns true if the minimum number of fields for a device in Cumulocity have been assigned
+	- parameter willDeploy: if set to true network parameters must be fully specified; if false networking fields are ignored
+	- returns: true if minimum fields are set,
+	*/
 	public func isValid(_ willDeploy: Bool) -> Bool {
 		return (!self.name.isEmpty || !self.model.isEmpty) && !self.externalId.isEmpty && !self.externalIdType.isEmpty && (self.networkType == .none || !willDeploy || (!self.networkInstance.isEmpty && !self.networkAppEUI.isEmpty && !self.networkAppKey.isEmpty))
 	}
-	
-    public func updateId(_ id: String, ofType type: String) {
         
-        self._ignoreChanges = true
-        self.externalId = id
-        self.externalIdType = type
-        
-        self._ignoreChanges = false
-        
-        self.idChanged.send(self.externalId + self.externalIdType)
-    }
-    
-    public func clearIds() {
-    
-        self._ignoreChanges = true
-        self.externalId = ""
-        self.externalIdType = "c8y_Serial"
-        self._ignoreChanges = false
-        
-    }
-    
-    private var _cachedPos: C8yManagedObject.Position? = nil
-    
+	/**
+	Returns a `C8yDevice` instance with all of the edited fields included
+	*/
     public func toDevice() -> C8yDevice {
         return toDevice(_cachedPos)
     }
     
+	/**
+	Returns a `C8yDevice` instance with all of the edited fields included and the provided GPS position
+	*/
+	public func toDevice(_ loc: CLLocation?) -> C8yDevice {
+	
+		var pos: C8yManagedObject.Position? = nil
+		
+		if (loc != nil) {
+			pos = C8yManagedObject.Position(lat: loc!.coordinate.latitude, lng: loc!.coordinate.longitude, alt: loc!.altitude)
+		}
+		
+		return toDevice(pos)
+	}
+	
+	/**
+	Returns a `C8yDevice` instance with all of the edited fields included and the provided GPS position
+	*/
     public func toDevice(_ position: C8yManagedObject.Position?) -> C8yDevice {
         
         self._cachedPos = position
@@ -303,17 +373,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
             device.position = self._lastPosition
         }
         
-        if (self._lastUpdated != nil) {
-            device.wrappedManagedObject.lastUpdated = self._lastUpdated!
-        }
-        
-        if (self._lastMessage != nil) {
-            device.wrappedManagedObject.availability = C8yManagedObject.Availability(status: self._lastStatus!, lastMessage: self._lastMessage!)
-        }
-        
         device.webLink = self.webLink
-        device.wrappedManagedObject.dataPoints = self.dataPoints
-        device.wrappedManagedObject.supportedOperations = self.operations
         
         if (self.type != "") {
             device.wrappedManagedObject.type = self.type
@@ -323,7 +383,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         
         if (self.networkType != .none) {
             
-            device.network = C8yAssignedNetwork(isProvisioned: self._deviceWrapper?.device.network == nil ? false: self._deviceWrapper?.device.network.isProvisioned)
+			device.network = C8yAssignedNetwork(isProvisioned: self.isDeployed)
             
             device.network.type = self.networkType.rawValue
             device.network.provider = self.networkProvider
@@ -344,24 +404,20 @@ public class C8yEditableDevice: ObservableObject, Equatable {
             device.network.instance = nil
         }
         
+		device.externalIds = self._externalIds
+		
         if (self.externalId != "-undefined-") {
             device.externalIds[self.externalIdType] = C8yExternalId(withExternalId: self.externalId, ofType: self.externalIdType)
-        } else if (self._deviceWrapper != nil) {
-            device.externalIds = self._deviceWrapper!.device.externalIds
         }
         
         if (position != nil) {
             device.wrappedManagedObject.updatePosition(latitude: position!.lat, longitude: position!.lng, altitude:  position?.alt)
         }
         
-        if (self._deviceWrapper != nil) {
-            _deviceWrapper!.device = device
-        }
-        
         return device
     }
     
-    public func mergeDevices(_ c8yDevice: C8yDevice) {
+	private func mergeDevices(_ c8yDevice: C8yDevice) {
     
         self._ignoreChanges = true
         
@@ -389,17 +445,6 @@ public class C8yEditableDevice: ObservableObject, Equatable {
             self.firmware = c8yDevice.firmware!
         }
         
-        self.operations = c8yDevice.supportedOperations
-        
-        if (c8yDevice.lastMessage != nil) {
-            self._lastMessage = c8yDevice.lastMessage
-        }
-        
-        self._lastStatus = c8yDevice.wrappedManagedObject.availability?.status
-        
-        if (c8yDevice.lastUpdated != nil) {
-            self._lastUpdated = c8yDevice.lastUpdated
-        }
         
         if (c8yDevice.position != nil) {
             self._lastPosition = c8yDevice.position
@@ -412,12 +457,6 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         if (c8yDevice.requiredResponseInterval != nil) {
             self.requiredResponseInterval = c8yDevice.requiredResponseInterval!
         }
-        
-        if (c8yDevice.dataPoints != nil) {
-            self.dataPoints = c8yDevice.dataPoints!
-        }
-        
-        // external id's
         
         if (c8yDevice.externalIds.count > 0) {
             self.externalIdType = c8yDevice.externalIds.keys.first!
@@ -466,6 +505,9 @@ public class C8yEditableDevice: ObservableObject, Equatable {
     private func emitDidChange(_ v: String) {
         if (!self._ignoreChanges) {
             self.haveChanges = true
+			if (self._deviceWrapper != nil) {
+				self._deviceWrapper!.device = self.toDevice()
+			}
             self.didChange.send(v)
         }
     }

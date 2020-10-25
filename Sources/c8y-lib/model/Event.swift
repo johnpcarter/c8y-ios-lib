@@ -8,14 +8,14 @@
 
 import Foundation
 
-let C8yLocationUpdate_EVENT = "c8y_LocationUpdate"
+public let C8yLocationUpdate_EVENT = "c8y_LocationUpdate"
 
 /**
 Represents an c8y event, refer to [c8y API Reference Guide](https://cumulocity.com/guides/reference/events/#event) for more info
 */
 public struct C8yEvent: JcEncodableContent, Identifiable {
     
-    public private (set) var id: String?
+    public internal (set) var id: String?
     
     public private (set) var source: String
     public private (set) var type: String?
@@ -142,8 +142,8 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         if (info != nil) {
             for (k,v) in info! {
                 
-                if (v is C8yStringWrapper) {
-                    try container.encode((v as! C8yStringWrapper).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue:k)!)
+                if (v is C8yStringCustomAsset) {
+                    try container.encode((v as! C8yStringCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue:k)!)
                 } else {
                     _ = try v.encode(container, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: k)!)
                 }

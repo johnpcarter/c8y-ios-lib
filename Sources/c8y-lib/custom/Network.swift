@@ -130,8 +130,8 @@ public struct C8yDeviceNetworkProvider {
 
     init(_ m: C8yManagedObject) {
         
-        if (m.properties[CY_LORA_NETWORK_TYPE_ID] is C8yStringWrapper) {
-            let n = (m.properties[CY_LORA_NETWORK_TYPE_ID] as! C8yStringWrapper).value
+        if (m.properties[CY_LORA_NETWORK_TYPE_ID] is C8yStringCustomAsset) {
+            let n = (m.properties[CY_LORA_NETWORK_TYPE_ID] as! C8yStringCustomAsset).value
             self.name = m.name!
             self.lnsId = n
         } else {

@@ -9,6 +9,29 @@
 import Foundation
 import Combine
 
+/**
+Use this class directly from a SwiftUI Form View to allow the wrapped group to be edited.
+
+Changes to fields are published to the attribute `onChange` and can be acted on in your View with the following code.
+Duplicates are removed and changes are debounced into 1 event every 3 seconds, this means you could automatically
+persist changes to Cumulocity via the method `C8yAssetCollection.saveObject(_)` without having it called
+on each key press made by the user.
+
+```
+VStack {
+	...
+}.onReceive(self.editableGroup.onChange) { editableGroup in
+	
+	do {
+		try self.assetCollection.saveObject(editableGroup.toGroup()) { success, error in
+	
+		}
+	} catch {
+		print("error \(error.localizedDescription)")
+	}
+}
+```
+*/
 public class C8yEditableGroup: ObservableObject {
     
     public static let GROUP_ID_TYPE = "assetId"
@@ -18,7 +41,7 @@ public class C8yEditableGroup: ObservableObject {
 	@Published public var externalId: String = "" {
 		willSet(o) {
 			if self.externalId != o {
-				self._didChange = true
+				self.haveChanges = true
 			}
 		}
 	}
@@ -149,12 +172,11 @@ public class C8yEditableGroup: ObservableObject {
         }
     }
     
-	private var _didChange: Bool = false
-	public var haveChanges: Bool {
-		get {
-			return self.isNew || self._didChange
-		}
-	}
+	/**
+	true if changes have been made to any of the attributes, you will need to set it back to false explicitly once changed
+	e.g. after saving changes via the `onChange` publisher
+	*/
+	public var haveChanges: Bool = false
 	
     public var readyToDeploy: Bool {
         get {
@@ -162,10 +184,14 @@ public class C8yEditableGroup: ObservableObject {
         }
     }
 	
-	public let didChange = CurrentValueSubject<String, Never>("")
-
+	/**
+	Use this publisher to listen for changes to any of device attribute, removes duplicates and debounces to minimise events to maximum 1 every 3 seconds
+	*/
 	public var onChange: AnyPublisher<C8yEditableGroup, Never> {
 		return self.didChange
+		.drop(while: { v in
+			return !self.haveChanges
+		 })
 		.debounce(for: .milliseconds(3000), scheduler: RunLoop.main)
 		.removeDuplicates()
 		.map { input in
@@ -173,14 +199,17 @@ public class C8yEditableGroup: ObservableObject {
 		}.eraseToAnyPublisher()
 	}
 	
+	private let didChange = CurrentValueSubject<String, Never>("")
     private var _ignoreChanges: Bool = false
-    
     private var cancellableSet: Set<AnyCancellable> = []
 
     public init() {
     
     }
     
+	/**
+	Constructor to allow an existing device to be edited.
+	*/
     public convenience init(withGroup group: C8yGroup) {
 
         self.init()
@@ -194,6 +223,9 @@ public class C8yEditableGroup: ObservableObject {
         }
     }
     
+	/**
+	Clears all of the editable fields without triggering change event publishers
+	*/
     public func clear() {
     
         self._ignoreChanges = true
@@ -214,6 +246,9 @@ public class C8yEditableGroup: ObservableObject {
         self._ignoreChanges = false
     }
     
+	/**
+	Returns a `C8yGroup` instance with all of the edited fields included
+	*/
 	public func toGroup(_ parentGroupName: String? = nil) -> C8yGroup {
            
 		var group = C8yGroup(self.c8yId, name: self.name, category: self.category, parentGroupName: parentGroupName, notes: notes.isEmpty ? nil : notes)
@@ -265,6 +300,8 @@ public class C8yEditableGroup: ObservableObject {
     
     private func _mergeWithGroup(_ group: C8yGroup) {
     
+		self._ignoreChanges = true
+		
         if (group.c8yId != nil) {
             self.c8yId = group.c8yId!
         }
@@ -300,7 +337,8 @@ public class C8yEditableGroup: ObservableObject {
 			self.notes = group.notes!
 		}
 		
-		self._didChange = false
+		self.haveChanges = false
+		self._ignoreChanges = false
     }
     
     func makeError<T>(_ response: JcRequestResponse<T>) -> Error? {
@@ -324,7 +362,7 @@ public class C8yEditableGroup: ObservableObject {
 	
 	private func emitDidChange(_ v: String) {
 		if (!self._ignoreChanges) {
-			self._didChange = true
+			self.haveChanges = true
 			self.didChange.send(v)
 		}
 	}

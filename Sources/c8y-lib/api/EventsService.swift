@@ -85,14 +85,17 @@ public class C8yEventsService: JcConnectionRequest<C8yCumulocityConnection> {
     - parameter event A new event to be posted, c8y id must be null
 	- returns Publisher that will issue fetched events in a `C8yPagedEvents` instance
      */
-    public func post(_ event: C8yEvent) throws -> AnyPublisher<JcRequestResponse<String?>, APIError> {
+    public func post(_ event: C8yEvent) throws -> AnyPublisher<JcRequestResponse<C8yEvent>, APIError> {
 
         try super._execute(method: Method.POST, resourcePath: C8Y_EVENTS_API, contentType: "application/json", request: event).map ( { response in
             
-            let location: String = response.httpHeaders![JC_HEADER_LOCATION] as! String
-            let id = String(location[location.index(location.lastIndex(of: "/")!, offsetBy: 1)...])
+			let location: String = response.httpHeaders![JC_HEADER_LOCATION] as! String
+			var updatedEvent: C8yEvent = event
 
-            return JcRequestResponse<String?>(response, content: id)
+			updatedEvent.id = String(location[location.index(location.lastIndex(of: "/")!, offsetBy: 1)...])
+
+			return JcRequestResponse<C8yEvent>(response, content: updatedEvent)
+			
         }).eraseToAnyPublisher()
     }
     

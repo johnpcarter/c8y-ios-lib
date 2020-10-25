@@ -70,21 +70,12 @@ class GroupLoader {
         
         var query = C8yManagedObjectQuery()
         query.add(key: "bygroupid", op: nil, value: self._c8yId)
-                
-		print("Group loader - Internal - started scanning group \(self._c8yId) - \(self.parent.name)")
-        
+                        
         C8yManagedObjectsService(_conn).get(forQuery: query, pageNum: pageNum).sink(receiveCompletion: { completion in
             
-            switch completion {
-				case .failure:
-					print("ok")
-				case .finished:
-					print("ko")
-            }
+           
         }, receiveValue: { response in
-            
-            print("Group loader - Internal - processing value for \(self._c8yId) - \(self.parent.name)")
-            
+                        
             self._remainingObjects = response.content!.objects
             self._response = response
             
@@ -100,7 +91,6 @@ class GroupLoader {
         let m: C8yManagedObject? = self._remainingObjects.popLast()
         
         if (m != nil) {
-			print("=====> unwrapping assets from \(self.parent.name), Popped \(String(describing: m!.name))")
             
             if (m!.type == C8Y_MANAGED_OBJECTS_GROUP_TYPE || m!.type == C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE) {
                 processGroupObject(m!)
@@ -109,8 +99,6 @@ class GroupLoader {
             }
         } else  {
         
-			print("=====> unwrapping assets from \(self.parent.name), at end")
-
             // reached end of group, do we need to load next page
             
             if (self._response!.content != nil && self._response!.content!.objects.count > self._response!.content!.statistics.pageSize) {
@@ -150,14 +138,13 @@ class GroupLoader {
 
             switch completion {
             case .failure(let error):
-                print("failed to load device object for \(String(describing: device.wrappedManagedObject.id))")
                 print(error)
                 self._unwrapAssets() // continue even with error
             case .finished:
                 self._unwrapAssets()
             }
 			
-			self._groupLoader.send(self.parent)
+			//self._groupLoader.send(self.parent)
 
         }, receiveValue: { response in
             device.setExternalIds(response.content!.externalIds)
@@ -176,12 +163,9 @@ class GroupLoader {
         
         C8yManagedObjectsService(_conn).externalIDsForManagedObject(childGroup.wrappedManagedObject.id!).sink(receiveCompletion: { (completion) in
            
-			print("sub group started \(String(describing: childGroup.wrappedManagedObject.name))")
-
 			GroupLoader(childGroup, conn: self._conn, path: self.determinePath(m), includeGroups: self._includeGroups).load().sink(receiveCompletion: { (completion) in
 				switch completion {
 				case .failure(let error):
-					print("failed to load group object for \(String(describing: childGroup.wrappedManagedObject.name))")
 					print(error)
 				case .finished:
 					print("sub group finished \(String(describing: childGroup.wrappedManagedObject.name)) - children \(childGroup.children.count)")
@@ -197,9 +181,7 @@ class GroupLoader {
 					self._unwrapAssets()
 				}
 			}, receiveValue: { (response) in
-					
-				print("got child group \(response.name), has \(response.children.count) children")
-				
+									
 				childGroup = response
 				
 				if (!self._includeGroups) {

@@ -37,6 +37,27 @@ public class C8yMutableDevice: ObservableObject  {
     }
 
 	/**
+	Returns a list of the move recent movement for this device based on emitted events for `C8yLocationUpdate_EVENT`
+	This will return an empty set if no recent movement has been detected i.e. no recent events have been sent.
+	
+	- returns: List of `CLLocationCoordinate2D` with most recent being at the end of the array
+	*/
+	public var positionHistory: [CLLocationCoordinate2D] {
+		get {
+			var h: [CLLocationCoordinate2D] = []
+			
+			for o in self.events {
+					
+				if (o.type == C8yLocationUpdate_EVENT && o.position != nil) {
+					h.insert(CLLocationCoordinate2D(latitude: o.position!.lat, longitude: o.position!.lng), at: 0)
+				}
+			}
+			
+			return h
+		}
+	}
+	
+	/**
 	Set to true if you want to load latest metrics for the device, value will reset back to false once reload has completed
 	*/
     @Published public var reloadMetrics: Bool = false {
@@ -227,7 +248,11 @@ public class C8yMutableDevice: ObservableObject  {
 
 		// get battery level
 		
-		self.getMeasurementSeries(self.device, type: C8Y_MEASUREMENT_BATTERY, series: C8Y_MEASUREMENT_BATTERY_TYPE, interval: 5, connection: self.conn!).sink { completion in
+		let interval: Double = Double(device.requiredResponseInterval == nil ? 60 : device.requiredResponseInterval! * 60)
+
+		self.getMeasurementSeries(self.device, type: C8Y_MEASUREMENT_BATTERY, series: C8Y_MEASUREMENT_BATTERY_TYPE, interval: interval, connection: self.conn!)
+			.receive(on: RunLoop.main)
+			.sink { completion in
 			switch completion {
 				case .failure:
 					self.batteryLevel = -1
@@ -418,11 +443,11 @@ public class C8yMutableDevice: ObservableObject  {
 	Submits the given operation to Cumulocity and records it in `operationHistory`
 	The operation will have an initial status of PENDING
 	
-	- parameter operation: The operation to be posted to Cumulocity for eventual execution by the device.
+	- parameter operation: The `C8yOperation` to be posted to Cumulocity for eventual execution by the device.
 	- returns: Publisher with cumulocity internal id of new operation.
 	- throws: Invalid operation
 	*/
-    public func runOperation(_ op: C8yOperation) throws -> AnyPublisher<String, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
+    public func sendOperation(_ op: C8yOperation) throws -> AnyPublisher<String, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
     		
         try C8yOperationService(self.conn!).post(operation: op)
 			.receive(on: RunLoop.main)
@@ -433,6 +458,50 @@ public class C8yMutableDevice: ObservableObject  {
 				return nop!.id!
 			}).eraseToAnyPublisher()
     }
+	
+	/**
+	Submits the given event to Cumulocity and records it in `events`
+	
+	*NOTE* - `C8yLocationUpdate_EVENT` type events will also update the devices `C8yMutableDevice.postion` attribute as a side effect
+	
+	- parameter event: The `C8yEvent` to be posted to Cumulocity for eventual execution by the device.
+	- returns: Publisher with cumulocity internal id of new event.
+	- throws: Invalid event
+	*/
+	public func sendEvent(_ event: C8yEvent) throws -> AnyPublisher<C8yEvent, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
+		
+		var updatedEvent = event
+		
+		return try C8yEventsService(self.conn!).post(event)
+			.receive(on: RunLoop.main)
+			.map( { response -> C8yEvent in
+				
+				updatedEvent = response.content!
+				self.events.insert(updatedEvent, at: 0)
+				
+				return updatedEvent
+			}).flatMap({ response -> AnyPublisher<C8yEvent, JcConnectionRequest<C8yCumulocityConnection>.APIError> in
+				
+				if (event.type == C8yLocationUpdate_EVENT) {
+					self.position = CLLocationCoordinate2D(latitude: event.position!.lat, longitude: event.position!.lng)
+					do {
+						return try C8yManagedObjectsService(self.conn!).put(C8yManagedObject(event.source, withPosition: event.position!))
+							.receive(on: RunLoop.main)
+							.map({ response -> C8yEvent in
+								return updatedEvent
+							}).eraseToAnyPublisher()
+					} catch {
+						return Just(updatedEvent).mapError({ never -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
+							return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
+						}).eraseToAnyPublisher()
+					}
+				} else {
+					return Just(updatedEvent).mapError({ never -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
+						return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
+					}).eraseToAnyPublisher()
+				}
+			}).eraseToAnyPublisher()
+	}
 	
 	/**
 	Submits the new alarm to Cumulocity and records it in `alarms`
@@ -891,7 +960,7 @@ public class C8yMutableDevice: ObservableObject  {
             self.lastAttachment = response.content!.parts[0]
             self.device.attachments.insert(self.lastAttachment!.id!, at: 0)
 
-            self.device.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_ATTACHMENTS] = C8yStringWrapper(String.make(array: self.device.attachments)!)
+            self.device.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_ATTACHMENTS] = C8yStringCustomAsset(String.make(array: self.device.attachments)!)
             
             return self.lastAttachment!.id!
         }).eraseToAnyPublisher()

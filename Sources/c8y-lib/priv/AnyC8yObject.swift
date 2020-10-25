@@ -205,60 +205,11 @@ extension C8yObject {
 			self.wrappedManagedObject.notes = n
 		}
 	}
-	
-    public var deviceCount: Int {
-        get {
-            var count: Int = 0
-            
-            self._counter{ (obj) in
-                count += obj.total
-            }
-            
-            return count
-        }
-    }
-    
-    public var onlineCount: Int {
-        get {
-            var count: Int = 0
-            
-            self._counter{ (obj) in
-                count += obj.onlineCount
-            }
-            
-            return count
-        }
-    }
-    
-    public var offlineCount: Int {
-        get {
-            var count: Int = 0
-            
-            self._counter{ (obj) in
-                count += obj.offlineCount
-            }
-            
-            return count
-        }
-    }
-    
-    public var alarmsCount: Int
-    {
-        get {
-            var count: Int = 0
-            
-            self._counter{ (obj) in
-                count += obj.alarmsCount
-            }
-            
-            return count
-        }
-    }
     
     public var orgCategory: C8yOrganisationCategory {
         get {
             if (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XORG_CATEGORY] != nil) {
-                return C8yOrganisationCategory(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XORG_CATEGORY] as! C8yStringWrapper).value) ?? .unknown
+                return C8yOrganisationCategory(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XORG_CATEGORY] as! C8yStringCustomAsset).value) ?? .unknown
             } else {
                 return .undefined
             }
@@ -296,6 +247,67 @@ extension C8yObject {
         }
     }
     
+	/**
+	Returns number of child devices that are unavailable
+	*/
+	public var offlineCount: Int {
+	
+		return self.deviceCount - self.onlineCount
+	}
+	
+	public var alarmsCount: Int {
+	
+		var count: Int = 0
+		
+		for o in self.children {
+			if o.type == .C8yGroup {
+				let g: C8yGroup = o.wrappedValue()
+				count += g.alarmsCount
+			} else {
+				let d: C8yDevice = o.wrappedValue()
+				count += d.alarmsCount
+			}
+		}
+		
+		return count
+	}
+	
+	public var deviceCount: Int {
+
+		var count: Int = 0
+		
+		for o in self.children {
+			if o.type == .C8yGroup {
+				let g: C8yGroup = o.wrappedValue()
+				count += g.deviceCount
+			} else {
+				count += 1
+			}
+		}
+			   
+		return count
+	}
+	   
+	public var onlineCount: Int {
+		
+		var count: Int = 0
+				
+		for o in self.children {
+			if o.type == .C8yGroup {
+				let g: C8yGroup = o.wrappedValue()
+				count += g.onlineCount
+			} else {
+				let d: C8yDevice = o.wrappedValue()
+				
+				if (d.status != .UNAVAILABLE) {
+					count += 1
+				}
+			}
+		}
+			   
+		return count
+	}
+	
     public mutating func setExternalIds(_ ids: [C8yExternalId]) {
     
         self.externalIds.removeAll()
@@ -306,7 +318,7 @@ extension C8yObject {
     }
     
     public var isNew: Bool {
-		return  self.c8yId == nil
+		return  self.c8yId == nil || self.c8yId!.isEmpty
     }
     
     public var hasChildren: Bool {
@@ -368,18 +380,6 @@ extension C8yObject {
         }
         
         return (path, found)
-    }
-    
-    func _counter(_ counter:(C8yCounter) -> Void) {
-    
-        for obj in self.children {
-            
-			if (obj.type == .C8yGroup) {
-                (obj.wrappedValue() as C8yGroup)._counter(counter)
-            } else {
-                counter(C8yCounter(for: obj.wrappedValue() as C8yDevice))
-            }
-        }
     }
     
     func indexOfChild(_ c8yId: String) -> Int {
@@ -516,6 +516,7 @@ public enum C8yOperationLevel: String {
     case error // critical alarms
     case offline // no status
     case maintenance
+	case unknown // value is nil
     case undeployed // never deployed
 }
 

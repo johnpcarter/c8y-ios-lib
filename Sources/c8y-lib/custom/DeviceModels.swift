@@ -282,11 +282,11 @@ public class C8yDeviceModelsReference: ObservableObject {
         public func refresh() {
             
             let m = self._wrappedDevice.model
-            let c = self._wrappedDevice.category
            
+			self._ignore = true
             self.selectedSupplier = self._wrappedDevice.supplier
             self.selectedModel = m
-            self._wrappedDevice.category = c
+			self._ignore = false
         }
         
         private func _lookupModel(forId id: String, andSupplierId supplierId: String) -> C8yModel? {

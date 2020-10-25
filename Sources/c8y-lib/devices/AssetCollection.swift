@@ -395,6 +395,41 @@ public class C8yAssetCollection: ObservableObject {
         
         return found
     }
+	
+	/**
+	Returns the first group with a name that contains the given fragment or nil if not found.
+	The group can be a sub-group of one of the referenced groups.
+	
+	*NOTE* - Only checks the local cache, if you want to look up devices in cumulocity use one of the `lookupGroup(c8yId:completionHandler:)` methods
+	
+	- parameter name: name fragment
+	- returns: the group object or nil if not found
+	*/
+	public func groupFor(name: String) -> C8yGroup? {
+		
+		var found: C8yGroup? = nil
+		
+		for o in self.objects {
+				
+			if (o.type == .C8yGroup) {
+				
+				if (o.name.contains(name)) {
+					found = o.wrappedValue()
+					break
+				} else {
+					let g: C8yGroup = o.wrappedValue()
+					let fg = g.group(ref: name)
+					
+					if (fg != nil) {
+						found = fg
+						break
+					}
+				}
+			}
+		}
+		
+		return found
+	}
     
 	/**
 	Returns the device for the given id, or nil if not found.
@@ -693,13 +728,13 @@ public class C8yAssetCollection: ObservableObject {
 	Deletes the existing asset from Cumulocity and then removed it from the local collection if necessary
 	Deletion might fail if either the asset doesn't exist or connection access rights are insufficient
 	
-	- parameter object: The cumulocity asset to be deleted
+	- parameter c8yId: c8y internal id for object to be deleted
 	- parameter completionHandler: Called once delete has completed, returns true if delete was done, false if not
 	*/
-	public func delete<T:C8yObject>(_ object: T, completionHandler: @escaping (Bool) -> Void) {
+	public func delete(c8yId: String, completionHandler: @escaping (Bool) -> Void) {
 		
 		self._storeCancellable(
-			C8yManagedObjectsService(self.connection!).delete(id: object.c8yId!)
+			C8yManagedObjectsService(self.connection!).delete(id: c8yId)
 				.receive(on: RunLoop.main)
 				.sink(receiveCompletion: { (completion) in
 					switch completion {
@@ -712,11 +747,11 @@ public class C8yAssetCollection: ObservableObject {
 								if (o.type == .C8yGroup) {
 									var group: C8yGroup = o.wrappedValue()
 									
-									if (group.removeFromGroup(object.c8yId!)) {
+									if (group.removeFromGroup(c8yId)) {
 										self._updateFavourites(group)
 									}
-								} else if (o.c8yId == object.c8yId) {
-									_ = self._removeFromFavourites(object.c8yId!)
+								} else if (o.c8yId == c8yId) {
+									_ = self._removeFromFavourites(c8yId)
 								}
 							}
 					}

@@ -24,7 +24,7 @@ Also includes a number of custom atributes to better categorise devices such as 
 public struct C8yDevice: C8yObject {
         
 	/**
-	Used to categorise the device type
+	Used to categorise the device typex
 	*/
 	public enum DeviceCategory: String, CaseIterable, Hashable, Identifiable, Encodable {
 		case Unknown
@@ -87,7 +87,7 @@ public struct C8yDevice: C8yObject {
     public var deviceCategory: DeviceCategory {
          get {
             if (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY] != nil) {
-                return DeviceCategory(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY] as! C8yStringWrapper).value) ?? .Unknown
+                return DeviceCategory(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY] as! C8yStringCustomAsset).value) ?? .Unknown
             } else if self.wrappedManagedObject.sensorType.count > 0 {
                 return DeviceCategory(rawValue: self.wrappedManagedObject.sensorType[0].rawValue.substring(from: 3))!
             } else {
@@ -96,11 +96,32 @@ public struct C8yDevice: C8yObject {
          }
         set(v) {
             if (self.wrappedManagedObject.sensorType.count == 0 || (C8yManagedObject.SensorType(rawValue: "c8y_\(v)") != nil && !self.wrappedManagedObject.sensorType.contains(C8yManagedObject.SensorType(rawValue: "c8y_\(v)")!))) {
-                wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY] = C8yStringWrapper(v.rawValue)
+                wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY] = C8yStringCustomAsset(v.rawValue)
             }
         }
-     }
+	}
     
+	public var alarmsCount: Int {
+	
+		var count: Int = 0
+		
+		for o in self.children {
+			if o.type == .C8yGroup {
+				let g: C8yGroup = o.wrappedValue()
+				count += g.alarmsCount
+			} else {
+				let d: C8yDevice = o.wrappedValue()
+				count += d.alarmsCount
+			}
+		}
+		
+		// local stuff
+		
+		count += (self.alarms?.critical ?? 0) + (self.alarms?.major ?? 0) + (self.alarms?.minor ?? 0)
+		
+		return count
+	}
+	
 	/**
 	Convenience attribute to determin if the device is operating correctly or not.
 		
@@ -113,16 +134,18 @@ public struct C8yDevice: C8yObject {
 	*/
      public var operationalLevel: C8yOperationLevel {
         get {
-            if (self.wrappedManagedObject.availability?.status == .MAINTENANCE || self.wrappedManagedObject.activeAlarmsStatus == nil || self.wrappedManagedObject.activeAlarmsStatus?.total == 0) {
+			if ((self.wrappedManagedObject.requiredAvailability?.responseInterval == -1 || self.wrappedManagedObject.availability?.status == .MAINTENANCE) || self.wrappedManagedObject.activeAlarmsStatus == nil || self.wrappedManagedObject.activeAlarmsStatus?.total == 0) {
                 if (self.wrappedManagedObject.availability?.status == .AVAILABLE) {
                     return .nominal
                 } else if (self.wrappedManagedObject.availability?.status == .UNAVAILABLE) {
                     return .offline
-                } else if (self.wrappedManagedObject.availability?.status == .MAINTENANCE) {
+				} else if (self.wrappedManagedObject.availability?.status == .MAINTENANCE || self.wrappedManagedObject.requiredAvailability?.responseInterval == -1) {
                     return .maintenance
-                } else {
-                    return .undeployed
-                }
+				} else if (!self.isDeployed) {
+					return .undeployed
+				} else {
+					return .unknown
+				}
 			} else {
 			
 				if (self.wrappedManagedObject.activeAlarmsStatus?.critical ?? 0 > 0 || self.wrappedManagedObject.availability?.status == .UNAVAILABLE) {
@@ -134,67 +157,12 @@ public struct C8yDevice: C8yObject {
 					return .operating
 				} else if (self.wrappedManagedObject.activeAlarmsStatus?.warning ?? 0 > 0) {
 					return .operating
-				} else {
+				} else if (!self.isDeployed) {
 					return .undeployed
+				} else {
+					return .unknown
 				}
 			}
-        }
-    }
-	
-	/**
-	Returns number of child devices
-	*/
-	public var deviceCount: Int {
-		return self.children.count
-	}
-	
-	/**
-	Returns number of child devices that are available
-	*/
-	public var onlineCount: Int {
-		
-		var count: Int = 0
-		
-		for c in self.children {
-			if (c.type == .C8yDevice) {
-				let d: C8yDevice = c.wrappedValue()
-				if (d.connected) {
-					count += 1
-				}
-			}
-		}
-		
-		return count
-	}
-	
-	/**
-	Returns number of child devices that are unavailable
-	*/
-	public var offlineCount: Int {
-	
-		return self.deviceCount - self.onlineCount
-	}
-	
-	/**
-	Total number of alarms associated with this device
-	*/
-    public var alarmsCount: Int
-    {
-        get {
-            var count: Int = 0
-            
-            self._counter{ (obj) in
-                count += obj.alarmsCount
-            }
-            
-            if (self.alarms != nil) {
-                count += self.alarms!.critical
-                count += self.alarms!.major
-                count += self.alarms!.minor
-                count += self.alarms!.warning
-			}
-            
-            return count
         }
     }
     
@@ -227,8 +195,12 @@ public struct C8yDevice: C8yObject {
 	*/
     public var status: C8yManagedObject.AvailabilityStatus {
         get {
-            return self.wrappedManagedObject.availability?.status ?? .UNKNOWN
-        }
+			if (self.wrappedManagedObject.requiredAvailability?.responseInterval == -1) {
+				return .MAINTENANCE
+			} else {
+				return self.wrappedManagedObject.availability?.status ?? .UNKNOWN
+			}
+		}
     }
     
 	/**
@@ -413,12 +385,12 @@ public struct C8yDevice: C8yObject {
 	*/
     public var webLink: String? {
         get {
-            return (self.wrappedManagedObject.properties[JC_MANAGED_OBJECT_WEBLINK] as? C8yStringWrapper)?.value
+            return (self.wrappedManagedObject.properties[JC_MANAGED_OBJECT_WEBLINK] as? C8yStringCustomAsset)?.value
         }
         set(lnk) {
             
             if (lnk != nil) {
-                self.wrappedManagedObject.properties[JC_MANAGED_OBJECT_WEBLINK] = C8yStringWrapper(lnk!)
+                self.wrappedManagedObject.properties[JC_MANAGED_OBJECT_WEBLINK] = C8yStringCustomAsset(lnk!)
             }
         }
     }
@@ -488,7 +460,7 @@ public struct C8yDevice: C8yObject {
 	Default constructor for an empty device
 	*/
     internal init() {
-        self.wrappedManagedObject = C8yManagedObject("_none_")
+        self.wrappedManagedObject = C8yManagedObject()
         self.wrappedManagedObject.isDevice = true
     }
 	
@@ -513,7 +485,7 @@ public struct C8yDevice: C8yObject {
         self.wrappedManagedObject = m
         
         if (wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_ATTACHMENTS] != nil) {
-            let subs = (wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_ATTACHMENTS] as! C8yStringWrapper).value.split(separator: ",")
+            let subs = (wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_ATTACHMENTS] as! C8yStringCustomAsset).value.split(separator: ",")
             
             for s in subs {
                 self.attachments.append(String(s))

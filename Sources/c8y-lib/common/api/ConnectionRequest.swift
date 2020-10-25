@@ -158,17 +158,16 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
 	private func call(method: Method, resourceEndPoint: String, contentType: String?, data: Data?, acceptType: String?) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
 		
 		return _call(method: method, resourceEndPoint: resourceEndPoint, contentType: contentType, data: data, acceptType: acceptType)
-			.map({ (data, response) -> JcRequestResponse<Data> in
+			.tryMap({ (data, response) -> JcRequestResponse<Data> in
 				
 				let statusCode = (response as! HTTPURLResponse).statusCode
-				var message: String? = nil
 				
 				if (statusCode < 200 || statusCode > 204) {
-					message = String(decoding: data, as: UTF8.self)
+					throw self.makeError((response as! HTTPURLResponse), data: data)
+				} else {
+					return JcRequestResponse(status: statusCode, message: (response as! HTTPURLResponse).description, headers: (response as! HTTPURLResponse).allHeaderFields, content: data)
 				}
-				
-				return JcRequestResponse(status: statusCode, message: message, headers: (response as! HTTPURLResponse).allHeaderFields, content: data)
-			}).eraseToAnyPublisher()
+			}).mapError{$0 as! APIError}.eraseToAnyPublisher()
 	}
 	
 	private func _call(method: Method, resourceEndPoint: String, contentType: String?, data: Data?, acceptType: String?) -> AnyPublisher<URLSession.DataTaskPublisher.Output, APIError> {
@@ -205,6 +204,10 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     private func makeError(_ error: Error) -> APIError {
         return APIError(httpCode: -1, reason: error.localizedDescription)
     }
+	
+	private func makeError(_ response: HTTPURLResponse, data: Data?) -> APIError {
+		return APIError(httpCode: response.statusCode, reason: data != nil ? String(decoding: data!, as: UTF8.self) : response.description)
+	}
     
     internal func makeError<T>(_ response: JcRequestResponse<T>) -> APIError {
         

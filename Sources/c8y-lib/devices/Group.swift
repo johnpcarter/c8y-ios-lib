@@ -36,7 +36,7 @@ public struct C8yGroup: C8yObject {
     public var groupCategory: C8yGroupCategory {
 		get {
 			if (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] != nil) {
-				return C8yGroupCategory(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] as! C8yStringWrapper).value) ?? .unknown
+				return C8yGroupCategory(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] as! C8yStringCustomAsset).value) ?? .unknown
 			} else if (self.children.count > self.deviceCount){
 				
 				// this group has sub-folders
@@ -58,7 +58,7 @@ public struct C8yGroup: C8yObject {
 			}
 		}
 		set(c) {
-			self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] = C8yStringWrapper(c.rawValue)
+			self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] = C8yStringCustomAsset(c.rawValue)
 		}
 	}
 
@@ -86,7 +86,7 @@ public struct C8yGroup: C8yObject {
             }
 			
 			if (!self.info.orgName.isEmpty) {
-				self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XORG_NAME] = C8yStringWrapper(self.info.orgName)
+				self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XORG_NAME] = C8yStringCustomAsset(self.info.orgName)
 			}
         }
     }
@@ -110,22 +110,32 @@ public struct C8yGroup: C8yObject {
 	}
 	
 	/**
+	Override default version to only return count of devices that have alarms and not the total number of alarms
+	*/
+	public var alarmsCount: Int {
+		
+		var count: Int = 0
+		
+		for o in self.children {
+			if o.type == .C8yGroup {
+				let g: C8yGroup = o.wrappedValue()
+				count += g.alarmsCount
+			} else {
+				let d: C8yDevice = o.wrappedValue()
+				if (d.alarmsCount > 0) {
+					count += 1
+				}
+			}
+		}
+		
+		return count
+	}
+	
+	/**
 	Returns a list of all the subgroups and devices associated with this group
 	*/
     public internal(set) var children: [AnyC8yObject] = [AnyC8yObject]()
 	
-    public var deviceCount: Int {
-        var count = 0
-        for c in self.children {
-            if (c.type == .C8yDevice) {
-                count += 1
-            } else {
-                count += (c.wrappedValue() as C8yGroup).deviceCount
-            }
-        }
-        return count
-    }
-    
 	/**
 	Represents the wrapped Managed Object that defines this group
 	*/
@@ -146,7 +156,7 @@ public struct C8yGroup: C8yObject {
 	- parameter isTopLevelGroup: if true the group will be visible in groups menu navigation on the left hand side of the Cumulocity web app. Otherwise will only be available as a sub-folder once you have assigned it to a parent group
 	- parameter notes: optional notes to be associated with the group
 	*/
-	internal init(_ c8yId: String?, name: String, isTopLevelGroup: Bool, category: C8yGroupCategory, notes: String?) {
+	public init(_ c8yId: String?, name: String, isTopLevelGroup: Bool, category: C8yGroupCategory, notes: String?) {
 		
 		self.init(C8yManagedObject(name: name, type: isTopLevelGroup ? C8Y_MANAGED_OBJECTS_GROUP_TYPE : C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE, notes: notes), parentGroupName: nil)
 		
@@ -156,7 +166,7 @@ public struct C8yGroup: C8yObject {
 			self.wrappedManagedObject.updateId(c8yId!)
 		}
 		
-		self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] = C8yStringWrapper(category.rawValue)
+		self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] = C8yStringCustomAsset(category.rawValue)
 	}
 	
     internal init(_ c8yId: String?, name: String, category: C8yGroupCategory, parentGroupName: String?, notes: String?) {
@@ -169,7 +179,7 @@ public struct C8yGroup: C8yObject {
             self.wrappedManagedObject.updateId(c8yId!)
         }
         
-        self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] = C8yStringWrapper(category.rawValue)
+        self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] = C8yStringCustomAsset(category.rawValue)
     }
     
 	internal init(_ c8yId: String) {
@@ -184,7 +194,7 @@ public struct C8yGroup: C8yObject {
         self.hierachy = parentGroupName
         self.wrappedManagedObject = obj
         
-		let orgName = obj.properties[C8Y_MANAGED_OBJECTS_XORG_NAME] != nil ? (obj.properties[C8Y_MANAGED_OBJECTS_XORG_NAME] as! C8yStringWrapper).value : "undefined"
+		let orgName = obj.properties[C8Y_MANAGED_OBJECTS_XORG_NAME] != nil ? (obj.properties[C8Y_MANAGED_OBJECTS_XORG_NAME] as! C8yStringCustomAsset).value : "undefined"
 		
 		self.info = Info(orgName: orgName, subName: nil, address: obj.properties[JC_MANAGED_OBJECT_ADDRESS] as? C8yAddress,
                                                                   contact: obj.properties[JC_MANAGED_OBJECT_CONTACT] as? C8yContactInfo,
@@ -513,7 +523,7 @@ public struct C8yGroup: C8yObject {
 			for c in self.children {
 								
 				if (c.c8yId == c8yId) {
-					if (object.c8yId == nil) {
+					if (object.c8yId == nil || object.c8yId!.isEmpty) {
 						self.children.remove(at: i)
 					} else {
 						self.children[i] = AnyC8yObject(object)
@@ -573,6 +583,66 @@ public struct C8yGroup: C8yObject {
         }
     }
 	
+	private func _alarmsCount() -> Int {
+	
+		var count: Int = 0
+		
+		for o in self.children {
+			if o.type == .C8yGroup {
+				let g: C8yGroup = o.wrappedValue()
+				count += g._alarmsCount()
+			} else {
+				let d: C8yDevice = o.wrappedValue()
+				if (d.alarmsCount > 0) {
+					count += 1
+				}
+			}
+		}
+		
+		return count
+	}
+	
+	private func _deviceCount() -> Int {
+
+		var count: Int = 0
+		
+		for o in self.children {
+			if o.type == .C8yGroup {
+				let g: C8yGroup = o.wrappedValue()
+				count += g._alarmsCount()
+			} else {
+				count += 1
+			}
+		}
+			   
+		return count
+	}
+	   
+	private func _onlineCount() -> Int {
+		
+		var count: Int = 0
+		
+		for o in self.children {
+			if o.type == .C8yGroup {
+				let g: C8yGroup = o.wrappedValue()
+				count += g._alarmsCount()
+			} else {
+				let d: C8yDevice = o.wrappedValue()
+				if (d.status != .UNAVAILABLE) {
+					count += 1
+				}
+			}
+		}
+			   
+		return count
+	}
+		
+	/**
+	Represents a custom structure to allow more functional information to be associated with a group, such as contacts if it represents a physical entitiy or a planning date
+	if it is to be used to group assets based on scheduling etc. etc.
+	
+	The element is broken out into strings at the top level of the managed object to ensure that they can be viewed/edited using the standard c8y Property Editor widget
+	*/
 	public struct Info {
 		
 		public internal(set) var orgName: String

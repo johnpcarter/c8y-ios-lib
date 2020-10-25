@@ -13,7 +13,7 @@ let C8Y_MANAGED_OBJECT_API = "/inventory/managedObject"
 let C8Y_MANAGED_OBJECTS_DEVICEx = "c8y_IsDevice"
 let C8Y_MANAGED_OBJECTS_GROUPx = "c8y_IsDeviceGroup"
 
-let C8Y_MANAGED_OBJECTS_GROUP_TYPE = "c8y_DeviceSubgroup"
+let C8Y_MANAGED_OBJECTS_GROUP_TYPE = "c8y_DeviceGroup"
 let C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE = "c8y_DeviceSubgroup"
 
 /**
@@ -113,6 +113,7 @@ public struct C8yManagedObject: JcEncodableContent {
         case AVAILABLE
         case UNAVAILABLE
         case MAINTENANCE
+		case NEW
         case UNKNOWN
     }
     
@@ -244,6 +245,16 @@ public struct C8yManagedObject: JcEncodableContent {
 		Last recorded update received by cumulocity from the device/agent
 		*/
         public let lastMessage: Date
+		
+		public init() {
+			self.status = .NEW
+			self.lastMessage = Date()
+		}
+		
+		public init(status: AvailabilityStatus, lastMessage: Date) {
+			self.status = status
+			self.lastMessage = lastMessage
+		}
     }
 
     public struct Firmware: Codable {
@@ -419,7 +430,14 @@ public struct C8yManagedObject: JcEncodableContent {
 	}
     
 	/**
-	Creates a new empty ManagedObject. Should only be used with the service `ManagedObjectService#put()` in order to make changes to an existing ManagedObject
+	Creates a new empty ManagedObject. Should only be used with the service `ManagedObjectService.post(_:)` in order to make changes to an existing ManagedObject
+	*/
+	public init() {
+			
+	}
+	
+	/**
+	Creates a new empty ManagedObject. Should only be used with the service `ManagedObjectService.put(_:)` in order to make changes to an existing ManagedObject
 	- parameter id c8y internal id of the ManagedObject to be updated
 	*/
     public init(_ id: String) {
@@ -439,6 +457,17 @@ public struct C8yManagedObject: JcEncodableContent {
 	}
 	
 	/**
+	Convenience constructor to allow the devices current position to be updated, should only be used with `ManagedObjectService#put()` method
+	- parameter id c8y internal id of the existing device to be updated with the new GPS position
+	- parameter position Position to be updated
+	*/
+	public init(_ id: String, withPosition position: Position) {
+			
+		self.id = id
+		self.position = position
+	}
+	
+	/**
 	Convenience constructor to allow a range of different properties  to be updated for the given ManagedObject via the `ManagedObjectService#put()` method
 	You can include both standard and custom attributes. If you want to update attributes within sub-fragments; specify the full name-space using '.' dot separator.
 	
@@ -449,7 +478,7 @@ public struct C8yManagedObject: JcEncodableContent {
 		self.id = id
 		
 		for p in properties {
-			self.properties[p.key] = C8yStringWrapper(p.value)
+			self.properties[p.key] = C8yStringCustomAsset(p.value)
 		}
 	}
 	
@@ -463,7 +492,8 @@ public struct C8yManagedObject: JcEncodableContent {
         self.name = name
         self.type = type
         self.notes = notes
-        
+		self.availability = Availability()
+		
 		if (type == C8Y_MANAGED_OBJECTS_GROUP_TYPE || type == C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE) {
 			self.isGroup = true
 		}
@@ -485,6 +515,7 @@ public struct C8yManagedObject: JcEncodableContent {
         self.name = name
         self.type = type
         self.notes = notes
+		self.availability = Availability()
 
         if (serialNumber != nil || model.count > 0 || supplier != nil || revision != nil) {
             self.hardware = Hardware(serialNumber: serialNumber, model: model, supplier: supplier, revision: revision)
@@ -666,8 +697,8 @@ public struct C8yManagedObject: JcEncodableContent {
             // cannot serialise complex structures that have been flattened by decoder below (need to declare explicit class that case via registerCustomDecoder)
             if (!k.contains(".")) {
                 
-                if (v is C8yStringWrapper) {
-                    try container.encode((v as! C8yStringWrapper).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue:k)!)
+                if (v is C8yStringCustomAsset) {
+                    try container.encode((v as! C8yStringCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue:k)!)
                 } else {
                     _ = try v.encode(container, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: k)!)
                 }

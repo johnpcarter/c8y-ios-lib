@@ -8,8 +8,20 @@
 
 import Foundation
 
+/**
+Constant for c8y battery level measurement
+*/
 public let C8Y_MEASUREMENT_BATTERY = "c8y_Battery"
-public let C8Y_MEASUREMENT_BATTERY_TYPE = "percentage"
+
+/**
+Constant for c8y battery level series
+*/
+public let C8Y_MEASUREMENT_BATTERY_TYPE = "level"
+
+/**
+Constant for c8y battery level series
+*/
+public let C8Y_MEASUREMENT_BATTERY_UNIT = "%"
 
 /**
 Represents a collection of c8y measurements, refer to [c8y API Reference Guide](https://cumulocity.com/guides/reference/measurements/#measurement) for more info

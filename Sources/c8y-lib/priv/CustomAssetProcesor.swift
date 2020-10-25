@@ -101,7 +101,7 @@ public struct C8yCustomAssetProcessor {
             if (!done) {
                 do {
                     let v: String = try container.decode(String.self, forKey: key)
-                    properties[key.stringValue] = C8yStringWrapper(v)
+                    properties[key.stringValue] = C8yStringCustomAsset(v)
                 } catch {
                     // h'mm it's not a String, need to flatten it
                  
@@ -137,7 +137,7 @@ public struct C8yCustomAssetProcessor {
                 
                 do {
                     let v: String = try nested.decode(String.self, forKey: nkey)
-                    properties[nKeyPath] = C8yStringWrapper(v)
+                    properties[nKeyPath] = C8yStringCustomAsset(v)
                 } catch {
                     // h'mm it's not a String, need to flatten it again
                  
