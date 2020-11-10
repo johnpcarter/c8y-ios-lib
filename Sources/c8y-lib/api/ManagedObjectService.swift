@@ -64,7 +64,6 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
      ```
      
      - parameter id c8y generated id
-     - parameter completionHandler Callback to be called with resulting `C8yManagedObject`
 	 - returns Publisher for resulting `C8yManagedObject` if any encapsulated in `JcRequestResponse` wrapper defining result
      */
     public func get(_ id: String) -> AnyPublisher<JcRequestResponse<C8yManagedObject>, APIError> {
@@ -85,14 +84,15 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
      Fetch the managed object `C8yManagedObject` using an external id
      
     # Notes: #
-     The object associated with the given external id, i.e. assigned via method `post(object:withExternalId:ofType:completionHandler:)`.
+     The object associated with the given external id, i.e. assigned via method `post(object:withExternalId:ofType:)`.
      The values will show under the identity tab of the given device in c8y Device Management
      
      - parameter forExternalId id given by device such as serial number, imei etc.
      - parameter ofType identifies the type of id e.g. 'c8y_Serial' or 'LoRa EUI' etc.
+	 - parameter deviceOnly set to true if only devices should be searched, default false means look for any matching managed object
      - returns Publisher for resulting `C8yManagedObject` if any encapsulated in `JcRequestResponse` wrapper defining result
      */
-    public func get(forExternalId: String, ofType: String) -> AnyPublisher<JcRequestResponse<C8yManagedObject>, APIError> {
+	public func get(forExternalId: String, ofType: String, deviceOnly: Bool = false) -> AnyPublisher<JcRequestResponse<C8yManagedObject>, APIError> {
            
         return super._get(resourcePath: args(forExternalId: forExternalId, ofType: ofType)).tryMap({ (response) -> String in
             if (response.status == .SUCCESS) {
@@ -245,10 +245,9 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
      for more details
         
      - parameter object a `ManagedObject` created locally for which the id attribute will be null
-     - parameter completionHandler callback function which will receive the `RequestResponder<String>` confirming success or failure and including the subjects new c8y internal id
      - returns Publisher indicating success/failure and an updated `C8yManagedObject` including the  internal id attributed by cumulocity.
      - throws Error if the object is missing required fields
-	- seeAlso get(forExternalId:ofType:completionHandler)
+	- seeAlso get(forExternalId:ofType:)
      */
     public func post(_ object: C8yManagedObject) throws -> AnyPublisher<JcRequestResponse<C8yManagedObject>, APIError> {
     
@@ -280,7 +279,7 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
     - returns Publisher indicating success/failure and an updated `C8yManagedObject` including the  internal id attributed by cumulocity.
     - throws Error if the object is missing required fields
     - requires valid ManagedObject reference without id
-    - seeAlso get(forExternalId:ofType:completionHandler)
+    - seeAlso get(forExternalId:ofType:)
     */
     public func post(_ object: C8yManagedObject, withExternalId externalId: String, ofType type: String) throws -> AnyPublisher<JcRequestResponse<C8yManagedObject>, APIError> {
     
@@ -330,7 +329,7 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
      - parameter forId internal c8y id of the managed object
      - returns Publisher indicating success/failure
      */
-    func register(externalId: String, ofType type: String, forId id: String) throws -> AnyPublisher<JcRequestResponse<String>, APIError> {
+    public func register(externalId: String, ofType type: String, forId id: String) throws -> AnyPublisher<JcRequestResponse<String>, APIError> {
         
         let externalIdRef = C8yExternalId(withExternalId: externalId, ofType: type)
                            
@@ -344,13 +343,13 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
      
      # Notes: #
      
-     Define an external id for your managed object at creation time using the method `post(object:withExternalId:ofType:completionHandler)`
+     Define an external id for your managed object at creation time using the method `post(object:withExternalId:ofType:)`
      Alternatively you can register as many external id's as you want after the object has been created using `register(externalId:ofType:forId:)`
      
      - parameter id The internal c8y id of the `C8yManagedObject`
      - returns Publisher with response containing a list of the external ids `RequestResponder<C8yExternalIds>`
      */
-    func externalIDsForManagedObject(_ id: String) -> AnyPublisher<JcRequestResponse<C8yExternalIds>, APIError> {
+	public func externalIDsForManagedObject(_ id: String) -> AnyPublisher<JcRequestResponse<C8yExternalIds>, APIError> {
 
         return super._get(resourcePath: "\(C8Y_MANAGED_EXTIDS_API)/\(id)/externalIds").tryMap({ response -> JcRequestResponse<C8yExternalIds> in
             return try JcRequestResponse<C8yExternalIds>(response, dateFormatter: C8yManagedObject.dateFormatter())
@@ -363,28 +362,6 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
             }
         }).eraseToAnyPublisher()
     }
-    
-    /**
-      Updates the existing managed object. The id attribute must be provided in advance, it is
-      recommended that you only use this method with a managed object that was returned by the
-      aforementioned [add] method, [get] or query methods provided by the [ManagedObjectsService] class.
-     
-      # Note: #
-     
-      Not all elements of your managed object can be posted, refer to the *REST API Guide* (https://cumulocity.com/guides/reference/inventory/#managed-object)
-      for more details
-     - parameter object A `ManagedObject` with a valid c8y internal id attribute
-     - parameter completionHandler Callback function which will receive the `RequestResponder<C8yManagedObject>` confirming success or failure and including the updated managed object
-     - throws Error if the object is missing required fields
-     - requires the ManagedObject object must already exist in c8y
-     */
-    /*func update(_ object: C8yManagedObject) throws -> AnyPublisher<JcRequestResponse<C8yManagedObject>, APIError> {
-        
-        return try super._execute(method: JcConnectionRequest.Method.POST, resourcePath: C8Y_MANAGED_OBJECTS_API, contentType: "application/json", request: object).map({ response -> JcRequestResponse<C8yManagedObject> in
-       
-            return JcRequestResponse<C8yManagedObject>(response, content: object)
-        }).eraseToAnyPublisher()
-    }*/
 
     /**
      Associates the given managed object with the identified group. This is most often used to add a device 'c8y_Device' to a group 'c8y_DeviceGroup'
@@ -393,7 +370,7 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
      - parameter parentId The internal id of parent managed object to which the child will be associated
      - returns Publisher which will issue the resulting `RequestResponder<C8yManagedObject>` confirming success or failure
      */
-    func assignToGroup(child: String, parentId: String) -> AnyPublisher<JcRequestResponse<Bool>, APIError> {
+    public func assignToGroup(child: String, parentId: String) -> AnyPublisher<JcRequestResponse<Bool>, APIError> {
 
         let payload = "{\n" +
         "    \"managedObject\" : {\n" +
@@ -412,7 +389,7 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
      - parameter id c8y internal id of the managed object to delete
      - returns  Publisher which will issue the `RequestResponder<Bool>` confirming success or failure
      */
-    func delete(id: String) -> AnyPublisher<JcRequestResponse<Bool>, APIError> {
+    public func delete(id: String) -> AnyPublisher<JcRequestResponse<Bool>, APIError> {
 
         super._delete(resourcePath: args(id: id)).eraseToAnyPublisher()
     }

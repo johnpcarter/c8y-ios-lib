@@ -34,7 +34,7 @@ VStack {
 */
 public class C8yEditableGroup: ObservableObject {
     
-    public static let GROUP_ID_TYPE = "assetId"
+    public static let GROUP_ID_TYPE = "c8y_id"
 
     @Published public var c8yId: String = ""
     

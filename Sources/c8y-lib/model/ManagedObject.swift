@@ -8,6 +8,9 @@
 
 import Foundation
 
+public let C8Y_INTERNAL_ID = "c8y_id"
+public let C8Y_SERIAL_ID = "c8y_Serial"
+
 let C8Y_MANAGED_OBJECT_API = "/inventory/managedObject"
 
 let C8Y_MANAGED_OBJECTS_DEVICEx = "c8y_IsDevice"

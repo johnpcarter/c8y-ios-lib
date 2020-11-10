@@ -207,7 +207,7 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         device.wrappedManagedObject.relayState = .CLOSED
         device.webLink = "https://www.apple.com"
         device.setExternalIds([C8yExternalId(withExternalId: "EXT-\(c8yId ?? "xxx")", ofType: "IMEI")])
-        device.wrappedManagedObject.supportedOperations = [C8Y_OPERATION_RESTART, C8Y_OPERATION_COMMAND, "c8y_Property_TEMP_ROOM"]
+        device.wrappedManagedObject.supportedOperations = [C8Y_OPERATION_RESTART, C8Y_OPERATION_COMMAND, C8Y_OPERATION_FIRMWARE, "c8y_Property_TEMP_ROOM"]
         device.wrappedManagedObject.activeAlarmsStatus = C8yManagedObject.ActiveAlarmsStatus(warning: 1, minor: 2, major: 3, critical: 1)
         
         return device

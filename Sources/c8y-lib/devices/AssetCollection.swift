@@ -261,20 +261,21 @@ public class C8yAssetCollection: ObservableObject {
                     
                     deviceCountDown -= 1
                     
-                    let newDevice: C8yDevice = C8yDevice(response.content!)
-                    
-                    self._storeCancellable(C8yManagedObjectsService(self.connection!).externalIDsForManagedObject(device.wrappedManagedObject.id!)
-                        .receive(on: RunLoop.main)
-                        .sink(receiveCompletion: { completion in
-                        
-                    }, receiveValue: { response in
-                        
-                        device.setExternalIds(response.content!.externalIds)
-                        
-                        if (device.isDifferent(newDevice)) {
-                            self._updateFavourites(device)
-                        }
-                    }))
+					let newDevice: C8yDevice = try! C8yDevice(response.content!)
+					
+					self._storeCancellable(C8yManagedObjectsService(self.connection!).externalIDsForManagedObject(device.wrappedManagedObject.id!)
+											.receive(on: RunLoop.main)
+											.sink(receiveCompletion: { completion in
+												
+											}, receiveValue: { response in
+												
+												device.setExternalIds(response.content!.externalIds)
+												
+												if (device.isDifferent(newDevice)) {
+													self._updateFavourites(device)
+												}
+											}))
+					
                 }))
                 
                 if (deviceCountDown == 0) {
@@ -331,6 +332,10 @@ public class C8yAssetCollection: ObservableObject {
 	*/
     public func clear() {
     
+		if (self._refreshTimer != nil) {
+			self._refreshTimer!.suspend()
+			self._refreshTimer = nil
+		}
         self.connection = nil
         self._cancellableSet.removeAll()
         self.objects.removeAll()
@@ -632,8 +637,7 @@ public class C8yAssetCollection: ObservableObject {
     }
     
 	/**
-	Adds a group asset to the local collection using its c8y Internal id.
-	Will call back end to fetch necessary dsata in order to create a new `C8yGroup` object before then inserting into the local collection.
+	Fetches the group asset from c8y and adds it to the local collection.
 	
 	- parameter c8yId: the c8y internal id of the group to be added to the local collection.
 	- parameter includeSubGroups: if true, sub groups are treated as unique entities, if false all subgroups are flattened i.e. any found sub-assets will be added to the top level group and sub group is ignored
@@ -697,6 +701,7 @@ public class C8yAssetCollection: ObservableObject {
     
 	/**
 	Saves any changes to the asset in Cumulocity
+	NOTE: Will NOT update any changed external id's, use the `register(externalId:ofType:forId:)` method to  register or replace an existing external id
 	
 	- parameter object: The cumulocity asset to be created and then referenced locally
 	- parameter completionHandler: Called once save has completed, returns a boolean indicating if save was successful.
@@ -754,6 +759,8 @@ public class C8yAssetCollection: ObservableObject {
 									_ = self._removeFromFavourites(c8yId)
 								}
 							}
+							
+							completionHandler(true)
 					}
 				}, receiveValue: { (response) in
 					// nothing doing here I think
@@ -770,7 +777,7 @@ public class C8yAssetCollection: ObservableObject {
 	- parameter completinoHandler: Called when operation has been completed to indicate success or failure
 	- throws: Invalid object i.e. mandatory field missing
 	*/
-	public func addToGroup<T:C8yObject>(_ object: T, c8yOfGroup: String, completionHandler: @escaping (T?, Error?) -> Void) throws {
+	public func createInGroup<T:C8yObject>(_ object: T, c8yOfGroup: String, completionHandler: @escaping (T?, Error?) -> Void) throws {
 		   
 		if (object.externalIds.count > 0) {
 			self._storeCancellable(try C8yManagedObjectsService(self.connection!).post(object.wrappedManagedObject, withExternalId: object.externalIds.first!.value.externalId, ofType: object.externalIds.first!.value.type)
@@ -853,7 +860,11 @@ public class C8yAssetCollection: ObservableObject {
 					print("done")
 				}
 			}, receiveValue: { response in
-				completionHandler(C8yGroup(response.content!), nil)
+				do {
+					completionHandler(try C8yGroup(response.content!), nil)
+				} catch {
+					completionHandler(nil, error)
+				}
 			}))
 		} else {
 			completionHandler(found, nil)
@@ -885,15 +896,19 @@ public class C8yAssetCollection: ObservableObject {
 				}
 			}, receiveValue: { response in
 				
-				var device = C8yDevice(response.content!)
+				do {
+					var device = try C8yDevice(response.content!)
 				
-				self.fetchExternalIds(device.c8yId!) { success, externalIds in
+					self.fetchExternalIds(device.c8yId!) { success, externalIds in
 				
-					if (success) {
-						device.setExternalIds(externalIds)
-					}
+						if (success) {
+							device.setExternalIds(externalIds)
+						}
 					
-					completionHandler(device, nil)
+						completionHandler(device, nil)
+					}
+				} catch {
+					completionHandler(nil, error)
 				}
 			}))
 		} else {
@@ -906,40 +921,71 @@ public class C8yAssetCollection: ObservableObject {
 	The device is NOT added to the local collection if not found locally.
 	
 	- parameter id: external id of the device to be found.
-	- parameter ofType: code descrbing external id type e.g. 'c8y_Serial'
-	- parameter completionHandler: callback that received the fetched device or error if failed
+	- parameter type: code descrbing external id type e.g. 'c8y_Serial'
+	- parameter completionHandler: callback that receives the fetched device, nil if not found or error if failed
 	*/
-	public func lookupDevice(forExternalId id: String, ofType type: String, completionHandler: @escaping (C8yDevice?, JcConnectionRequest<C8yCumulocityConnection>.APIError?) -> Void) {
+	public func lookupDevice(forExternalId id: String, type: String, completionHandler: @escaping (Result<C8yDevice, Error>) -> Void) {
 		
 		let found: C8yDevice? = self.deviceFor(externalId: id, ofType: type)
-
+		
 		if (found == nil) {
 			
 			// still no luck, lookup in c8y directly
-
-			self._storeCancellable(C8yManagedObjectsService(self.connection!).get(forExternalId: id, ofType: type)
-				.receive(on: RunLoop.main)
-				.sink(receiveCompletion: { completion in
-				switch completion {
-				case .failure(let error):
-					print(error)
-					completionHandler(nil, error)
-				case .finished:
-					print("done")
-				}
-			}, receiveValue: { (response) in
-				var device = C8yDevice(response.content!)
-				self.fetchExternalIds(device.c8yId!) { success, externalIds in
+			
+			if (type == C8Y_INTERNAL_ID) {
+				self._storeCancellable(C8yManagedObjectsService(self.connection!).get(id)
+										.receive(on: RunLoop.main)
+										.sink(receiveCompletion: { completion in
+											switch completion {
+												case .failure(let error):
+													completionHandler(.failure(error))
+												case .finished:
+													print("done")
+											}
+										}, receiveValue: { (response) in
+											do {
+												var device = try C8yDevice(response.content!)
+												self.fetchExternalIds(device.c8yId!) { success, externalIds in
+													
+													if (success) {
+														device.setExternalIds(externalIds)
+													}
+													
+													completionHandler(.success(device))
+												}
+											} catch {
+												completionHandler(.failure(error))
+											}
+										}))
+			} else {
 				
-					if (success) {
-						device.setExternalIds(externalIds)
-					}
-					
-					completionHandler(device, nil)
-				}
-			}))
+				self._storeCancellable(C8yManagedObjectsService(self.connection!).get(forExternalId: id, ofType: type)
+										.receive(on: RunLoop.main)
+										.sink(receiveCompletion: { completion in
+											switch completion {
+												case .failure(let error):
+													completionHandler(.failure(error))
+												case .finished:
+													print("done")
+											}
+										}, receiveValue: { (response) in
+											do {
+												var device = try C8yDevice(response.content!)
+												self.fetchExternalIds(device.c8yId!) { success, externalIds in
+													
+													if (success) {
+														device.setExternalIds(externalIds)
+													}
+													
+													completionHandler(.success(device))
+												}
+											} catch {
+												completionHandler(.failure(error))
+											}
+										}))
+			}
 		} else {
-			completionHandler(found, nil)
+			completionHandler(.success(found!))
 		}
 	}
 
@@ -949,9 +995,9 @@ public class C8yAssetCollection: ObservableObject {
 	
 	- parameter id: external id of the group to be found.
 	- parameter ofType: code descrbing external id type e.g. 'c8y_Serial'
-	- parameter completionHandler: callback that received the fetched group or error if failed
+	- parameter completionHandler: callback that receives the fetched group, nil if not found or error if failed
 	*/
-	public func lookupGroup(forExternalId id: String, type: String, completionHandler: @escaping (C8yGroup?, Error?) -> Void) {
+	public func lookupGroup(forExternalId id: String, type: String, completionHandler: @escaping (Result<C8yGroup, Error>) -> Void) {
 		
 		var found: C8yGroup? = nil
 		
@@ -988,12 +1034,14 @@ public class C8yAssetCollection: ObservableObject {
 			
 			// still no luck, lookup in c8y directly
 
-			if (type == "c8yId") {
-				self._storeCancellable(C8yManagedObjectsService(self.connection!).get(id).sink(receiveCompletion: { completion in
+			if (type == C8Y_INTERNAL_ID) {
+				self._storeCancellable(C8yManagedObjectsService(self.connection!).get(id)
+					.receive(on: RunLoop.main)
+					.sink(receiveCompletion: { completion in
 					switch completion {
 					case .failure(let error):
 						print(error)
-						completionHandler(nil, error)
+						completionHandler(.failure(error))
 					case .finished:
 						print("done")
 					}
@@ -1001,17 +1049,12 @@ public class C8yAssetCollection: ObservableObject {
 					self._postLookupGroup(response, completionHandler: completionHandler)
 				}))
 			} else {
-				self._storeCancellable(C8yManagedObjectsService(self.connection!).get(forExternalId: id, ofType: C8yEditableGroup.GROUP_ID_TYPE)
+				self._storeCancellable(C8yManagedObjectsService(self.connection!).get(forExternalId: id, ofType: type)
 					.receive(on: RunLoop.main)
 					.sink(receiveCompletion: { (completion) in
 					switch completion {
 					case .failure(let error):
-						print(error)
-						if (error.httpCode == 404) {
-							completionHandler(nil, nil)
-						} else {
-							completionHandler(nil, error)
-						}
+						completionHandler(.failure(error))
 					case .finished:
 						print("done")
 					}
@@ -1021,7 +1064,7 @@ public class C8yAssetCollection: ObservableObject {
 				}))
 			}
 		} else {
-			completionHandler(found, nil)
+			completionHandler(.success(found!))
 		}
 	}
 	
@@ -1043,16 +1086,20 @@ public class C8yAssetCollection: ObservableObject {
         self.assignToGroup(newObject, c8yOfGroup: c8yOfGroup, completionHandler: completionHandler)
     }
     
-    private func _postLookupGroup(_ response: JcRequestResponse<C8yManagedObject>, completionHandler: @escaping (C8yGroup?, Error?) -> Void) {
+    private func _postLookupGroup(_ response: JcRequestResponse<C8yManagedObject>, completionHandler: @escaping (Result<C8yGroup, Error>) -> Void) {
      
-        var group = C8yGroup(response.content!)
-        self.fetchExternalIds(group.c8yId!) { success, externalIds in
-            
-            if (success) {
-                group.setExternalIds(externalIds)
-            }
-        }
-        completionHandler(group, nil)
+		do {
+			var group = try C8yGroup(response.content!)
+			self.fetchExternalIds(group.c8yId!) { success, externalIds in
+				
+				if (success) {
+					group.setExternalIds(externalIds)
+				}
+			}
+			completionHandler(.success(group))
+		} catch {
+			completionHandler(.failure(error))
+		}
     }
     
     private func _assignToGroup(_ c8yId: String, c8yOfGroup: String, completionHandler: @escaping (Bool, Error?) -> Void) {
@@ -1112,7 +1159,8 @@ public class C8yAssetCollection: ObservableObject {
 					
 					if (response.status == .SUCCESS) {
 						if (response.content!.isDevice) {
-							var newDevice = C8yDevice(response.content!)
+							
+							var newDevice = try! C8yDevice(response.content!)
 							self._storeCancellable(C8yManagedObjectsService(self.connection!).externalIDsForManagedObject(response.content!.id!)
 													.receive(on: RunLoop.main)
 													.sink(receiveCompletion: { completion in
@@ -1122,6 +1170,7 @@ public class C8yAssetCollection: ObservableObject {
 															newDevice.setExternalIds(exts.content!.externalIds)
 														}
 													}))
+							
 						} else {
 							self._addGroup(C8yGroup(response.content!, parentGroupName: nil), includeSubGroups: includeSubGroups)
 						}
@@ -1152,7 +1201,7 @@ public class C8yAssetCollection: ObservableObject {
     
     private func _addGroup(_ group: C8yGroup, includeSubGroups: Bool) {
                         
-        self._storeCancellable(GroupLoader(group.wrappedManagedObject, conn: self.connection!, path: nil, includeGroups: includeSubGroups).load()
+        self._storeCancellable(GroupLoader(group, conn: self.connection!, path: nil, includeGroups: includeSubGroups).load()
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { (completion) in
             switch completion {

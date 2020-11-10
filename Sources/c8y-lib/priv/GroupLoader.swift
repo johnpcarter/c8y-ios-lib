@@ -29,9 +29,9 @@ class GroupLoader {
     
     private var _cancellableSet: Set<AnyCancellable> = []
 
-    convenience init(_ m: C8yManagedObject, conn: C8yCumulocityConnection, path: String?, includeGroups: Bool) {
+    convenience init(_ m: C8yManagedObject, conn: C8yCumulocityConnection, path: String?, includeGroups: Bool) throws {
     
-        self.init(C8yGroup(m), conn: conn, path: path, includeGroups: includeGroups)
+        try self.init(C8yGroup(m), conn: conn, path: path, includeGroups: includeGroups)
     }
     
     init(_ group: C8yGroup, conn: C8yCumulocityConnection, path: String?, includeGroups: Bool) {
@@ -92,11 +92,15 @@ class GroupLoader {
         
         if (m != nil) {
             
-            if (m!.type == C8Y_MANAGED_OBJECTS_GROUP_TYPE || m!.type == C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE) {
-                processGroupObject(m!)
-            } else if (m!.type != "c8y_PrivateSmartRule") { //TODO: And what about the rest
-                processDeviceObject(m!)
-            }
+			do {
+				if (m!.isGroup) {
+					try processGroupObject(m!)
+				} else { //TODO: And what about the rest
+					try processDeviceObject(m!)
+				}
+			} catch {
+				// can't happen
+			}
         } else  {
         
             // reached end of group, do we need to load next page
@@ -124,9 +128,9 @@ class GroupLoader {
         }
     }
     
-    func processDeviceObject(_ m: C8yManagedObject) {
+    func processDeviceObject(_ m: C8yManagedObject) throws {
                            
-        var device = C8yDevice(m, hierachy: self._path ?? "")
+        var device = try C8yDevice(m, hierachy: self._path ?? "")
            
         C8yManagedObjectsService(_conn).externalIDsForManagedObject(device.wrappedManagedObject.id!).sink(receiveCompletion: { completion in
           
@@ -152,10 +156,10 @@ class GroupLoader {
         }).store(in: &self._cancellableSet)
     }
     
-    func processGroupObject(_ m: C8yManagedObject) {
+    func processGroupObject(_ m: C8yManagedObject) throws {
         
         let currentGroup: C8yGroup? = self.parent.parentOf(c8yId: m.id!)?.wrappedValue()
-        var childGroup: C8yGroup = C8yGroup(m)
+        var childGroup: C8yGroup = try C8yGroup(m)
         
         if (currentGroup != nil) {
             childGroup = currentGroup!
@@ -195,7 +199,11 @@ class GroupLoader {
 							self.processedObjects.append(d.c8yId!)
 						} else {
 							let g: C8yGroup = c.wrappedValue()
-							self.processGroupObject(g.wrappedManagedObject)
+							do {
+								try self.processGroupObject(g.wrappedManagedObject)
+							} catch {
+								// already checked type above, can't happen
+							}
 						}
 					}
 				}

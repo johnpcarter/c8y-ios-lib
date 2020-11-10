@@ -118,7 +118,7 @@ Protocol identifying common features for all cumulocity assets managed via a `C8
 
 Currently only `CyGroup` and `C8yDevice` have been defined
 */
-public protocol C8yObject: Identifiable, Equatable {
+public protocol C8yObject: Equatable {
     
 	/**
 	iOS id attributed for loca use/indexing

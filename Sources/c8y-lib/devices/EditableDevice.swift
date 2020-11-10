@@ -59,7 +59,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
 	/**
 	associated external id type of external id
 	*/
-    @Published public var externalIdType: String = "c8y_Serial" {
+    @Published public var externalIdType: String = C8Y_SERIAL_ID {
         didSet {
             if (!self._ignoreChanges) {
                 self.idChanged.send(self.externalId + self.externalIdType)
@@ -178,7 +178,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
 			self.emitDidChange(self.webLink)
 		}
 	}
-        
+	
 	private var _isDeployed: Bool = false
 	
 	/**
@@ -367,7 +367,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         
         self._cachedPos = position
         
-        var device: C8yDevice = C8yDevice(self.c8yId, serialNumber: self.externalIdType == "c8y_Serial" && self.externalId != "-undefined-" ? self.externalId : nil, withName: self.name, type: self.category.rawValue, supplier: self.supplier != "generic" ? self.supplier : nil, model: self.model, notes: self.notes, requiredResponseInterval: self.requiredResponseInterval, revision: self.revision, category: self.category)
+        var device: C8yDevice = C8yDevice(self.c8yId, serialNumber: self.externalIdType == C8Y_SERIAL_ID && self.externalId != "-undefined-" ? self.externalId : nil, withName: self.name, type: self.category.rawValue, supplier: self.supplier != "generic" ? self.supplier : nil, model: self.model, notes: self.notes, requiredResponseInterval: self.requiredResponseInterval, revision: self.revision, category: self.category)
                 
         if (self._lastPosition != nil) {
             device.position = self._lastPosition
@@ -417,7 +417,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         return device
     }
     
-	private func mergeDevices(_ c8yDevice: C8yDevice) {
+	public func mergeDevices(_ c8yDevice: C8yDevice) {
     
         self._ignoreChanges = true
         
@@ -461,7 +461,10 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         if (c8yDevice.externalIds.count > 0) {
             self.externalIdType = c8yDevice.externalIds.keys.first!
             self.externalId = c8yDevice.externalIds[self.externalIdType]!.externalId
-        }
+		} else if (c8yDevice.serialNumber != nil) {
+			self.externalId = c8yDevice.serialNumber!
+			self.externalIdType = C8Y_SERIAL_ID
+		}
         
         // extras
         

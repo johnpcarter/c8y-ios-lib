@@ -192,6 +192,9 @@ public class C8yMutableDevice: ObservableObject  {
     
 	private var _cachedResponseInterval: Int = 30
 
+	private var _primaryMeasurementInterval: Double = -1
+	private var _attempts: Int = 0
+	
 	/**
 	Default constructor representing a new `C8yDevice`
 	*/
@@ -208,7 +211,8 @@ public class C8yMutableDevice: ObservableObject  {
         
         self.device = device
         self.conn = connection
-        
+		self._primaryMeasurementInterval = Double(device.requiredResponseInterval == nil ? 60 : device.requiredResponseInterval! * 60)
+
         if (self.device.position != nil) {
             self.position = CLLocationCoordinate2D(latitude: device.position!.lat, longitude: device.position!.lng)
         }
@@ -223,18 +227,18 @@ public class C8yMutableDevice: ObservableObject  {
 	
 	/**
 	Provides a publisher that can be used to listen for periodic updates to primary metric
+	The refresh is based on the devices `C8yDevice.requiredResponseInterval` property
+	
 	- parameter preferredMetric: label of the measurement to periodically fetched requires both name and series separated by a dot '.' e.g. 'Temperature.T'
-	- parameter refreshInterval: period in seconds in which to refresh values
+	- parameter autoRefresh: set to true if you want the value to be refreshed automatically, false to only update once
 	- returns: Publisher that will issue updated metrics periodically
 	*/
-	public func primaryMetricPublisher(preferredMetric: String?, refreshInterval: Double = -1) -> AnyPublisher<Measurement, Never> {
+	public func primaryMetricPublisher(preferredMetric: String?, autoRefresh: Bool = false) -> AnyPublisher<Measurement, Never> {
 	
 		if (_loadBatteryAndPrimaryMetricValuesDONE && self._preferredMetric == preferredMetric) {
 			return self._monitorPublisher!.eraseToAnyPublisher()
 		}
-		
-		print("setting up thread for primary metric '\(preferredMetric ?? "nil")' for \(self.device.model)")
-		
+				
 		self._loadBatteryAndPrimaryMetricValuesDONE = true
 		self._preferredMetric = preferredMetric
 		
@@ -244,27 +248,30 @@ public class C8yMutableDevice: ObservableObject  {
 		
 		// setup monitoring
 		
-		self.startMonitorForPrimaryMetric(preferredMetric, refreshInterval: refreshInterval)
+		let interval: Double = Double((device.requiredResponseInterval ?? 60)) * 60.0
 
-		// get battery level
+		print("setting up thread for primary metric '\(preferredMetric ?? "nil")' for \(self.device.name) to \(autoRefresh)")
+
+		self.startMonitorForPrimaryMetric(preferredMetric, refreshInterval:interval) { successfulInterval in
 		
-		let interval: Double = Double(device.requiredResponseInterval == nil ? 60 : device.requiredResponseInterval! * 60)
+			// get battery level
 
-		self.getMeasurementSeries(self.device, type: C8Y_MEASUREMENT_BATTERY, series: C8Y_MEASUREMENT_BATTERY_TYPE, interval: interval, connection: self.conn!)
-			.receive(on: RunLoop.main)
-			.sink { completion in
-			switch completion {
-				case .failure:
-					self.batteryLevel = -1
-				case .finished:
-					// do nothing
-					print("nowt")
-			}
-		} receiveValue: { series in
-			if (series.values.count > 0) {
-				self.batteryLevel = series.values.last!.values[0].min
-			}
-		}.store(in: &self._cancellable)
+			self.getMeasurementSeries(self.device, type: C8Y_MEASUREMENT_BATTERY, series: C8Y_MEASUREMENT_BATTERY_TYPE, interval: successfulInterval, connection: self.conn!)
+				.receive(on: RunLoop.main)
+				.sink { completion in
+				switch completion {
+					case .failure:
+						self.batteryLevel = -1
+					case .finished:
+						// do nothing
+						print("nowt")
+				}
+			} receiveValue: { series in
+				if (series.values.count > 0) {
+					self.batteryLevel = series.values.last!.values[0].min
+				}
+			}.store(in: &self._cancellable)
+		}
 		
 		return _monitorPublisher!.eraseToAnyPublisher()
 	}
@@ -753,11 +760,14 @@ public class C8yMutableDevice: ObservableObject  {
         }).eraseToAnyPublisher()
     }
     
+	enum CombineError: Error {
+		case impossible
+	}
 	/**
 	Fetches latest device prefered metric from Cumulocity
 	- returns: Publisher containing latest preferred metric
 	*/
-    public func fetchMostRecentPrimaryMetric(_ preferredMetric: String?) -> AnyPublisher<C8yMutableDevice.Measurement, Never> {
+    public func fetchMostRecentPrimaryMetric(_ preferredMetric: String?) -> AnyPublisher<C8yMutableDevice.Measurement, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
            
         if (device.c8yId! != "_new_") {
             
@@ -778,19 +788,34 @@ public class C8yMutableDevice: ObservableObject  {
             }
             
             if (mType != nil) {
-                let interval: Double = Double(device.requiredResponseInterval == nil ? 60 : device.requiredResponseInterval! * 60)
-                
-                return self.getMeasurementSeries(device, type: mType!, series: mSeries!, interval: interval, connection: self.conn!)
+				return self.getMeasurementSeries(device, type: mType!, series: mSeries!, interval: self._primaryMeasurementInterval, connection: self.conn!)
 					.receive(on: RunLoop.main)
-					.map({response in
-                    return self.populatePrimaryMetric(response, type: mType!)
-                }).replaceError(with:C8yMutableDevice.Measurement())
+					.map {response in
+						return self.populatePrimaryMetric(response, type: mType!)
+
+					}.flatMap { measurement -> AnyPublisher<C8yMutableDevice.Measurement, JcConnectionRequest<C8yCumulocityConnection>.APIError> in
+						if (measurement.type == nil && self._attempts < 3) {
+							self._attempts += 1
+							// perhaps we need to look back further
+							self._primaryMeasurementInterval = self._primaryMeasurementInterval * 2
+							
+							return self.fetchMostRecentPrimaryMetric(preferredMetric)
+						} else {
+							return Just(measurement).mapError({ _ -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
+								return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
+							}).eraseToAnyPublisher()
+						}
+					}
                 .eraseToAnyPublisher()
             } else {
-                return Just(C8yMutableDevice.Measurement()).eraseToAnyPublisher() // dummy
+                return Just(C8yMutableDevice.Measurement()).mapError({ _ -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
+					return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
+			 }).eraseToAnyPublisher() // dummy
             }
         } else {
-            return Just(C8yMutableDevice.Measurement()).eraseToAnyPublisher() // dummy
+            return Just(C8yMutableDevice.Measurement()).mapError({ _ -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
+				return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
+			}).eraseToAnyPublisher() // dummy
         }
     }
      
@@ -799,15 +824,21 @@ public class C8yMutableDevice: ObservableObject  {
 	Changes will be issued via the publisher returned from the method `primaryMetricPublisher(preferredMetric:refreshInterval:)`
 	- parameter preferredMetric: label of the measurement to periodically fetched requires both name and series separated by a dot '.' e.g. 'Temperature.T', if not provided will attempt to use first data point in `dataPoints`
 	- parameter refreshInterval: period in seconds in which to refresh values
+	- parameter onFirstLoad: callback, executed once first metrics have been successfully fetched, successful interval value is given
 	*/
-	public func startMonitorForPrimaryMetric(_ preferredMetric: String?, refreshInterval: Double) {
+	public func startMonitorForPrimaryMetric(_ preferredMetric: String?, refreshInterval: Double, onFirstLoad: ((Double) -> Void)? = nil) {
         
 		self._monitorPublisher = CurrentValueSubject<Measurement, Never>(Measurement())
 		
 		self.fetchMostRecentPrimaryMetric(preferredMetric)
 			.receive(on: RunLoop.main)
+			.replaceError(with:C8yMutableDevice.Measurement())
 			.sink(receiveValue: { (v) in
 				self._monitorPublisher?.send(self.primaryMetric)
+				
+				if (v.type != nil && onFirstLoad != nil) {
+					onFirstLoad!(self._primaryMeasurementInterval)
+				}
 			}).store(in: &self._cancellable)
 		
 		if (self.device.requiredResponseInterval != nil && self.device.requiredResponseInterval! > 0 && Double(self.device.requiredResponseInterval!*60) > refreshInterval) {
@@ -831,6 +862,7 @@ public class C8yMutableDevice: ObservableObject  {
 				
 				self.fetchMostRecentPrimaryMetric(preferredMetric)
 					.receive(on: RunLoop.main)
+					.replaceError(with:C8yMutableDevice.Measurement())
 					.sink(receiveValue: { (v) in
 						self._monitorPublisher?.send(self.primaryMetric)
 					}).store(in: &self._cancellable)
@@ -928,7 +960,7 @@ public class C8yMutableDevice: ObservableObject  {
                 return self.lastAttachment!
                 }).eraseToAnyPublisher()
         } else {
-            return Just(self.lastAttachment!).mapError({ never -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
+            return Just(self.lastAttachment!).mapError({ _ -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
 				return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
             }).eraseToAnyPublisher()
         }
@@ -1005,7 +1037,9 @@ public class C8yMutableDevice: ObservableObject  {
     
 	private func getExternalIds() {
 	
-		C8yManagedObjectsService(self.conn!).externalIDsForManagedObject(device.wrappedManagedObject.id!).sink(receiveCompletion: { completion in
+		C8yManagedObjectsService(self.conn!).externalIDsForManagedObject(device.wrappedManagedObject.id!)
+			.receive(on: RunLoop.main)
+			.sink(receiveCompletion: { completion in
 
 		}, receiveValue: { response in
 			self.device.setExternalIds(response.content!.externalIds)
@@ -1032,7 +1066,7 @@ public class C8yMutableDevice: ObservableObject  {
 		}
 
 		print("setting primary metric to \(String(describing: self.primaryMetric.min)) for \(self.device.name)")
-		
+	
 		return self.primaryMetric
 	}
 	

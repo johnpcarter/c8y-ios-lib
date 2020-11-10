@@ -105,7 +105,7 @@ public struct C8yManagedObjectQuery {
     }
     
     /**
-     * Adds a new query to the existing set
+     Adds a new query to the existing set
      */
     public mutating func add(_ query: Query) -> C8yManagedObjectQuery {
         queries.append(query)
@@ -113,12 +113,17 @@ public struct C8yManagedObjectQuery {
         return self
     }
 
-    /**
-     * Adds a new query to the existing set based on the individual values
-     * @param key left hand operator
-     * @param operator the operator to be applied e.g. 'eq' 'ne' etc. or blank if key is a function
-     * @param value right hand operator or value of function is operator is null
-     */
+	/**
+	Adds a new query to the existing set based on the individual values
+	e.g
+		.add("type", .eq "sandwich")
+	or
+		.add("has", nil, "c8y_IsDevice")
+	
+	@param key left hand operator
+	@param operator the operator to be applied e.g. 'eq' 'ne' etc. or blank if key is a function
+	@param value right hand operator or value of function if operator is null
+	*/
     public mutating func add(key: String, op: Operator?, value: String) {
 
         queries.append(Query(key: key, op: op, value: value))

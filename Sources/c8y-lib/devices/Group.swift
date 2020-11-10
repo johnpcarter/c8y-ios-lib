@@ -143,9 +143,14 @@ public struct C8yGroup: C8yObject {
         
 	/**
 	Constructor to create a group for the given c8y managed object
+	- throws Error if managed object does not reference a group asset
 	*/
-    public init(_ obj: C8yManagedObject) {
+    public init(_ obj: C8yManagedObject) throws {
        
+		if (obj.id != nil && !obj.isGroup) {
+			throw GroupDecodingError.notAGroupObject(object: obj)
+		}
+		
         self.init(obj, parentGroupName: nil)
     }
     
@@ -171,8 +176,8 @@ public struct C8yGroup: C8yObject {
 	
     internal init(_ c8yId: String?, name: String, category: C8yGroupCategory, parentGroupName: String?, notes: String?) {
         
-        self.init(C8yManagedObject(name: name, type: parentGroupName == nil ? C8Y_MANAGED_OBJECTS_GROUP_TYPE : C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE, notes: notes), parentGroupName: parentGroupName)
-        
+		self.init(C8yManagedObject(name: name, type: parentGroupName == nil ? C8Y_MANAGED_OBJECTS_GROUP_TYPE : C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE, notes: notes), parentGroupName: parentGroupName)
+		
 		self.groupCategory = category
 		
         if (c8yId != nil) {
@@ -186,6 +191,7 @@ public struct C8yGroup: C8yObject {
 		// fake group
 		
 		self.init(C8yManagedObject(name: "top", type: "", notes: ""), parentGroupName: nil)
+		
 		self.wrappedManagedObject.updateId(c8yId)
 	}
 	
@@ -233,11 +239,11 @@ public struct C8yGroup: C8yObject {
 	
 	Format is key='value' e.g.
 		c8y_Serial=122434344
-		c8y_Id=9393
+		c8y_id=9393
 	*/
     public func defaultIdAndType() -> String {
         
-        var idType = "c8yId"
+        var idType = C8Y_INTERNAL_ID
         var id = self.c8yId
         
         if (self.externalIds.count > 0) {
@@ -289,7 +295,7 @@ public struct C8yGroup: C8yObject {
 	*/
     public func match(forExternalId id: String, type: String?) -> Bool {
                    
-        if (type == nil || type == "c8yId") {
+        if (type == nil || type == C8Y_INTERNAL_ID) {
             return self.c8yId == id
         } else {
             return (self.externalIds[type!] != nil && self.externalIds[type!]!.externalId == id)
@@ -636,7 +642,14 @@ public struct C8yGroup: C8yObject {
 			   
 		return count
 	}
-		
+	
+	/**
+	Thrown from init if wrapped Managed Object is not a group asset
+	*/
+	public enum GroupDecodingError: Error {
+		case notAGroupObject(object: C8yManagedObject)
+	}
+	
 	/**
 	Represents a custom structure to allow more functional information to be associated with a group, such as contacts if it represents a physical entitiy or a planning date
 	if it is to be used to group assets based on scheduling etc. etc.

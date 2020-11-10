@@ -28,8 +28,8 @@ public struct C8yDevice: C8yObject {
 	*/
 	public enum DeviceCategory: String, CaseIterable, Hashable, Identifiable, Encodable {
 		case Unknown
-		case Group
 		case Gauge
+		case Switch
 		case Temperature
 		case Motion
 		case Accelerator
@@ -49,6 +49,7 @@ public struct C8yDevice: C8yObject {
 		case Router
 		case Phone
 		case Computer
+		case Group
 		
 		public var id: DeviceCategory {self}
 	}
@@ -208,15 +209,15 @@ public struct C8yDevice: C8yObject {
 	*/
     public internal(set) var serialNumber: String? {
         get {
-            return self.externalIds["c8y_Serial"]?.externalId
+            return self.externalIds[C8Y_SERIAL_ID]?.externalId
             
         }
         set(v) {
             
-            var ext = self.externalIds["c8y_Serial"]
+            var ext = self.externalIds[C8Y_SERIAL_ID]
             
             if (ext == nil && v != nil) {
-                self.externalIds["c8y_Serial"] = C8yExternalId(withExternalId: v!, ofType: "c8y_Serial")
+                self.externalIds[C8Y_SERIAL_ID] = C8yExternalId(withExternalId: v!, ofType: C8Y_SERIAL_ID)
             } else if (v != nil) {
                 ext!.externalId = v!
             }
@@ -480,8 +481,12 @@ public struct C8yDevice: C8yObject {
 	
 	- parameter m: The managed object representing the device
 	*/
-    public init(_ m: C8yManagedObject) {
+    public init(_ m: C8yManagedObject) throws {
                 
+		if (m.id != nil && !m.isDevice) {
+			throw DeviceDecodingError.notADeviceObject(object: m)
+		}
+		
         self.wrappedManagedObject = m
         
         if (wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_ATTACHMENTS] != nil) {
@@ -512,9 +517,9 @@ public struct C8yDevice: C8yObject {
 		self.wrappedManagedObject.isDevice = true
 	}
 	
-    internal init(_ m: C8yManagedObject, hierachy: String) {
+    internal init(_ m: C8yManagedObject, hierachy: String) throws {
                 
-        self.init(m)
+        try self.init(m)
         self.wrappedManagedObject.isDevice = true
 
         self.hierachy = hierachy
@@ -553,7 +558,7 @@ public struct C8yDevice: C8yObject {
 	
 	Format is key='value' e.g.
 		c8y_Serial=122434344
-		c8y_Id=9393
+		c8y_id=9393
 	*/
     public func defaultIdAndType() -> String {
        
@@ -562,9 +567,9 @@ public struct C8yDevice: C8yObject {
        if (self.externalIds.count > 0) {
            idString = "\(externalIds.first!.value.type)=\(externalIds.first!.value.externalId)"
        } else if (self.serialNumber != nil) {
-           idString = "c8y_Serial=\(self.serialNumber!)"
+           idString = "\(C8Y_SERIAL_ID)=\(self.serialNumber!)"
        } else {
-		idString = "c8y_Id=\(self.c8yId ?? "unasigned")"
+		idString = "\(C8Y_INTERNAL_ID)=\(self.c8yId ?? "unasigned")"
        }
        
        return idString
@@ -597,7 +602,7 @@ public struct C8yDevice: C8yObject {
 	*/
     public func match(forExternalId id: String, type: String?) -> Bool {
                    
-        return (self.externalIds[type ?? "c8y_Serial"] != nil && self.externalIds[type ?? "c8y_Serial"]!.externalId == id)
+        return (self.externalIds[type ?? C8Y_SERIAL_ID] != nil && self.externalIds[type ?? C8Y_SERIAL_ID]!.externalId == id)
     }
     
 	/**
@@ -661,10 +666,10 @@ public struct C8yDevice: C8yObject {
         
         if (type == nil) {
             idString = self.defaultIdAndType()
-        } else if (type == "c8y_Serial" && self.serialNumber != nil) {
-			idString =  self.serialNumber!
-		} else if (type == "c8y_id") {
-			idString = self.c8yId ?? "unassigned"
+        } else if (type == C8Y_SERIAL_ID && self.serialNumber != nil) {
+			idString =  "\(C8Y_SERIAL_ID)=\(self.serialNumber!)"
+		} else if (type == C8Y_INTERNAL_ID) {
+			idString = "\(C8Y_INTERNAL_ID)=\(self.c8yId ?? "unassigned")"
 		} else {
             let ext = self.externalIds[type!]
             
@@ -675,22 +680,22 @@ public struct C8yDevice: C8yObject {
             idString = "\(ext!.type)=\(ext!.externalId)"
         }
         
-        if (self.supplier != C8Y_UNDEFINED_SUPPLIER) {
+		if (self.supplier != C8Y_UNDEFINED_SUPPLIER && !self.supplier.isEmpty) {
             idString += "\n"
             idString += "supplier=\(self.supplier)"
         }
         
-        if (self.model != C8Y_UNDEFINED_MODEL && self.model != "-") {
+		if (self.model != C8Y_UNDEFINED_MODEL && self.model != "-"  && !self.model.isEmpty) {
             idString += "\n"
             idString += "model=\(self.model)"
         }
         
-        if (self.network.appKey != nil) {
+		if (self.network.appKey != nil && !self.network.appKey!.isEmpty) {
             idString += "\n"
             idString += "appKey=\(self.network.appKey!)"
         }
         
-        if (self.network.appEUI != nil) {
+        if (self.network.appEUI != nil && !self.network.appEUI!.isEmpty) {
             idString += "\n"
             idString += "appEUI=\(self.network.appEUI!)"
         }
@@ -710,4 +715,12 @@ public struct C8yDevice: C8yObject {
 
         return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
+	
+	/**
+	Thrown from init if wrapped Managed Object is not a device asset
+	*/
+	public enum DeviceDecodingError: Error {
+		case notADeviceObject(object: C8yManagedObject)
+		case outOfStock
+	}
 }
