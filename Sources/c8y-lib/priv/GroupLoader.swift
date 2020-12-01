@@ -73,7 +73,10 @@ class GroupLoader {
                         
         C8yManagedObjectsService(_conn).get(forQuery: query, pageNum: pageNum).sink(receiveCompletion: { completion in
             
-           
+			print("Completed")
+			
+			//self._groupLoader.send(completion: .finished)
+			
         }, receiveValue: { response in
                         
             self._remainingObjects = response.content!.objects
@@ -99,7 +102,9 @@ class GroupLoader {
 					try processDeviceObject(m!)
 				}
 			} catch {
-				// can't happen
+				print("error \(error.localizedDescription)")
+				// can happen, just ignore and go to next element in list.
+				self._unwrapAssets()
 			}
         } else  {
         

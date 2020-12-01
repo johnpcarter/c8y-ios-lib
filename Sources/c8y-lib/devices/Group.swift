@@ -433,12 +433,15 @@ public struct C8yGroup: C8yObject {
     
 	/**
 	Removes the specified asset from the group or sub group of one of its children
+	
 	- parameter c8yId: id of the asset to be removed
 	- returns: true if the asset was found and removed
 	*/
     public mutating func removeFromGroup(_ c8yId: String) -> Bool {
         
-		return self.replace(c8yId, object: C8yGroup(""))
+		// use replace with a dummy object, replace function will remove
+
+		return self.replaceOrRemove(c8yId, object: C8yGroup(""))
     }
     
 	/**
@@ -448,7 +451,7 @@ public struct C8yGroup: C8yObject {
 	*/
     public mutating func replaceInGroup<T:C8yObject>(_ object: T) -> Bool {
         
-		return self.replace(object.c8yId!, object: object)
+		return self.replaceOrRemove(object.c8yId!, object: object)
     }
     
     private func indexOfManagedObject(_ obj: C8yManagedObject) -> Int {
@@ -518,7 +521,7 @@ public struct C8yGroup: C8yObject {
 		return found
 	}
 	
-	private mutating func replace<T:C8yObject>(_ c8yId: String, object: T) -> Bool {
+	private mutating func replaceOrRemove<T:C8yObject>(_ c8yId: String, object: T? = nil) -> Bool {
 		
 		var matched: Bool = false
 		
@@ -529,10 +532,12 @@ public struct C8yGroup: C8yObject {
 			for c in self.children {
 								
 				if (c.c8yId == c8yId) {
-					if (object.c8yId == nil || object.c8yId!.isEmpty) {
+					// if replacement object is a dummy, then assume we are removing not replacing!!
+					
+					if (object == nil || object!.c8yId!.isEmpty) {
 						self.children.remove(at: i)
 					} else {
-						self.children[i] = AnyC8yObject(object)
+						self.children[i] = AnyC8yObject(object!)
 					}
 					
 					matched = true
@@ -541,7 +546,7 @@ public struct C8yGroup: C8yObject {
 					
 					var v: C8yGroup = c.wrappedValue()
 				
-					if (v.replace(c8yId, object: object)) {
+					if (v.replaceOrRemove(c8yId, object: object)) {
 						self.children[i] = AnyC8yObject(v)
 					
 						matched = true

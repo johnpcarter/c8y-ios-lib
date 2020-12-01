@@ -111,7 +111,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
     
     //@Published
 	private var _prevModel: String = ""
-    public var model: String = "" {
+    @Published public var model: String = "" {
 		willSet {
 			self._prevModel = self.model
 		}
@@ -176,6 +176,30 @@ public class C8yEditableDevice: ObservableObject, Equatable {
     @Published public var webLink: String = "" {
 		didSet {
 			self.emitDidChange(self.webLink)
+		}
+	}
+	
+	@Published public var addressLine: String = "" {
+		didSet {
+			self.emitDidChange(self.addressLine)
+		}
+	}
+	
+	@Published public var city: String = "" {
+		didSet {
+			self.emitDidChange(self.city)
+		}
+	}
+	
+	@Published public var postCode: String = "" {
+		didSet {
+			self.emitDidChange(self.postCode)
+		}
+	}
+	
+	@Published public var country: String = "" {
+		didSet {
+			self.emitDidChange(self.country)
 		}
 	}
 	
@@ -412,12 +436,12 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         
         if (position != nil) {
             device.wrappedManagedObject.updatePosition(latitude: position!.lat, longitude: position!.lng, altitude:  position?.alt)
-        }
+		}
         
         return device
     }
     
-	public func mergeDevices(_ c8yDevice: C8yDevice) {
+	public func mergeDevices(_ c8yDevice: C8yDevice, group: C8yGroup? = nil) {
     
         self._ignoreChanges = true
         
@@ -448,7 +472,12 @@ public class C8yEditableDevice: ObservableObject, Equatable {
         
         if (c8yDevice.position != nil) {
             self._lastPosition = c8yDevice.position
-        }
+		} else if (group != nil && group!.info.address != nil) {
+			self.addressLine = group!.info.address!.addressLine1 ?? ""
+			self.city = group!.info.address!.city ?? ""
+			self.postCode = group!.info.address!.postCode ?? ""
+			self.country = group!.info.address!.country ?? ""			
+		}
         
         if (c8yDevice.notes != nil) {
             self.notes = c8yDevice.notes!

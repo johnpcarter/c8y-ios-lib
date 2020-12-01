@@ -71,6 +71,9 @@
                 <a class="nav-group-task-link" href="../Structs/C8yGroup.html">C8yGroup</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/C8yGroup/GroupDecodingError.html">– GroupDecodingError</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/C8yGroup/Info.html">– Info</a>
               </li>
               <li class="nav-group-task">
@@ -78,6 +81,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/C8yDevice/DeviceCategory.html">– DeviceCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/C8yDevice/DeviceDecodingError.html">– DeviceDecodingError</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/C8yMutableDevice.html">C8yMutableDevice</a>
@@ -397,6 +403,9 @@
             <a class="nav-group-name-link" href="../Other%20Global%20Variables.html">Other Global Variables</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library15C8Y_INTERNAL_IDSSvp">C8Y_INTERNAL_ID</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8Y_MEASUREMENT_BATTERYSSvp">C8Y_MEASUREMENT_BATTERY</a>
               </li>
               <li class="nav-group-task">
@@ -434,6 +443,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library20C8Y_OPERATION_UPLOADSSvp">C8Y_OPERATION_UPLOAD</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library13C8Y_SERIAL_IDSSvp">C8Y_SERIAL_ID</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8yLocationUpdate_EVENTSSvp">C8yLocationUpdate_EVENT</a>
@@ -618,9 +630,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC3get13forExternalId6ofType7Combine12AnyPublisherVyAA17JcRequestResponseCyAA0dE6ObjectVGAA0q10ConnectionR0C8APIErrorVyAA0daU0C_GGSS_SStF"></a>
-                    <a name="//apple_ref/swift/Method/get(forExternalId:ofType:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC3get13forExternalId6ofType7Combine12AnyPublisherVyAA17JcRequestResponseCyAA0dE6ObjectVGAA0q10ConnectionR0C8APIErrorVyAA0daU0C_GGSS_SStF">get(forExternalId:<wbr>ofType:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC3get13forExternalId6ofType10deviceOnly7Combine12AnyPublisherVyAA17JcRequestResponseCyAA0dE6ObjectVGAA0s10ConnectionT0C8APIErrorVyAA0daW0C_GGSS_SSSbtF"></a>
+                    <a name="//apple_ref/swift/Method/get(forExternalId:ofType:deviceOnly:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC3get13forExternalId6ofType10deviceOnly7Combine12AnyPublisherVyAA17JcRequestResponseCyAA0dE6ObjectVGAA0s10ConnectionT0C8APIErrorVyAA0daW0C_GGSS_SSSbtF">get(forExternalId:<wbr>ofType:<wbr>deviceOnly:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -629,17 +641,17 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Fetch the managed object <code><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></code> using an external id</p>
-<h1 id='notes' class='heading'>Notes:</h1>
 
-<p>The object associated with the given external id, i.e. assigned via method <code>post(object:withExternalId:ofType:completionHandler:)</code>.
- The values will show under the identity tab of the given device in c8y Device Management</p>
+<p># Notes: #
+   The object associated with the given external id, i.e. assigned via method <code>post(object:withExternalId:ofType:)</code>.
+   The values will show under the identity tab of the given device in c8y Device Management</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">get</span><span class="p">(</span><span class="nv">forExternalId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/JcRequestResponse.html">JcRequestResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></span><span class="o">&gt;</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">get</span><span class="p">(</span><span class="nv">forExternalId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">deviceOnly</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/JcRequestResponse.html">JcRequestResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></span><span class="o">&gt;</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -806,13 +818,12 @@
 <span class="k">for</span> <span class="n">more</span> <span class="n">details</span>
 
 <span class="o">-</span> <span class="n">parameter</span> <span class="n">object</span> <span class="n">a</span> <span class="p">`</span><span class="nv">ManagedObject</span><span class="p">`</span> <span class="n">created</span> <span class="n">locally</span> <span class="k">for</span> <span class="n">which</span> <span class="n">the</span> <span class="n">id</span> <span class="n">attribute</span> <span class="n">will</span> <span class="n">be</span> <span class="n">null</span>
-<span class="o">-</span> <span class="n">parameter</span> <span class="n">completionHandler</span> <span class="n">callback</span> <span class="n">function</span> <span class="n">which</span> <span class="n">will</span> <span class="n">receive</span> <span class="n">the</span> <span class="err">`</span><span class="kt">RequestResponder</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="err">`</span> <span class="n">confirming</span> <span class="n">success</span> <span class="n">or</span> <span class="n">failure</span> <span class="n">and</span> <span class="n">including</span> <span class="n">the</span> <span class="n">subjects</span> <span class="k">new</span> <span class="n">c8y</span> <span class="kd">internal</span> <span class="n">id</span>
 <span class="o">-</span> <span class="n">returns</span> <span class="kt">Publisher</span> <span class="n">indicating</span> <span class="n">success</span><span class="o">/</span><span class="n">failure</span> <span class="n">and</span> <span class="n">an</span> <span class="n">updated</span> <span class="p">`</span><span class="nv">C8yManagedObject</span><span class="p">`</span> <span class="n">including</span> <span class="n">the</span>  <span class="kd">internal</span> <span class="n">id</span> <span class="n">attributed</span> <span class="n">by</span> <span class="n">cumulocity</span><span class="o">.</span>
 <span class="o">-</span> <span class="k">throws</span> <span class="kt">Error</span> <span class="k">if</span> <span class="n">the</span> <span class="n">object</span> <span class="k">is</span> <span class="n">missing</span> <span class="kd">required</span> <span class="n">fields</span>
 </code></pre>
 <div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    seeAlso get(forExternalId:ofType:completionHandler)
+    seeAlso get(forExternalId:ofType:)
 
 </div>
 
@@ -860,7 +871,7 @@ The internal id generated by Cumulocity is included in the updated object return
 
 </div><div class="aside aside-see-also">
     <p class="aside-title">See also</p>
-    seeAlso get(forExternalId:ofType:completionHandler)
+    seeAlso get(forExternalId:ofType:)
 
 </div>
 
@@ -914,6 +925,118 @@ Use one of the <code><a href="../Structs/C8yManagedObject.html">C8yManagedObject
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC8register10externalId6ofType03forJ07Combine12AnyPublisherVyAA17JcRequestResponseCySSGAA0q10ConnectionR0C8APIErrorVyAA0daT0C_GGSS_S2StKF"></a>
+                    <a name="//apple_ref/swift/Method/register(externalId:ofType:forId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC8register10externalId6ofType03forJ07Combine12AnyPublisherVyAA17JcRequestResponseCySSGAA0q10ConnectionR0C8APIErrorVyAA0daT0C_GGSS_S2StKF">register(externalId:<wbr>ofType:<wbr>forId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Ensures a existing <code><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></code> can be retrieved with the given external id</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">register</span><span class="p">(</span><span class="nv">externalId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">ofType</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">forId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/JcRequestResponse.html">JcRequestResponse</a></span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC014externalIDsForE6Objecty7Combine12AnyPublisherVyAA17JcRequestResponseCyAA0D11ExternalIdsVGAA0o10ConnectionP0C8APIErrorVyAA0daT0C_GGSSF"></a>
+                    <a name="//apple_ref/swift/Method/externalIDsForManagedObject(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC014externalIDsForE6Objecty7Combine12AnyPublisherVyAA17JcRequestResponseCyAA0D11ExternalIdsVGAA0o10ConnectionP0C8APIErrorVyAA0daT0C_GGSSF">externalIDsForManagedObject(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Retrieves the list of external id&rsquo;s associated for the <code><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></code> for the given c8y internal id</p>
+<h1 id='notes' class='heading'>Notes:</h1>
+
+<p>Define an external id for your managed object at creation time using the method <code>post(object:withExternalId:ofType:)</code>
+Alternatively you can register as many external id&rsquo;s as you want after the object has been created using <code><a href="../Classes/C8yManagedObjectsService.html#/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC8register10externalId6ofType03forJ07Combine12AnyPublisherVyAA17JcRequestResponseCySSGAA0q10ConnectionR0C8APIErrorVyAA0daT0C_GGSS_S2StKF">register(externalId:ofType:forId:)</a></code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">externalIDsForManagedObject</span><span class="p">(</span><span class="n">_</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/JcRequestResponse.html">JcRequestResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yExternalIds.html">C8yExternalIds</a></span><span class="o">&gt;</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC13assignToGroup5child8parentId7Combine12AnyPublisherVyAA17JcRequestResponseCySbGAA0q10ConnectionR0C8APIErrorVyAA0daT0C_GGSS_SStF"></a>
+                    <a name="//apple_ref/swift/Method/assignToGroup(child:parentId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC13assignToGroup5child8parentId7Combine12AnyPublisherVyAA17JcRequestResponseCySbGAA0q10ConnectionR0C8APIErrorVyAA0daT0C_GGSS_SStF">assignToGroup(child:<wbr>parentId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Associates the given managed object with the identified group. This is most often used to add a device &lsquo;c8y_Device&rsquo; to a group &lsquo;c8y_DeviceGroup&rsquo;</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">assignToGroup</span><span class="p">(</span><span class="nv">child</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parentId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/JcRequestResponse.html">JcRequestResponse</a></span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC6delete2id7Combine12AnyPublisherVyAA17JcRequestResponseCySbGAA0m10ConnectionN0C8APIErrorVyAA0daP0C_GGSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/delete(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library24C8yManagedObjectsServiceC6delete2id7Combine12AnyPublisherVyAA17JcRequestResponseCySbGAA0m10ConnectionN0C8APIErrorVyAA0daP0C_GGSS_tF">delete(id:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deletes the given managed object</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/JcRequestResponse.html">JcRequestResponse</a></span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -922,7 +1045,7 @@ Use one of the <code><a href="../Structs/C8yManagedObject.html">C8yManagedObject
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-25)</p>
+      <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-12-01)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -102,7 +102,7 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         
         saintJaques.position = C8yManagedObject.Position(lat: 48.85003920540231, lng: 2.3466991482459334, alt: 0)
         saintJaques.setExternalIds([C8yExternalId(withExternalId: "56445345", ofType: C8yEditableGroup.GROUP_ID_TYPE)])
-        saintJaques.info.address = C8yAddress(addressLine1: "12, rue Saint Jaques", city: "Paris", postCode: "75003", country: "France", phone: "0303033")
+        saintJaques.info.address = C8yAddress(addressLine1: "12, rue Saint Jaques", city: "Paris", postCode: "75003", country: "France")
         saintJaques.info.siteOwner = C8yContactInfo("John Carter", phone: "0622851648", email: "john.carter@softwareag.com")
         saintJaques.info.subName = "Educational Institute"
         saintJaques.info.planning = C8yPlanning()
@@ -176,7 +176,7 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         c.contactEmail = "john.carter@softwareag.com"
         c.contactPhone = "0622851648"
         
-        _ = C8yAddress(addressLine1: "53, Boulevard Saint Germain", city: "Paris", postCode: "75005", country: "FRANCE", phone: "01223232")
+        _ = C8yAddress(addressLine1: "53, Boulevard Saint Germain", city: "Paris", postCode: "75005", country: "FRANCE")
            
         return C8yGroup(c8yId, name: name, category: .organisation, parentGroupName: nil, notes: "How now brown cow, this is a mocked object")
     }

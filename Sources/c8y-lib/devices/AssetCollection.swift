@@ -626,15 +626,35 @@ public class C8yAssetCollection: ObservableObject {
     }
     
 	/**
-	Removes the asset from the local collection.
-	*NOTE* - This has no impact on the back-end,  use the `delete(:completionHandler:)` method if you want to really delete the asset from cumulocity
+	Removes the asset with the given id it from the local collection regardles of where it is in
+	the hireachy of groups.
 	
-	- parameter c8yId: the c8y internal id of the asset to removed from the local collection.
+	*NOTE* - This has no impact on the back-end,  use the `delete(:completionHandler:)` method if you want to really delete the asset from cumulocity
+
+	- parameter c8yId: c8y internal id for object to be deleted
+	- returns true if asset was found and removed, false if not
 	*/
-    public func remove(c8yId: String) -> Bool {
-                 
-        self._removeFromFavourites(c8yId)
-    }
+	public func remove(c8yId: String) -> Bool {
+		
+		var found: Bool = false
+		
+		for o in self.objects {
+			
+			if (o.type == .C8yGroup) {
+				var group: C8yGroup = o.wrappedValue()
+				
+				if (group.removeFromGroup(c8yId)) {
+					self._updateFavourites(group)
+					found = true;
+				}
+			} else if (o.c8yId == c8yId) {
+				_ = self._removeFromFavourites(c8yId)
+				found = true
+			}
+		}
+		
+		return found
+	}
     
 	/**
 	Fetches the group asset from c8y and adds it to the local collection.
@@ -736,31 +756,36 @@ public class C8yAssetCollection: ObservableObject {
 	- parameter c8yId: c8y internal id for object to be deleted
 	- parameter completionHandler: Called once delete has completed, returns true if delete was done, false if not
 	*/
-	public func delete(c8yId: String, completionHandler: @escaping (Bool) -> Void) {
+	public func delete(c8yId: String, completionHandler: ((Bool) -> Void)? = nil) {
 		
 		self._storeCancellable(
 			C8yManagedObjectsService(self.connection!).delete(id: c8yId)
 				.receive(on: RunLoop.main)
 				.sink(receiveCompletion: { (completion) in
+					var didDelete: Bool = false
+					
 					switch completion {
-						case .failure(let error):
-							print(error)
-							completionHandler(false)
+						case .failure:
+							didDelete = false
 						case .finished:
-							for o in self.objects {
-								
-								if (o.type == .C8yGroup) {
-									var group: C8yGroup = o.wrappedValue()
-									
-									if (group.removeFromGroup(c8yId)) {
-										self._updateFavourites(group)
-									}
-								} else if (o.c8yId == c8yId) {
-									_ = self._removeFromFavourites(c8yId)
-								}
-							}
+							didDelete = true
+					}
+					
+					for o in self.objects {
+						
+						if (o.type == .C8yGroup) {
+							var group: C8yGroup = o.wrappedValue()
 							
-							completionHandler(true)
+							if (group.removeFromGroup(c8yId)) {
+								self._updateFavourites(group)
+							}
+						} else if (o.c8yId == c8yId) {
+							_ = self._removeFromFavourites(c8yId)
+						}
+					}
+					
+					if (completionHandler != nil) {
+						completionHandler!(didDelete)
 					}
 				}, receiveValue: { (response) in
 					// nothing doing here I think
@@ -819,14 +844,16 @@ public class C8yAssetCollection: ObservableObject {
 	- parameter completinoHandler: Called when operation has been completed to indicate success or failure
 	*/
 	public func assignToGroup<T:C8yObject>(_ object: T, c8yOfGroup: String, completionHandler: @escaping (T?, Error?) -> Void) {
+		
 		self._assignToGroup(object.c8yId!, c8yOfGroup: c8yOfGroup) { success, error in
 				
 			for o in self.objects {
 				
 				if (o.type == .C8yGroup) {
 					var group: C8yGroup = o.wrappedValue()
-					
-					if (group.addToGroup(c8yIdOfSubGroup: group.c8yId!, object: object)) {
+										
+					if (group.addToGroup(c8yIdOfSubGroup: c8yOfGroup, object: object)) {
+						
 						self._updateFavourites(group)
 					}
 				}
@@ -1134,6 +1161,7 @@ public class C8yAssetCollection: ObservableObject {
         if (c8yReferencesToLoad.count == 0) {
             
             DispatchQueue.main.async {
+				self._firstLoadCompleted = true
                 p.send(completion: .finished)
             }
             

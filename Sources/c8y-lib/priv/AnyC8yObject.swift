@@ -12,7 +12,7 @@ import UIKit
 import CoreImage.CIFilterBuiltins
 
 let C8Y_MANAGED_OBJECTS_XORG_CATEGORY = "xOrgCategory"
-let C8Y_MANAGED_OBJECTS_XORG_NAME = "xOrgName"
+let C8Y_MANAGED_OBJECTS_XORG_NAME = "xGroupDescription"
 let C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY = "xGroupCategory"
 let C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY = "xC8yDeviceCategory"
 

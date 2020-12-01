@@ -264,7 +264,7 @@ public class C8yEditableGroup: ObservableObject {
         }
         
 		if (!self.addressLine1.isEmpty) {
-			group.info.address = C8yAddress(addressLine1: self.addressLine1, city: self.city, postCode: self.postCode, country: self.country, phone: self.contactPhone)
+			group.info.address = C8yAddress(addressLine1: self.addressLine1, city: self.city, postCode: self.postCode, country: self.country)
 		}
         group.info.siteOwner = C8yContactInfo(self.contactPerson, phone: self.contactPhone, email: self.contactEmail)
            
@@ -291,7 +291,7 @@ public class C8yEditableGroup: ObservableObject {
 		}
 		
 		if (!self.addressLine1.isEmpty) {
-			group.info.address = C8yAddress(addressLine1: self.addressLine1, city: self.city, postCode: self.postCode, country: self.country, phone: self.contactPhone)
+			group.info.address = C8yAddress(addressLine1: self.addressLine1, city: self.city, postCode: self.postCode, country: self.country)
 		}
 		group.info.siteOwner = C8yContactInfo(self.contactPerson, phone: self.contactPhone, email: self.contactEmail)
 		   

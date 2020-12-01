@@ -8,27 +8,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/api/ManageObjectQuery.swift",
-      "line": 84,
-      "symbol": "C8yManagedObjectQuery.Query.init(key:op:value:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/api/ManageObjectQuery.swift",
-      "line": 103,
-      "symbol": "C8yManagedObjectQuery.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/api/ManageObjectQuery.swift",
-      "line": 127,
-      "symbol": "C8yManagedObjectQuery.build()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/api/ManagedObjectService.swift",
       "line": 29,
       "symbol": "C8yManagedObjectsService.ManagedObjectNotFoundError",
@@ -625,14 +604,14 @@
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/custom/model/Address.swift",
-      "line": 33,
+      "line": 32,
       "symbol": "C8yAddress",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/custom/model/Address.swift",
-      "line": 35,
+      "line": 34,
       "symbol": "C8yAddress.addressSummary",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -667,35 +646,28 @@
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/custom/model/Address.swift",
-      "line": 40,
-      "symbol": "C8yAddress.phone",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "line": 46,
+      "symbol": "C8yAddress.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/custom/model/Address.swift",
-      "line": 48,
+      "line": 63,
       "symbol": "C8yAddress.init(addressLine1:city:postCode:country:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/custom/model/Address.swift",
-      "line": 70,
-      "symbol": "C8yAddress.init(addressLine1:city:postCode:country:phone:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/custom/model/Address.swift",
-      "line": 93,
+      "line": 85,
       "symbol": "C8yAddress.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/custom/model/Address.swift",
-      "line": 102,
+      "line": 94,
       "symbol": "C8yAddress.isDifferent(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1046,14 +1018,14 @@
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Device.swift",
       "line": 31,
-      "symbol": "C8yDevice.DeviceCategory.Group",
+      "symbol": "C8yDevice.DeviceCategory.Gauge",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Device.swift",
       "line": 32,
-      "symbol": "C8yDevice.DeviceCategory.Gauge",
+      "symbol": "C8yDevice.DeviceCategory.Switch",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -1192,9 +1164,30 @@
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Device.swift",
-      "line": 104,
+      "line": 52,
+      "symbol": "C8yDevice.DeviceCategory.Group",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Device.swift",
+      "line": 105,
       "symbol": "C8yDevice.alarmsCount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Device.swift",
+      "line": 723,
+      "symbol": "C8yDevice.DeviceDecodingError.notADeviceObject(object:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Device.swift",
+      "line": 724,
+      "symbol": "C8yDevice.DeviceDecodingError.outOfStock",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
@@ -1286,6 +1279,41 @@
       "line": 176,
       "symbol": "C8yEditableDevice.webLink",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/EditableDevice.swift",
+      "line": 182,
+      "symbol": "C8yEditableDevice.addressLine",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/EditableDevice.swift",
+      "line": 188,
+      "symbol": "C8yEditableDevice.city",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/EditableDevice.swift",
+      "line": 194,
+      "symbol": "C8yEditableDevice.postCode",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/EditableDevice.swift",
+      "line": 200,
+      "symbol": "C8yEditableDevice.country",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/EditableDevice.swift",
+      "line": 444,
+      "symbol": "C8yEditableDevice.mergeDevices(_:group:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -1444,168 +1472,175 @@
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 274,
+      "line": 280,
       "symbol": "C8yGroup.isPlannedForDate(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 648,
+      "line": 655,
+      "symbol": "C8yGroup.GroupDecodingError.notAGroupObject(object:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
+      "line": 666,
       "symbol": "C8yGroup.Info.orgName",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 649,
+      "line": 667,
       "symbol": "C8yGroup.Info.subName",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 651,
+      "line": 669,
       "symbol": "C8yGroup.Info.contractRef",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 653,
+      "line": 671,
       "symbol": "C8yGroup.Info.address",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 655,
+      "line": 673,
       "symbol": "C8yGroup.Info.planning",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 657,
+      "line": 675,
       "symbol": "C8yGroup.Info.siteOwner",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 658,
+      "line": 676,
       "symbol": "C8yGroup.Info.adminOwner",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 660,
+      "line": 678,
       "symbol": "C8yGroup.Info.init(orgName:subName:address:contact:planning:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/Group.swift",
-      "line": 672,
+      "line": 690,
       "symbol": "C8yGroup.Info.isDifferent(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1076,
+      "line": 1173,
       "symbol": "C8yMutableDevice.MeasurementSeries",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1077,
+      "line": 1174,
       "symbol": "C8yMutableDevice.MeasurementSeries.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1078,
+      "line": 1175,
       "symbol": "C8yMutableDevice.MeasurementSeries.label",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1079,
+      "line": 1176,
       "symbol": "C8yMutableDevice.MeasurementSeries.unit",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1080,
+      "line": 1177,
       "symbol": "C8yMutableDevice.MeasurementSeries.yValues",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1081,
+      "line": 1178,
       "symbol": "C8yMutableDevice.MeasurementSeries.xValues",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1084,
+      "line": 1181,
       "symbol": "C8yMutableDevice.Measurement",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1085,
+      "line": 1182,
       "symbol": "C8yMutableDevice.Measurement.min",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1086,
+      "line": 1183,
       "symbol": "C8yMutableDevice.Measurement.max",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1087,
+      "line": 1184,
       "symbol": "C8yMutableDevice.Measurement.unit",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1088,
+      "line": 1185,
       "symbol": "C8yMutableDevice.Measurement.label",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1089,
+      "line": 1186,
       "symbol": "C8yMutableDevice.Measurement.type",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1091,
+      "line": 1188,
       "symbol": "C8yMutableDevice.Measurement.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/devices/MutableDevice.swift",
-      "line": 1095,
+      "line": 1192,
       "symbol": "C8yMutableDevice.Measurement.init(min:max:unit:label:type:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1884,526 +1919,561 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManageObjectQuery.swift",
+      "line": 84,
+      "symbol": "C8yManagedObjectQuery.Query.init(key:op:value:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManageObjectQuery.swift",
+      "line": 103,
+      "symbol": "C8yManagedObjectQuery.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManageObjectQuery.swift",
+      "line": 132,
+      "symbol": "C8yManagedObjectQuery.build()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 45,
+      "line": 11,
+      "symbol": "C8Y_INTERNAL_ID",
+      "symbol_kind": "source.lang.swift.decl.var.global",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
+      "line": 12,
+      "symbol": "C8Y_SERIAL_ID",
+      "symbol_kind": "source.lang.swift.decl.var.global",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
+      "line": 48,
       "symbol": "C8yManagedObject.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 47,
+      "line": 50,
       "symbol": "C8yManagedObject.type",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 48,
+      "line": 51,
       "symbol": "C8yManagedObject.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 50,
+      "line": 53,
       "symbol": "C8yManagedObject.createdTime",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 51,
+      "line": 54,
       "symbol": "C8yManagedObject.lastUpdated",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 53,
+      "line": 56,
       "symbol": "C8yManagedObject.owner",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 55,
+      "line": 58,
       "symbol": "C8yManagedObject.status",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 57,
+      "line": 60,
       "symbol": "C8yManagedObject.applicationOwner",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 58,
+      "line": 61,
       "symbol": "C8yManagedObject.applicationId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 59,
+      "line": 62,
       "symbol": "C8yManagedObject.notes",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 61,
+      "line": 64,
       "symbol": "C8yManagedObject.firmware",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 63,
+      "line": 66,
       "symbol": "C8yManagedObject.childDevices",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 64,
+      "line": 67,
       "symbol": "C8yManagedObject.childAssets",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 66,
+      "line": 69,
       "symbol": "C8yManagedObject.connectionStatus",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 67,
+      "line": 70,
       "symbol": "C8yManagedObject.availability",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 68,
+      "line": 71,
       "symbol": "C8yManagedObject.activeAlarmsStatus",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 69,
+      "line": 72,
       "symbol": "C8yManagedObject.isDevice",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 70,
+      "line": 73,
       "symbol": "C8yManagedObject.isGroup",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 72,
+      "line": 75,
       "symbol": "C8yManagedObject.requiredAvailability",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 73,
+      "line": 76,
       "symbol": "C8yManagedObject.dataPoints",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 74,
+      "line": 77,
       "symbol": "C8yManagedObject.sensorType",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 94,
+      "line": 97,
       "symbol": "C8yManagedObject.hardware",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 106,
+      "line": 109,
       "symbol": "C8yManagedObject.ConnectionStatusType",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 107,
+      "line": 110,
       "symbol": "C8yManagedObject.ConnectionStatusType.DISCONNECTED",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 108,
+      "line": 111,
       "symbol": "C8yManagedObject.ConnectionStatusType.CONNECTED",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 109,
+      "line": 112,
       "symbol": "C8yManagedObject.ConnectionStatusType.MAINTENANCE",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 112,
+      "line": 115,
       "symbol": "C8yManagedObject.AvailabilityStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 113,
+      "line": 116,
       "symbol": "C8yManagedObject.AvailabilityStatus.AVAILABLE",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 114,
+      "line": 117,
       "symbol": "C8yManagedObject.AvailabilityStatus.UNAVAILABLE",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 115,
+      "line": 118,
       "symbol": "C8yManagedObject.AvailabilityStatus.MAINTENANCE",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 116,
+      "line": 119,
       "symbol": "C8yManagedObject.AvailabilityStatus.NEW",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 117,
+      "line": 120,
       "symbol": "C8yManagedObject.AvailabilityStatus.UNKNOWN",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 120,
+      "line": 123,
       "symbol": "C8yManagedObject.SensorType",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 121,
+      "line": 124,
       "symbol": "C8yManagedObject.SensorType.TemperatureSensor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 122,
+      "line": 125,
       "symbol": "C8yManagedObject.SensorType.MotionSensor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 123,
+      "line": 126,
       "symbol": "C8yManagedObject.SensorType.AccelerationSensor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 124,
+      "line": 127,
       "symbol": "C8yManagedObject.SensorType.LightSensor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 125,
+      "line": 128,
       "symbol": "C8yManagedObject.SensorType.HumiditySensor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 126,
+      "line": 129,
       "symbol": "C8yManagedObject.SensorType.MoistureSensor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 127,
+      "line": 130,
       "symbol": "C8yManagedObject.SensorType.DistanceMeasurement",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 128,
+      "line": 131,
       "symbol": "C8yManagedObject.SensorType.SinglePhaseElectricitySensor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 129,
+      "line": 132,
       "symbol": "C8yManagedObject.SensorType.CurrentSensor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 132,
+      "line": 135,
       "symbol": "C8yManagedObject.RelayStateType",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 133,
+      "line": 136,
       "symbol": "C8yManagedObject.RelayStateType.OPEN",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 134,
+      "line": 137,
       "symbol": "C8yManagedObject.RelayStateType.CLOSED",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 135,
+      "line": 138,
       "symbol": "C8yManagedObject.RelayStateType.OPEN_PENDING",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 136,
+      "line": 139,
       "symbol": "C8yManagedObject.RelayStateType.CLOSE_PENDING",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 144,
+      "line": 147,
       "symbol": "C8yManagedObject.ChildReferences.ref",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 145,
+      "line": 148,
       "symbol": "C8yManagedObject.ChildReferences.references",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 147,
+      "line": 150,
       "symbol": "C8yManagedObject.ChildReferences.ReferencedObject",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 149,
+      "line": 152,
       "symbol": "C8yManagedObject.ChildReferences.ReferencedObject.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 150,
+      "line": 153,
       "symbol": "C8yManagedObject.ChildReferences.ReferencedObject.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 151,
+      "line": 154,
       "symbol": "C8yManagedObject.ChildReferences.ReferencedObject.ref",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 249,
+      "line": 252,
       "symbol": "C8yManagedObject.Availability.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 254,
+      "line": 257,
       "symbol": "C8yManagedObject.Availability.init(status:lastMessage:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 260,
+      "line": 263,
       "symbol": "C8yManagedObject.Firmware",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 261,
+      "line": 264,
       "symbol": "C8yManagedObject.Firmware.version",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 268,
+      "line": 271,
       "symbol": "C8yManagedObject.ActiveAlarmsStatus.warning",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 269,
+      "line": 272,
       "symbol": "C8yManagedObject.ActiveAlarmsStatus.minor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 270,
+      "line": 273,
       "symbol": "C8yManagedObject.ActiveAlarmsStatus.major",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 271,
+      "line": 274,
       "symbol": "C8yManagedObject.ActiveAlarmsStatus.critical",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 281,
+      "line": 284,
       "symbol": "C8yManagedObject.ActiveAlarmsStatus.init(warning:minor:major:critical:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 318,
+      "line": 321,
       "symbol": "C8yManagedObject.ActiveAlarmsStatus.total",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 328,
+      "line": 331,
       "symbol": "C8yManagedObject.RequiredAvailability.responseInterval",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 335,
+      "line": 338,
       "symbol": "C8yManagedObject.ConnectionStatus.status",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 343,
+      "line": 346,
       "symbol": "C8yManagedObject.Position.lat",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 344,
+      "line": 347,
       "symbol": "C8yManagedObject.Position.lng",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 345,
+      "line": 348,
       "symbol": "C8yManagedObject.Position.alt",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 347,
+      "line": 350,
       "symbol": "C8yManagedObject.Position.init(lat:lng:alt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 379,
+      "line": 382,
       "symbol": "C8yManagedObject.Position.isDifferent(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 393,
+      "line": 396,
       "symbol": "C8yManagedObject.LpwanDevice.provisioned",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 404,
+      "line": 407,
       "symbol": "C8yManagedObject.Hardware.serialNumber",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 405,
+      "line": 408,
       "symbol": "C8yManagedObject.Hardware.model",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 406,
+      "line": 409,
       "symbol": "C8yManagedObject.Hardware.supplier",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jcart/Programming/xcode/c8y-ios-client/Cumulocity Client Library/Sources/c8y-lib/model/ManagedObject.swift",
-      "line": 407,
+      "line": 410,
       "symbol": "C8yManagedObject.Hardware.revision",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"

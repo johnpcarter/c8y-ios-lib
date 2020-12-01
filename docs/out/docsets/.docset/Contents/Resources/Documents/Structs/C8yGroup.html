@@ -71,6 +71,9 @@
                 <a class="nav-group-task-link" href="../Structs/C8yGroup.html">C8yGroup</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/C8yGroup/GroupDecodingError.html">– GroupDecodingError</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/C8yGroup/Info.html">– Info</a>
               </li>
               <li class="nav-group-task">
@@ -78,6 +81,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/C8yDevice/DeviceCategory.html">– DeviceCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/C8yDevice/DeviceDecodingError.html">– DeviceDecodingError</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/C8yMutableDevice.html">C8yMutableDevice</a>
@@ -397,6 +403,9 @@
             <a class="nav-group-name-link" href="../Other%20Global%20Variables.html">Other Global Variables</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library15C8Y_INTERNAL_IDSSvp">C8Y_INTERNAL_ID</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8Y_MEASUREMENT_BATTERYSSvp">C8Y_MEASUREMENT_BATTERY</a>
               </li>
               <li class="nav-group-task">
@@ -434,6 +443,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library20C8Y_OPERATION_UPLOADSSvp">C8Y_OPERATION_UPLOAD</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library13C8Y_SERIAL_IDSSvp">C8Y_SERIAL_ID</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8yLocationUpdate_EVENTSSvp">C8yLocationUpdate_EVENT</a>
@@ -759,9 +771,9 @@ This is only provided if you used <code><a href="../Classes/C8yAssetCollection.h
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library8C8yGroupVyAcA0D13ManagedObjectVcfc"></a>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupVyAcA0D13ManagedObjectVKcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupVyAcA0D13ManagedObjectVcfc">init(_:<wbr>)</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupVyAcA0D13ManagedObjectVKcfc">init(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -770,13 +782,18 @@ This is only provided if you used <code><a href="../Classes/C8yAssetCollection.h
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Constructor to create a group for the given c8y managed object</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    throws Error if managed object does not reference a group asset
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="../Structs/C8yManagedObject.html">C8yManagedObject</a></span><span class="p">)</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -962,7 +979,7 @@ This is only provided if you used <code><a href="../Classes/C8yAssetCollection.h
 
 <p>Format is key=&lsquo;value&rsquo; e.g.
     c8y_Serial=122434344
-    c8y_Id=9393</p>
+    c8y_id=9393</p>
 
                       </div>
                       <div class="declaration">
@@ -1546,6 +1563,34 @@ This is only provided if you used <code><a href="../Classes/C8yAssetCollection.h
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:25Cumulocity_Client_Library8C8yGroupV0E13DecodingErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/GroupDecodingError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV0E13DecodingErrorO">GroupDecodingError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Thrown from init if wrapped Managed Object is not a group asset</p>
+
+                        <a href="../Structs/C8yGroup/GroupDecodingError.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">GroupDecodingError</span> <span class="p">:</span> <span class="kt">Error</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:25Cumulocity_Client_Library8C8yGroupV4InfoV"></a>
                     <a name="//apple_ref/swift/Struct/Info" class="dashAnchor"></a>
                     <a class="token" href="#/s:25Cumulocity_Client_Library8C8yGroupV4InfoV">Info</a>
@@ -1582,7 +1627,7 @@ if it is to be used to group assets based on scheduling etc. etc.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-25)</p>
+      <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-12-01)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

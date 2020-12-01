@@ -8,7 +8,7 @@
 
 import Foundation
 
-let JC_MANAGED_OBJECT_ADDRESS = "xAddress"
+let JC_MANAGED_OBJECT_ADDRESS = "xGroupAddress"
 
 class C8yAddressAssetDecoder: C8yCustomAssetFactory {
     
@@ -23,57 +23,49 @@ class C8yAddressAssetDecoder: C8yCustomAssetFactory {
     override func make(key: C8yCustomAssetProcessor.AssetObjectKey, container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>) throws -> C8yCustomAsset {
                 
         //return try container.decode(C8yAddress.self, forKey: key)
-        var address = C8yAddress()
-        try address.decode(container, forKey: key)
-        
-        return address
+		//try address.decode(container, forKey: key)
+
+		return try C8yAddress(container.decode(String.self, forKey: key))
     }
 }
 
 public struct C8yAddress: C8yCustomAsset {
     
     public private(set) var addressSummary: String
+	
     public private(set) var addressLine1: String?
     public private(set) var city: String?
     public private(set) var postCode: String?
     public private(set) var country: String?
-    public private(set) var phone: String?
 
     enum CodingKeys : String, CodingKey {
-        case addressSummary = "xAddress"
-        case country = "xAddressCountry"
-        case phone = "xAddressPhone"
+        case addressSummary = "xGroupAddress"
+		case country = "xCountry"
     }
     
-	public init(addressLine1: String, city: String, postCode: String, country: String) {
+	public init(_ addressSummary: String) {
 		
-		self.addressLine1 = addressLine1
-		self.city = city
-		self.postCode = postCode
-		self.country = country
+		self.addressSummary = addressSummary
+		let parts: Array<Substring> = addressSummary.split(separator: ",")
 		
-		self.addressSummary = addressLine1
-		
-		if (!city.isEmpty) {
-			self.addressSummary = self.addressSummary + ", " + city
-		}
-		
-		if (!postCode.isEmpty) {
-			self.addressSummary = self.addressSummary + ", " + postCode
-		}
-		
-		if (!country.isEmpty) {
-			self.addressSummary = self.addressSummary + ", " + country
+		parts.forEach { p in
+			
+			if (self.addressLine1 == nil) {
+				self.addressLine1 = String(p)
+			} else if (self.city == nil) {
+				self.city = String(p)
+			} else if (self.postCode == nil) {
+				self.postCode = String(p)
+			}
 		}
 	}
 	
-    public init(addressLine1: String, city: String, postCode: String, country: String, phone: String) {
+    public init(addressLine1: String, city: String, postCode: String, country: String) {
         
         self.addressLine1 = addressLine1
         self.city = city
         self.postCode = postCode
         self.country = country
-        self.phone = phone
         
 		self.addressSummary = addressLine1
 		
@@ -104,7 +96,7 @@ public struct C8yAddress: C8yCustomAsset {
         if (address == nil) {
             return true
         } else {
-            return self.addressLine1 != address?.addressLine1 || self.city != address?.city || self.postCode != address?.postCode || self.country != address?.country || self.phone != address?.phone
+            return self.addressLine1 != address?.addressLine1 || self.city != address?.city || self.postCode != address?.postCode || self.country != address?.country
         }
     }
     
@@ -112,15 +104,7 @@ public struct C8yAddress: C8yCustomAsset {
 
         var copy = container
         
-        try copy.encode(self.addressSummary, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "xAddress")!)
-        
-        if (self.country != nil) {
-            try copy.encode(self.country, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "xAddressCountry")!)
-        }
-        
-        if (self.phone != nil) {
-            try copy.encode(self.phone, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "xAddressPhone")!)
-        }
+        try copy.encode(self.addressSummary, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_ADDRESS)!)
         
         return copy
     }
@@ -150,8 +134,6 @@ public struct C8yAddress: C8yCustomAsset {
 				
             case CodingKeys.country.stringValue:
                 self.country = try container.decode(String.self, forKey: forKey)
-            case CodingKeys.phone.stringValue:
-                self.phone = try container.decode(String.self, forKey: forKey)
             default:
                 break // do nothing
         }

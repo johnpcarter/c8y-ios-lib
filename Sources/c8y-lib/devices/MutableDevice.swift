@@ -103,6 +103,34 @@ public class C8yMutableDevice: ObservableObject  {
         }
     }
 	
+	private var _ignore: Bool = false
+	
+	/**
+	Set to true to activate maintenance mode for device in Cumulocity.
+	@see `toggleMaintenanceMode()`
+	*/
+	@Published public var maintenanceMode: Bool {
+		didSet {
+			do {
+				if (_ignore) {
+					return;
+				}
+				
+				try toggleMaintainanceMode()
+			} catch {
+				_ignore = true
+				self.maintenanceMode = !self.maintenanceMode
+				_ignore = false
+			}
+		}
+	}
+	
+	/**
+	Returns true if the device has been provisioned with its network.
+
+	*/
+	@Published public private(set) var isDeployed: Bool
+	
 	/**
 	Returns the current battery level if available (returns -2 if not applicable)
 	*/
@@ -200,6 +228,8 @@ public class C8yMutableDevice: ObservableObject  {
 	*/
     public init() {
         self.device = C8yDevice()
+		self.maintenanceMode = false;
+		self.isDeployed = false;
     }
 	
     /**
@@ -211,6 +241,8 @@ public class C8yMutableDevice: ObservableObject  {
         
         self.device = device
         self.conn = connection
+		self.maintenanceMode = device.requiredResponseInterval == -1
+		self.isDeployed = device.isDeployed;
 		self._primaryMeasurementInterval = Double(device.requiredResponseInterval == nil ? 60 : device.requiredResponseInterval! * 60)
 
         if (self.device.position != nil) {
@@ -329,17 +361,22 @@ public class C8yMutableDevice: ObservableObject  {
             self._cachedResponseInterval = self.device.wrappedManagedObject.requiredAvailability!.responseInterval
             self.device.wrappedManagedObject.requiredAvailability!.responseInterval = -1
         }
-        
-        try C8yManagedObjectsService(self.conn!).put(C8yManagedObject.init(self.device.c8yId!, requiredAvailability: self.device.wrappedManagedObject.requiredAvailability!))
+		
+		try C8yManagedObjectsService(self.conn!).put(C8yManagedObject.init(self.device.c8yId!, requiredAvailability: self.device.wrappedManagedObject.requiredAvailability!))
 			.receive(on: RunLoop.main)
-            .sink(receiveCompletion: { (completion) in
-                // nothing to do
-            }) { response in
-                
+			.sink(receiveCompletion: { (completion) in
+				// nothing to do
+				
+				self._ignore = true
+				self.maintenanceMode = self.device.requiredResponseInterval == -1
+				self._ignore = false
+				
+			}) { response in
+				
 				self.device.wrappedManagedObject.availability = C8yManagedObject.Availability(status: self.device.wrappedManagedObject.requiredAvailability!.responseInterval == -1 ? .MAINTENANCE : .AVAILABLE, lastMessage: self.device.wrappedManagedObject.availability?.lastMessage ?? Date())
-        }.store(in: &self._cancellable)
+		}.store(in: &self._cancellable)
     }
-    
+	
 	/**
 	Submits an operation to switch the relay and also synchronises the device relay attribute `C8yDevice.relayState`.
 	*NOTE* - Only applicable if the device or agent supports it.
@@ -423,6 +460,7 @@ public class C8yMutableDevice: ObservableObject  {
 			.receive(on: RunLoop.main)
 			.map({device -> C8yDevice in
 				self.device = device
+				self.isDeployed = true
 				return device
 			}).eraseToAnyPublisher()
     }
@@ -436,16 +474,41 @@ public class C8yMutableDevice: ObservableObject  {
 	- returns: Publisher with updated device
 	- throws: If network is invalid or not recognised
 	*/
-	public func deprovision()throws -> AnyPublisher<C8yDevice, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
+	public func deprovision() throws -> AnyPublisher<C8yDevice, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
     
 		return try C8yNetworks.deprovision(device, conn: self.conn!)
 			.receive(on: RunLoop.main)
 			.map({device -> C8yDevice in
 				self.device = device
+				self.isDeployed = false
 				return device
 			}).eraseToAnyPublisher()
     }
     
+	/**
+	Deletes the device from Cumulocity, will first deprovision the device from it's related network if it flagged as still being deployed `isDeployed`
+	
+	NOTE: If you are the using the `C8yAssetCollection` class to present your assets then you will need to also call the AssetCollection
+	`remove()` method to remove the device locally.
+	
+	- returns: Publisher with success/failure of operation
+	- throws: if provisioned and network deprobvisioning failed.
+	*/
+	public func delete() throws -> AnyPublisher<Bool, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
+		
+		if self.device.network.isProvisioned {
+			return try self.deprovision().flatMap({ response -> AnyPublisher<Bool, JcConnectionRequest<C8yCumulocityConnection>.APIError> in
+				return C8yManagedObjectsService(self.conn!).delete(id: self.device.c8yId!).map({ response -> Bool in
+					return response.content!
+				}).eraseToAnyPublisher()
+			}).eraseToAnyPublisher()
+		} else {
+			return C8yManagedObjectsService(self.conn!).delete(id: self.device.c8yId!).map({ response -> Bool in
+				return response.content!
+			}).eraseToAnyPublisher()
+		}
+	}
+	
 	/**
 	Submits the given operation to Cumulocity and records it in `operationHistory`
 	The operation will have an initial status of PENDING
@@ -1106,7 +1169,7 @@ public class C8yMutableDevice: ObservableObject  {
             return type
         }
     }
-    
+	
     public struct MeasurementSeries {
         public var name: String?
         public var label: String?

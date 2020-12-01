@@ -71,6 +71,9 @@
                 <a class="nav-group-task-link" href="../Structs/C8yGroup.html">C8yGroup</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/C8yGroup/GroupDecodingError.html">– GroupDecodingError</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/C8yGroup/Info.html">– Info</a>
               </li>
               <li class="nav-group-task">
@@ -78,6 +81,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/C8yDevice/DeviceCategory.html">– DeviceCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/C8yDevice/DeviceDecodingError.html">– DeviceDecodingError</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/C8yMutableDevice.html">C8yMutableDevice</a>
@@ -397,6 +403,9 @@
             <a class="nav-group-name-link" href="../Other%20Global%20Variables.html">Other Global Variables</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library15C8Y_INTERNAL_IDSSvp">C8Y_INTERNAL_ID</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8Y_MEASUREMENT_BATTERYSSvp">C8Y_MEASUREMENT_BATTERY</a>
               </li>
               <li class="nav-group-task">
@@ -434,6 +443,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library20C8Y_OPERATION_UPLOADSSvp">C8Y_OPERATION_UPLOAD</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library13C8Y_SERIAL_IDSSvp">C8Y_SERIAL_ID</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8yLocationUpdate_EVENTSSvp">C8yLocationUpdate_EVENT</a>
@@ -1578,8 +1590,10 @@ case the returned object is contained in a <code>AnyCV8yObject</code> object.</p
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Removes the asset from the local collection.
-<em>NOTE</em> - This has no impact on the back-end,  use the <code>delete(:completionHandler:)</code> method if you want to really delete the asset from cumulocity</p>
+                        <p>Removes the asset with the given id it from the local collection regardles of where it is in
+the hireachy of groups.</p>
+
+<p><em>NOTE</em> - This has no impact on the back-end,  use the <code>delete(:completionHandler:)</code> method if you want to really delete the asset from cumulocity</p>
 
                       </div>
                       <div class="declaration">
@@ -1602,7 +1616,7 @@ case the returned object is contained in a <code>AnyCV8yObject</code> object.</p
                               </td>
                               <td>
                                 <div>
-                                  <p>the c8y internal id of the asset to removed from the local collection.</p>
+                                  <p>c8y internal id for object to be deleted</p>
                                 </div>
                               </td>
                             </tr>
@@ -1625,8 +1639,7 @@ case the returned object is contained in a <code>AnyCV8yObject</code> object.</p
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Adds a group asset to the local collection using its c8y Internal id.
-Will call back end to fetch necessary dsata in order to create a new <code><a href="../Structs/C8yGroup.html">C8yGroup</a></code> object before then inserting into the local collection.</p>
+                        <p>Fetches the group asset from c8y and adds it to the local collection.</p>
 
                       </div>
                       <div class="declaration">
@@ -1760,7 +1773,8 @@ Creation might fail if connection access rights are insufficient or a mandatory 
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Saves any changes to the asset in Cumulocity</p>
+                        <p>Saves any changes to the asset in Cumulocity
+NOTE: Will NOT update any changed external id&rsquo;s, use the <code>register(externalId:ofType:forId:)</code> method to  register or replace an existing external id</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
     Invalid object i.e. mandatory field missing
@@ -1813,9 +1827,9 @@ Creation might fail if connection access rights are insufficient or a mandatory 
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC6delete5c8yId17completionHandlerySS_ySbctF"></a>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC6delete5c8yId17completionHandlerySS_ySbcSgtF"></a>
                     <a name="//apple_ref/swift/Method/delete(c8yId:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC6delete5c8yId17completionHandlerySS_ySbctF">delete(c8yId:<wbr>completionHandler:<wbr>)</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC6delete5c8yId17completionHandlerySS_ySbcSgtF">delete(c8yId:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1831,7 +1845,7 @@ Deletion might fail if either the asset doesn&rsquo;t exist or connection access
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">c8yId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">((</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1872,9 +1886,9 @@ Deletion might fail if either the asset doesn&rsquo;t exist or connection access
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC10addToGroup_05c8yOfI017completionHandleryx_SSyxSg_s5Error_pSgtctKAA0D6ObjectRzlF"></a>
-                    <a name="//apple_ref/swift/Method/addToGroup(_:c8yOfGroup:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC10addToGroup_05c8yOfI017completionHandleryx_SSyxSg_s5Error_pSgtctKAA0D6ObjectRzlF">addToGroup(_:<wbr>c8yOfGroup:<wbr>completionHandler:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC13createInGroup_05c8yOfI017completionHandleryx_SSyxSg_s5Error_pSgtctKAA0D6ObjectRzlF"></a>
+                    <a name="//apple_ref/swift/Method/createInGroup(_:c8yOfGroup:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC13createInGroup_05c8yOfI017completionHandleryx_SSyxSg_s5Error_pSgtctKAA0D6ObjectRzlF">createInGroup(_:<wbr>c8yOfGroup:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1895,7 +1909,7 @@ to reflect any changes.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">addToGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">c8yOfGroup</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">createInGroup</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">c8yOfGroup</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/C8yObject.html">C8yObject</a></span></code></pre>
 
                         </div>
                       </div>
@@ -2137,9 +2151,9 @@ The device is NOT added to the local collection if not found locally.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice13forExternalId6ofType17completionHandlerySS_SSyAA0dH0VSg_AA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GSgtctF"></a>
-                    <a name="//apple_ref/swift/Method/lookupDevice(forExternalId:ofType:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice13forExternalId6ofType17completionHandlerySS_SSyAA0dH0VSg_AA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GSgtctF">lookupDevice(forExternalId:<wbr>ofType:<wbr>completionHandler:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice13forExternalId4type17completionHandlerySS_SSys6ResultOyAA0dH0Vs5Error_pGctF"></a>
+                    <a name="//apple_ref/swift/Method/lookupDevice(forExternalId:type:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC12lookupDevice13forExternalId4type17completionHandlerySS_SSys6ResultOyAA0dH0Vs5Error_pGctF">lookupDevice(forExternalId:<wbr>type:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2155,7 +2169,7 @@ The device is NOT added to the local collection if not found locally.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lookupDevice</span><span class="p">(</span><span class="n">forExternalId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">ofType</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">?,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lookupDevice</span><span class="p">(</span><span class="n">forExternalId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yDevice.html">C8yDevice</a></span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -2178,7 +2192,7 @@ The device is NOT added to the local collection if not found locally.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>ofType</em>
+                                <em>type</em>
                                 </code>
                               </td>
                               <td>
@@ -2195,7 +2209,7 @@ The device is NOT added to the local collection if not found locally.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>callback that received the fetched device or error if failed</p>
+                                  <p>callback that receives the fetched device, nil if not found or error if failed</p>
                                 </div>
                               </td>
                             </tr>
@@ -2208,9 +2222,9 @@ The device is NOT added to the local collection if not found locally.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup13forExternalId4type17completionHandlerySS_SSyAA0dH0VSg_s5Error_pSgtctF"></a>
+                    <a name="/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup13forExternalId4type17completionHandlerySS_SSys6ResultOyAA0dH0Vs5Error_pGctF"></a>
                     <a name="//apple_ref/swift/Method/lookupGroup(forExternalId:type:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup13forExternalId4type17completionHandlerySS_SSyAA0dH0VSg_s5Error_pSgtctF">lookupGroup(forExternalId:<wbr>type:<wbr>completionHandler:<wbr>)</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library18C8yAssetCollectionC11lookupGroup13forExternalId4type17completionHandlerySS_SSys6ResultOyAA0dH0Vs5Error_pGctF">lookupGroup(forExternalId:<wbr>type:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2226,7 +2240,7 @@ The group is NOT added to the local collection if not found locally.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lookupGroup</span><span class="p">(</span><span class="n">forExternalId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lookupGroup</span><span class="p">(</span><span class="n">forExternalId</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/C8yGroup.html">C8yGroup</a></span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -2266,7 +2280,7 @@ The group is NOT added to the local collection if not found locally.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>callback that received the fetched group or error if failed</p>
+                                  <p>callback that receives the fetched group, nil if not found or error if failed</p>
                                 </div>
                               </td>
                             </tr>
@@ -2284,7 +2298,7 @@ The group is NOT added to the local collection if not found locally.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-25)</p>
+      <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-12-01)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

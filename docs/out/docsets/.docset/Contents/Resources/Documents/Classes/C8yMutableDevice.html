@@ -71,6 +71,9 @@
                 <a class="nav-group-task-link" href="../Structs/C8yGroup.html">C8yGroup</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/C8yGroup/GroupDecodingError.html">– GroupDecodingError</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/C8yGroup/Info.html">– Info</a>
               </li>
               <li class="nav-group-task">
@@ -78,6 +81,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/C8yDevice/DeviceCategory.html">– DeviceCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/C8yDevice/DeviceDecodingError.html">– DeviceDecodingError</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/C8yMutableDevice.html">C8yMutableDevice</a>
@@ -397,6 +403,9 @@
             <a class="nav-group-name-link" href="../Other%20Global%20Variables.html">Other Global Variables</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library15C8Y_INTERNAL_IDSSvp">C8Y_INTERNAL_ID</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8Y_MEASUREMENT_BATTERYSSvp">C8Y_MEASUREMENT_BATTERY</a>
               </li>
               <li class="nav-group-task">
@@ -434,6 +443,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library20C8Y_OPERATION_UPLOADSSvp">C8Y_OPERATION_UPLOAD</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library13C8Y_SERIAL_IDSSvp">C8Y_SERIAL_ID</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Other%20Global%20Variables.html#/s:25Cumulocity_Client_Library23C8yLocationUpdate_EVENTSSvp">C8yLocationUpdate_EVENT</a>
@@ -715,6 +727,63 @@ This will return an empty set if no recent movement has been detected i.e. no re
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC15maintenanceModeSbvp"></a>
+                    <a name="//apple_ref/swift/Property/maintenanceMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC15maintenanceModeSbvp">maintenanceMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set to true to activate maintenance mode for device in Cumulocity.
+@see <code>toggleMaintenanceMode()</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">maintenanceMode</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC10isDeployedSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isDeployed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC10isDeployedSbvp">isDeployed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns true if the device has been provisioned with its network.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isDeployed</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC12batteryLevelSdvp"></a>
                     <a name="//apple_ref/swift/Property/batteryLevel" class="dashAnchor"></a>
                     <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC12batteryLevelSdvp">batteryLevel</a>
@@ -754,7 +823,7 @@ This will return an empty set if no recent movement has been detected i.e. no re
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Returns the primary metric for this device e.g. Temperature, ambiance etc.
-This attribute is not observable as it can change too frequently, instead use the method <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH015refreshInterval7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SdtF">primaryMetricPublisher(preferredMetric:refreshInterval:)</a></code>
+This attribute is not observable as it can change too frequently, instead use the method <code>primaryMetricPublisher(preferredMetric:refreshInterval:)</code>
 along with the &lsquo;onReceive&rsquo; SwiftUI event to ensure you can update your view fragment efficiently e.g.</p>
 <pre class="highlight swift"><code><span class="kt">VStack</span><span class="p">(</span><span class="nv">alignment</span><span class="p">:</span> <span class="o">.</span><span class="n">leading</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">Text</span><span class="p">(</span><span class="s">"termperature is </span><span class="se">\(</span><span class="k">self</span><span class="o">.</span><span class="err">$</span><span class="n">primaryMeasurement</span><span class="o">.</span><span class="n">min</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
@@ -931,7 +1000,7 @@ along with the &lsquo;onReceive&rsquo; SwiftUI event to ensure you can update yo
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Indicates whether there is currently a background thread in place to periodically fetch the latest preferred metric and battery level
-Use the method <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC28startMonitorForPrimaryMetric_15refreshIntervalySSSg_SdtF">startMonitorForPrimaryMetric(_:refreshInterval:)</a></code></p>
+Use the method <code>startMonitorForPrimaryMetric(_:refreshInterval:)</code></p>
 
                       </div>
                       <div class="declaration">
@@ -1118,9 +1187,9 @@ via the method <code>attachmentForId(id)</code> or posted via the method <code><
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH015refreshInterval7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SdtF"></a>
-                    <a name="//apple_ref/swift/Method/primaryMetricPublisher(preferredMetric:refreshInterval:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH015refreshInterval7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SdtF">primaryMetricPublisher(preferredMetric:<wbr>refreshInterval:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH011autoRefresh7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/primaryMetricPublisher(preferredMetric:autoRefresh:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH011autoRefresh7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SbtF">primaryMetricPublisher(preferredMetric:<wbr>autoRefresh:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1128,14 +1197,15 @@ via the method <code>attachmentForId(id)</code> or posted via the method <code><
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Provides a publisher that can be used to listen for periodic updates to primary metric</p>
+                        <p>Provides a publisher that can be used to listen for periodic updates to primary metric
+The refresh is based on the devices <code><a href="../Structs/C8yDevice.html#/s:25Cumulocity_Client_Library9C8yDeviceV24requiredResponseIntervalSiSgvp">C8yDevice.requiredResponseInterval</a></code> property</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">primaryMetricPublisher</span><span class="p">(</span><span class="nv">preferredMetric</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">refreshInterval</span><span class="p">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yMutableDevice/Measurement.html">Measurement</a></span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">primaryMetricPublisher</span><span class="p">(</span><span class="nv">preferredMetric</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">autoRefresh</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yMutableDevice/Measurement.html">Measurement</a></span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1158,12 +1228,12 @@ via the method <code>attachmentForId(id)</code> or posted via the method <code><
                             <tr>
                               <td>
                                 <code>
-                                <em>refreshInterval</em>
+                                <em>autoRefresh</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>period in seconds in which to refresh values</p>
+                                  <p>set to true if you want the value to be refreshed automatically, false to only update once</p>
                                 </div>
                               </td>
                             </tr>
@@ -1399,6 +1469,45 @@ The implementation is provided via the appropriate network type <code>C8yNetwork
                       <div>
                         <h4>Return Value</h4>
                         <p>Publisher with updated device</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC6delete7Combine12AnyPublisherVySbAA19JcConnectionRequestC8APIErrorVyAA0daL0C_GGyKF"></a>
+                    <a name="//apple_ref/swift/Method/delete()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC6delete7Combine12AnyPublisherVySbAA19JcConnectionRequestC8APIErrorVyAA0daL0C_GGyKF">delete()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deletes the device from Cumulocity, will first deprovision the device from it&rsquo;s related network if it flagged as still being deployed <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC10isDeployedSbvp">isDeployed</a></code></p>
+
+<p>NOTE: If you are the using the <code><a href="../Classes/C8yAssetCollection.html">C8yAssetCollection</a></code> class to present your assets then you will need to also call the AssetCollection
+<code>remove()</code> method to remove the device locally.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    if provisioned and network deprobvisioning failed.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="p">,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Publisher with success/failure of operation</p>
                       </div>
                     </section>
                   </div>
@@ -1921,9 +2030,9 @@ You must ensure that your SwiftUI View references this class object either as a 
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC28fetchMostRecentPrimaryMetricy7Combine12AnyPublisherVyAC11MeasurementVs5NeverOGSSSgF"></a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC28fetchMostRecentPrimaryMetricy7Combine12AnyPublisherVyAC11MeasurementVAA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GGSSSgF"></a>
                     <a name="//apple_ref/swift/Method/fetchMostRecentPrimaryMetric(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC28fetchMostRecentPrimaryMetricy7Combine12AnyPublisherVyAC11MeasurementVs5NeverOGSSSgF">fetchMostRecentPrimaryMetric(_:<wbr>)</a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC28fetchMostRecentPrimaryMetricy7Combine12AnyPublisherVyAC11MeasurementVAA19JcConnectionRequestC8APIErrorVyAA0daQ0C_GGSSSgF">fetchMostRecentPrimaryMetric(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1938,7 +2047,7 @@ You must ensure that your SwiftUI View references this class object either as a 
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchMostRecentPrimaryMetric</span><span class="p">(</span><span class="n">_</span> <span class="nv">preferredMetric</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">C8yMutableDevice</span><span class="o">.</span><span class="kt"><a href="../Classes/C8yMutableDevice/Measurement.html">Measurement</a></span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchMostRecentPrimaryMetric</span><span class="p">(</span><span class="n">_</span> <span class="nv">preferredMetric</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">C8yMutableDevice</span><span class="o">.</span><span class="kt"><a href="../Classes/C8yMutableDevice/Measurement.html">Measurement</a></span><span class="p">,</span> <span class="kt"><a href="../Classes/JcConnectionRequest.html">JcConnectionRequest</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/C8yCumulocityConnection.html">C8yCumulocityConnection</a></span><span class="o">&gt;.</span><span class="kt">APIError</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1952,9 +2061,9 @@ You must ensure that your SwiftUI View references this class object either as a 
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC28startMonitorForPrimaryMetric_15refreshIntervalySSSg_SdtF"></a>
-                    <a name="//apple_ref/swift/Method/startMonitorForPrimaryMetric(_:refreshInterval:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC28startMonitorForPrimaryMetric_15refreshIntervalySSSg_SdtF">startMonitorForPrimaryMetric(_:<wbr>refreshInterval:<wbr>)</a>
+                    <a name="/s:25Cumulocity_Client_Library16C8yMutableDeviceC28startMonitorForPrimaryMetric_15refreshInterval11onFirstLoadySSSg_SdySdcSgtF"></a>
+                    <a name="//apple_ref/swift/Method/startMonitorForPrimaryMetric(_:refreshInterval:onFirstLoad:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:25Cumulocity_Client_Library16C8yMutableDeviceC28startMonitorForPrimaryMetric_15refreshInterval11onFirstLoadySSSg_SdySdcSgtF">startMonitorForPrimaryMetric(_:<wbr>refreshInterval:<wbr>onFirstLoad:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1963,14 +2072,14 @@ You must ensure that your SwiftUI View references this class object either as a 
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Initiates a background thread to periodically refetch the preferred metric from Cumulocity.
-Changes will be issued via the publisher returned from the method <code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH015refreshInterval7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SdtF">primaryMetricPublisher(preferredMetric:refreshInterval:)</a></code></p>
+Changes will be issued via the publisher returned from the method <code>primaryMetricPublisher(preferredMetric:refreshInterval:)</code></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startMonitorForPrimaryMetric</span><span class="p">(</span><span class="n">_</span> <span class="nv">preferredMetric</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">refreshInterval</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startMonitorForPrimaryMetric</span><span class="p">(</span><span class="n">_</span> <span class="nv">preferredMetric</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">refreshInterval</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">onFirstLoad</span><span class="p">:</span> <span class="p">((</span><span class="kt">Double</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -2002,6 +2111,18 @@ Changes will be issued via the publisher returned from the method <code><a href=
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onFirstLoad</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>callback, executed once first metrics have been successfully fetched, successful interval value is given</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -2022,7 +2143,7 @@ Changes will be issued via the publisher returned from the method <code><a href=
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Stops the background thread for the preferred metric refresh and operation history. The thread must have been started by either <code>startMonitorForPrimaryMetric(_:refreshInterval)</code> or
-<code><a href="../Classes/C8yMutableDevice.html#/s:25Cumulocity_Client_Library16C8yMutableDeviceC22primaryMetricPublisher09preferredH015refreshInterval7Combine03AnyI0VyAC11MeasurementVs5NeverOGSSSg_SdtF">primaryMetricPublisher(preferredMetric:refreshInterval:)</a></code></p>
+<code>primaryMetricPublisher(preferredMetric:refreshInterval:)</code></p>
 
                       </div>
                       <div class="declaration">
@@ -2411,7 +2532,7 @@ and the device&rsquo;s <code>C8ytDevice.attachments</code> attribute</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-10-25)</p>
+      <p>&copy; 2020 <a class="link" href="http://johncarter.eu" target="_blank" rel="external">John Carter (john.carter@softwareag.com)</a>. All rights reserved. (Last updated: 2020-12-01)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
