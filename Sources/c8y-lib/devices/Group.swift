@@ -259,11 +259,11 @@ public struct C8yGroup: C8yObject {
 	*/
 	public func defaultId() -> String? {
 		
-		var id = self.c8yId
+		let id = self.c8yId
 		
-		if (self.externalIds.count > 0) {
+		/*if (self.externalIds.count > 0) {
 			id = self.externalIds.first!.value.externalId
-		}
+		}*/
 		
 		return id
 	}
