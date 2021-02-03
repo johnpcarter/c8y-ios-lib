@@ -17,28 +17,32 @@ public let C8Y_OPERATION_PROPERTY = "c8y_Property"
 public let C8Y_OPERATION_FIRMWARE = "c8y_Firmware"
 public let C8Y_OPERATION_UPLOAD = "c8y_UploadConfigFile"
 public let C8Y_OPERATION_DOWNLOAD = "c8y_DownloadConfigFile"
-public let C8Y_OPERATION_RELAY_STATE = "state"
+public let C8Y_OPERATION_RELAY_STATE = "relayState"
 
 /**
 Represents an c8y operation, that can be posted to a remote device [c8y API Reference Guide](https://cumulocity.com/guides/reference/device-control/#operation) for more info
 */
 public struct C8yOperation: JcEncodableContent, Identifiable {
     
-    public private(set) var id: String?
+    public private(set) var id: String = UUID().uuidString
     public private(set) var bulkOperationId: String?
     
-    public private(set) var deviceId: String
+    public var deviceId: String
     public private(set) var deviceExternalIDs: [C8yExternalId]?
     
     public private(set) var creationTime: Date?
-    public internal(set) var status: Status?
+    public var status: Status?
     public private(set) var failureReason: String?
     
-    public private(set) var type: String?
-    public private(set) var description: String?
+    public var type: String = "unknown"
+    public var description: String?
     
     public var operationDetails: OperationDetails
     
+	// populated from model info
+	
+	public var model: OperationTemplate = OperationTemplate()
+	
     public enum Status: String, Codable {
         case SUCCESSFUL
         case FAILED
@@ -46,6 +50,12 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
         case PENDING
     }
     
+	public init() {
+		self.deviceId = ""
+		self.description = ""
+		self.operationDetails = OperationDetails()
+	}
+	
 	/**
 	Creates a new operation for the associated `C8yManagedObject`
 	- parameter forSource internal c8y id of the associated managed object/asset
@@ -64,6 +74,8 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
     
     public init(from decoder:Decoder) throws {
         
+		print("Decoding operation:")
+		
         let values = try decoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
         
         self.deviceId = ""
@@ -72,6 +84,8 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
 		
         for (key) in values.allKeys {
             
+			print("processing key \(key)")
+			
             switch (key.stringValue) {
             case "id":
                 self.id = try values.decode(String.self, forKey: key)
@@ -108,26 +122,63 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
         
         var container = encoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
         
-        try container.encode(deviceId, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "deviceId")!)
-        try container.encode(description, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "description")!)
-
-		if (!operationDetails.params.isEmpty) {
-            try container.encode(operationDetails, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: self.type!)!)
-        } else {
-            try container.encode(C8yManagedObject.EmptyFragment("pow"), forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: self.type!)!)
-        }
+		try container.encode(self.deviceId, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "deviceId")!)
+		try container.encode(self.description, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "description")!)
+		
+		if (self.status != nil && self.status != .PENDING) {
+			try container.encode(self.status!.rawValue, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "status")!)
+		}
+		
+		if (self.operationDetails.values.count > 0) {
+			
+			if (self.type != "unknown") {
+				try container.encode(self.operationDetails, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: self.type)!)
+			} else {
+				try self.operationDetails.values.keys.forEach { key in
+					
+					if (self.operationDetails.values[key]! is C8yStringCustomAsset) {
+						try container.encode((self.operationDetails.values[key]! as! C8yStringCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: key)!)
+					} else if (self.operationDetails.values[key]! is C8yDoubleCustomAsset) {
+						try container.encode((self.operationDetails.values[key]! as! C8yDoubleCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: key)!)
+					} else if (self.operationDetails.values[key]! is C8yBoolCustomAsset) {
+						try container.encode((self.operationDetails.values[key]! as! C8yBoolCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: key)!)
+					}
+				}
+			}
+		}
     }
-    
+	
+	public struct OperationTemplate: Codable {
+		
+		public var type: String = "c8y_Relay"
+		public var description: String? = nil
+		public var value: String? = nil
+		public var valueAsPercentage: Bool?
+		public var label: String? = nil
+		public var activeLabel: String? = nil
+		
+		public var uom: String? = nil
+		public var min: Double? = nil
+		public var max: Double? = nil
+		public var values: [String]? = nil
+		
+		public var symbolForMin: String? = nil
+		public var symbolForMax: String? = nil
+		
+		public init() {
+			
+		}
+	}
+	
 	/**
 	Defines the details of the operation to be executed by the device
 	*/
-    public struct OperationDetails: Codable {
-        
-        public private(set) var id: String?
-        public private(set) var name: String?
-        
-        public var values: Dictionary<String, String> = [:]
-		public var params: Dictionary<String, String> = [:]
+	public struct OperationDetails: Codable {
+		
+		public private(set) var id: String = UUID().uuidString
+		
+		public var name: String?
+		public var values: Dictionary<String, C8yCustomAsset> = [:]
 		
 		public init() {
 		}
@@ -137,49 +188,84 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
 		- parameter name name of the attribute to be set
 		- parameter value the value to be assigned to the attribute
 		*/
-        public init(_ name: String, value: String) {
-        
-            self.name = name
-            self.values = [name: value]
-        }
-        
-        public init(from decoder:Decoder) throws {
-               
-            let values = try decoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
-            
-            for (key) in values.allKeys {
-                switch (key.stringValue) {
-                case "id":
-                    self.id = try values.decode(String.self, forKey: key)
-                case "name":
-                    self.name = try values.decode(String.self, forKey: key)
-                default:
-                    
-                    do {
-                        self.values[key.stringValue] = try values.decode(String.self, forKey: key)
-                    } catch {
-                        print("operation details error: \(error.localizedDescription)")
-                    }
-                }
-            }
-        }
-        
-        public func encode(to encoder: Encoder) throws {
-            
-            var container = encoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
-            
-            if (self.id != nil) {
-                try container.encode(self.id!, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "id")!)
-            }
-            
-            if (self.name != nil) {
-                try container.encode(self.name, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: name!)!)
-            }
-            
-            for kv in self.values {
-                try container.encode(kv.value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: kv.key)!)
+		public init(_ name: String, value: String?) {
+		
+			self.name = name
+			
+			if (value != nil) {
+				self.values = [name: C8yStringCustomAsset(value!)]
+			}
+		}
+		
+		public init(_ name: String, value: Double?) {
+		
+			self.name = name
+			
+			if (value != nil) {
+				self.values = [name: C8yDoubleCustomAsset(value!)]
+			}
+		}
+		
+		public init(_ name: String, value: Bool?) {
+		
+			self.name = name
+			
+			if (value != nil) {
+				self.values = [name: C8yBoolCustomAsset(value!)]
+			}
+		}
+		
+		public init(from decoder:Decoder) throws {
+			   
+			let values = try decoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
+			
+			for key in values.allKeys {
+				switch (key.stringValue) {
+				case "id":
+					self.id = try values.decode(String.self, forKey: key)
+				case "name":
+					self.name = try values.decode(String.self, forKey: key)
+				default:
+					
+					do { self.values[key.stringValue] = C8yStringCustomAsset(try values.decode(String.self, forKey: key))
+					} catch {
+						do { self.values[key.stringValue] = C8yDoubleCustomAsset(try values.decode(Double.self, forKey: key))
+						} catch {
+							do { self.values[key.stringValue] =  C8yBoolCustomAsset(try values.decode(Bool.self, forKey: key))
+							} catch {
+								// h'mm no good
+								
+								throw InvalidOperationTypeValue(key: key.stringValue)
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		public struct InvalidOperationTypeValue: Error {
+			public var key: String?
+		}
+		
+		public func encode(to encoder: Encoder) throws {
+			
+			var container = encoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
+			
+			if (self.name != nil) {
+				try container.encode(self.name, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: name!)!)
+			}
+			
 
-            }
-        }
-    }
+			for kv in self.values {
+				
+				if (kv.value is C8yStringCustomAsset) {
+					try container.encode((kv.value as! C8yStringCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: kv.key)!)
+				} else if (kv.value is C8yDoubleCustomAsset) {
+					try container.encode((kv.value as! C8yDoubleCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: kv.key)!)
+				} else if (kv.value is C8yBoolCustomAsset) {
+					try container.encode((kv.value as! C8yBoolCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: kv.key)!)
+				}
+			}
+		}
+	}
 }

@@ -52,9 +52,9 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
      - returns: Http session task used to invoke request
      */
     
-    internal func _get(resourcePath: String) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
+    internal func _get(resourcePath: String, headers: [String:String]? = nil) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
         
-        return self.call(method: Method.GET, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil)
+		return self.call(method: Method.GET, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil, headers: headers)
     }
     
     /**
@@ -65,9 +65,9 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     - returns: Http session task used to invoke request
     */
     
-    internal func _getMultipart(resourcePath: String) -> AnyPublisher<JcMultiPartRequestResponse, APIError> {
+    internal func _getMultipart(resourcePath: String, headers: [String:String]? = nil) -> AnyPublisher<JcMultiPartRequestResponse, APIError> {
         
-		self.call(method: Method.GET, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil)
+		self.call(method: Method.GET, resourceEndPoint: resourcePath, contentType: nil, data: nil, acceptType: nil, headers: headers)
 			.map({ (response) -> JcMultiPartRequestResponse in
 				return JcMultiPartRequestResponse(response)
 			}).eraseToAnyPublisher()
@@ -103,9 +103,9 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     - returns: Http session task used to invoke request
     */
     
-    internal func _execute<RequestContent:JcEncodableContent>(method: Method,resourcePath: String, contentType: String, request: RequestContent) throws -> AnyPublisher<JcRequestResponse<Data>, APIError> {
+	internal func _execute<RequestContent:JcEncodableContent>(method: Method, resourcePath: String, contentType: String, request: RequestContent, headers: [String:String]? = nil) throws -> AnyPublisher<JcRequestResponse<Data>, APIError> {
         
-		return try self.call(method: method, resourceEndPoint: resourcePath, contentType: contentType, data: self.parseRequestContent(request), acceptType: self.acceptTypeForResponse(request))
+		return try self.call(method: method, resourceEndPoint: resourcePath, contentType: contentType, data: self.parseRequestContent(request), acceptType: self.acceptTypeForResponse(request), headers: headers)
     }
     
     /**
@@ -118,9 +118,9 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     - returns: Http session task used to invoke request
     */
     
-    internal func _execute(method: Method, resourcePath: String, contentType: String, request: Data) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
+    internal func _execute(method: Method, resourcePath: String, contentType: String, request: Data, headers: [String:String]? = nil) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
 
-		return self.call(method: method, resourceEndPoint: resourcePath, contentType: contentType, data: request, acceptType: self.acceptTypeForResponse(request))
+		return self.call(method: method, resourceEndPoint: resourcePath, contentType: contentType, data: request, acceptType: self.acceptTypeForResponse(request), headers: headers)
     }
     
     /**
@@ -133,7 +133,7 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     - returns: Http session task used to invoke request
     */
     
-    internal func _execute(method: Method,resourcePath: String, request: JcMultiPartContent) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
+    internal func _execute(method: Method,resourcePath: String, request: JcMultiPartContent, headers: [String:String]? = nil) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
         
 		return self.call(method: method, resourceEndPoint: resourcePath, contentType: JC_MULTIPART_CONTENT_TYPE, data: request.build(), acceptType: self.acceptTypeForResponse(request))
     }
@@ -155,9 +155,9 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     }
     
     
-	private func call(method: Method, resourceEndPoint: String, contentType: String?, data: Data?, acceptType: String?) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
+	private func call(method: Method, resourceEndPoint: String, contentType: String?, data: Data?, acceptType: String?, headers: [String:String]? = nil) -> AnyPublisher<JcRequestResponse<Data>, APIError> {
 		
-		return _call(method: method, resourceEndPoint: resourceEndPoint, contentType: contentType, data: data, acceptType: acceptType)
+		return _call(method: method, resourceEndPoint: resourceEndPoint, contentType: contentType, data: data, acceptType: acceptType, headers: headers)
 			.tryMap({ (data, response) -> JcRequestResponse<Data> in
 				
 				let statusCode = (response as! HTTPURLResponse).statusCode
@@ -170,7 +170,7 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
 			}).mapError{$0 as! APIError}.eraseToAnyPublisher()
 	}
 	
-	private func _call(method: Method, resourceEndPoint: String, contentType: String?, data: Data?, acceptType: String?) -> AnyPublisher<URLSession.DataTaskPublisher.Output, APIError> {
+	private func _call(method: Method, resourceEndPoint: String, contentType: String?, data: Data?, acceptType: String?, headers: [String:String]? = nil) -> AnyPublisher<URLSession.DataTaskPublisher.Output, APIError> {
 				
 		let url = URL(string: resourceEndPoint, relativeTo: _connection.endPoint)
 		var urlRequest = URLRequest(url: url!)
@@ -184,6 +184,12 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
 		print("invoking \(method.rawValue) - " + urlRequest.url!.absoluteString)
 		
 		urlRequest.addValue(acceptType ?? "application/json", forHTTPHeaderField: "Accept")
+		
+		if (headers != nil) {
+			headers!.forEach { k, v in
+				urlRequest.addValue(v, forHTTPHeaderField: k)
+			}
+		}
 		
 		if (method == Method.POST || method == Method.PUT || method == Method.PATCH) {
 			
@@ -206,7 +212,10 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     }
 	
 	private func makeError(_ response: HTTPURLResponse, data: Data?) -> APIError {
-		return APIError(httpCode: response.statusCode, reason: data != nil ? String(decoding: data!, as: UTF8.self) : response.description)
+		
+		let r = data != nil ? String(decoding: data!, as: UTF8.self) : response.description
+		
+		return APIError(httpCode: response.statusCode, reason: r)
 	}
     
     internal func makeError<T>(_ response: JcRequestResponse<T>) -> APIError {
@@ -221,9 +230,14 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
     
     }
     
-    public struct APIError: Error {
+    public struct APIError: LocalizedError, CustomStringConvertible {
         
         public var httpCode: Int
         public var reason: String?
+		
+		public var description: String {
+			let format = NSLocalizedString("http error: \(httpCode) - \(reason ?? "no reason given")", comment: "Error description")
+			return String.localizedStringWithFormat(format)
+		}
     }
 }

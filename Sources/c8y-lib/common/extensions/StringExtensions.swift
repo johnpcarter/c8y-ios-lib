@@ -9,11 +9,43 @@
 import Foundation
 
 public extension String {
-    
+	
+	var isNumber: Bool {
+		return Double(self) != nil
+	}
+	
+	func spacify() -> String {
+
+		return self.replacingOccurrences(of: "([a-z])([A-Z])", with: "$1 $2", options: .regularExpression, range: nil)
+	}
+	
+	func index(of input: String, options: String.CompareOptions = .literal) -> Int {
+		
+		let i = self.range(of: input, options: options)
+		
+		if (i != nil) {
+			return self.distance(from: self.startIndex, to: i!.lowerBound)
+		} else {
+			return -1
+		}
+	}
+	
+	func convertIndexToInt(_ i: String.Index?) -> Int {
+	
+		if (i != nil) {
+			return self.distance(from: self.startIndex, to: i!)
+		} else {
+			return -1
+		}
+	}
+	
+	func lastIndex(of input: String) -> Int {
+		return index(of: input, options: .backwards)
+	}
+	
     func startsWith(_ string: String) -> Bool {
         
         return lowercased().hasPrefix(string.lowercased())
-
     }
     
     func endsWith(_ string: String) -> Bool {
@@ -36,7 +68,18 @@ public extension String {
             return self.trim()
         }
     }
-    
+	
+	func lastToken(_ separator: String) -> String {
+	
+		let parts = self.split(separator: String.Element(separator))
+		
+		if (parts.count > 1) {
+			return String(parts[parts.count-1]).trim()
+		} else {
+			return self.trim()
+		}
+	}
+	
     func valueOfKeyValuePair(_ separator: String) -> String {
         
          let parts = self.split(separator: String.Element(separator))
@@ -48,17 +91,17 @@ public extension String {
         }
     }
     
-    func substring(from: Int) -> String {
+    func subString(from: Int) -> String {
         
         return String(self[String.Index(utf16Offset: from, in: self)...])
     }
     
-    func substring(to: Int) -> String {
+    func subString(to: Int) -> String {
            
         return String(self[..<String.Index(utf16Offset: to, in: self)])
     }
     
-    func substring(from: Int, to: Int) -> String {
+    func subString(from: Int, to: Int) -> String {
               
         return String(self[String.Index(utf16Offset: from, in: self)..<String.Index(utf16Offset: to, in: self)])
     }
@@ -92,4 +135,6 @@ public extension String {
         
         return out
     }
+	
+	
 }

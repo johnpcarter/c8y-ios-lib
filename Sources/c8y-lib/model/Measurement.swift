@@ -12,11 +12,13 @@ import Foundation
 Constant for c8y battery level measurement
 */
 public let C8Y_MEASUREMENT_BATTERY = "c8y_Battery"
+public let C8Y_ALT_MEASUREMENT_BATTERY = "battery_measurement"
 
 /**
 Constant for c8y battery level series
 */
 public let C8Y_MEASUREMENT_BATTERY_TYPE = "level"
+public let C8Y_ALT_MEASUREMENT_BATTERY_TYPE = "Percentage"
 
 /**
 Constant for c8y battery level series
@@ -78,9 +80,20 @@ public struct C8yMeasurement: Codable {
             case "self":
                 break
             default:
-                try addValues(key, container: values)
+				do {
+					try addValues(key, container: values)
+				} catch {
+					print("ignoring measurement fragment \(key)")
+					// ignore invalid elements
+				}
             }
         }
+		
+		// check if we got a valid measurement
+		
+		if self.measurements == nil || self.measurements!.count == 0 {
+			throw MeasurementsError.noValuesFound
+		}
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -157,8 +170,13 @@ public struct C8yMeasurement: Codable {
         init(forKey key: C8yCustomAssetProcessor.AssetObjectKey, inContainer container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>) throws {
             
             self.label = key.stringValue
-            self.value = try container.decode(Double.self, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "value")!)
-
+			
+			do {
+				self.value = try container.decode(Double.self, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "value")!)
+			} catch {
+				self.value = 0 // set missing value to 0
+			}
+			
             if (container.contains(C8yCustomAssetProcessor.AssetObjectKey(stringValue: "unit")!)) {
                 self.unit = try container.decode(String.self, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "unit")!)
             } else {
@@ -179,5 +197,9 @@ public struct C8yMeasurement: Codable {
             self.unit = unit
         }
     }
+	
+	public enum MeasurementsError: Error {
+		case noValuesFound
+	}
 }
 

@@ -120,11 +120,13 @@ class GroupLoader {
                     
                     // reached end, remove all objects that are not in processed list i.e. don't exist any more
                     
-                    for c in self.parent.children {
-                        if (!self.processedObjects.contains(c.c8yId!)) {
-                            _ = self.parent.removeFromGroup(c.c8yId!)
-                        }
-                    }
+					for c in self.parent.children {
+						if (!self.processedObjects.contains(c.c8yId!)) {
+							self.parent.children.removeAll { (o) -> Bool in
+								return o.c8yId == c.c8yId!
+							}
+						}
+					}
                 }
             }
 			
@@ -135,15 +137,15 @@ class GroupLoader {
     
     func processDeviceObject(_ m: C8yManagedObject) throws {
                            
-        var device = try C8yDevice(m, hierachy: self._path ?? "")
+        let device = try C8yDevice(m, hierachy: self._path ?? "")
            
-        C8yManagedObjectsService(_conn).externalIDsForManagedObject(device.wrappedManagedObject.id!).sink(receiveCompletion: { completion in
-          
-			if (!self._refreshOnly || self.parent.isDifferent(device)) {
-				self.parent.addToGroup(device)
+		self.externalIdsForDevice(device) { updatedDevice, completion in
+			
+			if (!self._refreshOnly || self.parent.isDifferent(updatedDevice)) {
+				self.parent.addToGroup(updatedDevice)
 			}
 			
-			self.processedObjects.append(device.c8yId!)
+			self.processedObjects.append(updatedDevice.c8yId!)
 
             switch completion {
             case .failure(let error):
@@ -152,15 +154,22 @@ class GroupLoader {
             case .finished:
                 self._unwrapAssets()
             }
-			
-			//self._groupLoader.send(self.parent)
-
-        }, receiveValue: { response in
-            device.setExternalIds(response.content!.externalIds)
-            
-        }).store(in: &self._cancellableSet)
+		}
     }
-    
+	
+	private func externalIdsForDevice(_ device: C8yDevice, completionHandler: @escaping (C8yDevice, Subscribers.Completion<JcConnectionRequest<C8yCumulocityConnection>.APIError>) -> Void) {
+	
+		var updatedDevice: C8yDevice = device
+		
+		C8yManagedObjectsService(_conn).externalIDsForManagedObject(device.wrappedManagedObject.id!).subscribe(Subscribers.Sink(receiveCompletion: { completion in
+		  
+			completionHandler(updatedDevice, completion)
+			
+		}, receiveValue: { response in
+			updatedDevice.setExternalIds(response.content!.externalIds)
+		}))
+	}
+	
     func processGroupObject(_ m: C8yManagedObject) throws {
         
         let currentGroup: C8yGroup? = self.parent.parentOf(c8yId: m.id!)?.wrappedValue()

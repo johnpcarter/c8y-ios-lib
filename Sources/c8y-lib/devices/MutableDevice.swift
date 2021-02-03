@@ -30,7 +30,7 @@ public class C8yMutableDevice: ObservableObject  {
 	*/
     @Published public var position: CLLocationCoordinate2D? = nil {
         didSet {
-            if (position != nil) {
+			if (position != nil && (position!.latitude != device.position?.lat || position!.longitude != device.position?.lng)) {
                 device.position = C8yManagedObject.Position(lat: self.position!.latitude, lng: self.position!.longitude, alt: 0)
             }
         }
@@ -42,18 +42,17 @@ public class C8yMutableDevice: ObservableObject  {
 	
 	- returns: List of `CLLocationCoordinate2D` with most recent being at the end of the array
 	*/
-	public var positionHistory: [CLLocationCoordinate2D] {
-		get {
-			var h: [CLLocationCoordinate2D] = []
+	@Published public var tracking: [CLLocationCoordinate2D] = []
+	
+	/**
+	Set to true if you want reload all device data and associated values, will reset back to false once reload has completed
+	*/
+	@Published public var reload: Bool = false {
+		didSet {
 			
-			for o in self.events {
-					
-				if (o.type == C8yLocationUpdate_EVENT && o.position != nil) {
-					h.insert(CLLocationCoordinate2D(latitude: o.position!.lat, longitude: o.position!.lng), at: 0)
-				}
+			if (self.reload) {
+				self.reloadDevice()
 			}
-			
-			return h
 		}
 	}
 	
@@ -64,7 +63,7 @@ public class C8yMutableDevice: ObservableObject  {
         didSet {
             
             if (self.reloadMetrics) {
-                self.updateMetricsForToday()
+				self._deviceMetricsNotifier.reload(self, conn: self.conn!)
             }
         }
     }
@@ -76,7 +75,7 @@ public class C8yMutableDevice: ObservableObject  {
         didSet {
                
             if (self.reloadLogs) {
-                self.updateEventLogsForToday()
+				self._deviceEventsNotifier.reload(self, conn: self.conn!)
             }
         }
     }
@@ -87,7 +86,7 @@ public class C8yMutableDevice: ObservableObject  {
     @Published public var reloadAlarms: Bool = false {
         didSet {
             if (self.reloadAlarms) {
-                self.updateAlarmsForToday()
+				self._deviceAlarmsNotifier.reload(self, conn: self.conn!)
             }
         }
     }
@@ -98,7 +97,7 @@ public class C8yMutableDevice: ObservableObject  {
     @Published public var reloadOperations: Bool = false {
         didSet {
             if (self.reloadOperations) {
-                self.updateOperationHistory()
+				self._deviceOperationsNotifier.reload(self, conn: self.conn!)
             }
         }
     }
@@ -134,8 +133,10 @@ public class C8yMutableDevice: ObservableObject  {
 	/**
 	Returns the current battery level if available (returns -2 if not applicable)
 	*/
-	@Published public private(set) var batteryLevel: Double = -2
+	@Published public internal(set) var batteryLevel: Double = -2
     
+	@Published public private(set) var model: C8yModel
+	
 	/**
 	Returns the primary metric for this device e.g. Temperature, ambiance etc.
 	This attribute is not observable as it can change too frequently, instead use the method `primaryMetricPublisher(preferredMetric:refreshInterval:)`
@@ -151,22 +152,22 @@ public class C8yMutableDevice: ObservableObject  {
 	}
 	```
 	*/
-    public private(set) var primaryMetric: Measurement = Measurement()
+	public internal(set) var primaryMetric: C8yDeviceMetricsNotifier.Measurement = C8yDeviceMetricsNotifier.Measurement()
 	
 	/**
 	Returns the primary metric history
 	*/
-    @Published public private(set) var primaryMetricHistory: MeasurementSeries = MeasurementSeries()
+	@Published public internal(set) var primaryMetricHistory: C8yDeviceMetricsNotifier.MeasurementSeries = C8yDeviceMetricsNotifier.MeasurementSeries()
     
 	/**
 	Returns all available measurements captured by Cumulocity for this device
 	*/
-    @Published public var measurements: [String:[C8yMeasurement]] = [:]
+    @Published public internal(set) var measurements: [String:[C8yMeasurement]] = [:]
 
 	/**
 	Returns all the latest events received by Cumulocity for the device
 	*/
-    @Published public var events: [C8yEvent] = []
+	@Published public var events: [C8yEvent] = []
     
 	/**
 	Returns all the latest alarms received by Cumulocity for the device
@@ -177,12 +178,6 @@ public class C8yMutableDevice: ObservableObject  {
 	Returns a list of all operations that are pending or completed that have been submitted to Cumulocity for this device
 	*/
     @Published public var operationHistory: [C8yOperation] = []
-    
-	/**
-	Indicates whether there is currently a background thread in place to periodically fetch the latest preferred metric and battery level
-	Use the method `startMonitorForPrimaryMetric(_:refreshInterval:)`
-	*/
-    public private(set) var isMonitoring: Bool = false
     
 	/**
 	Convenience attribute to try and detect if a device is currently being restarted, i.e. someone submitted a 'c8y_Restart' operation
@@ -198,7 +193,8 @@ public class C8yMutableDevice: ObservableObject  {
 			}
 		}
 	}
-	private var _restartTime: Date? = nil
+	
+	internal var _restartTime: Date? = nil
 	
 	/**
 	Convenience attribute that caches the last binary file associated with the device that was fetched from Cumulocity
@@ -211,18 +207,13 @@ public class C8yMutableDevice: ObservableObject  {
 	*/
     public var conn: C8yCumulocityConnection?
     
-    private var _deviceMetricsTimer: JcRepeatingTimer?
-	private var _deviceOperationHistoryTimer: JcRepeatingTimer?
-	
-    private var _refreshInterval: TimeInterval = -1
-    private var _cancellable: [AnyCancellable] = []
-    private var _monitorPublisher: CurrentValueSubject<Measurement, Never>?
-    
 	private var _cachedResponseInterval: Int = 30
-
-	private var _primaryMeasurementInterval: Double = -1
-	private var _attempts: Int = 0
 	
+	private var _deviceMetricsNotifier: C8yDeviceMetricsNotifier = C8yDeviceMetricsNotifier()
+	private var _deviceOperationsNotifier: C8yDeviceOperationsNotifier = C8yDeviceOperationsNotifier()
+	private var _deviceEventsNotifier: C8yDeviceEventsNotifier = C8yDeviceEventsNotifier()
+	private var _deviceAlarmsNotifier: C8yDeviceAlarmsNotifier = C8yDeviceAlarmsNotifier()
+
 	/**
 	Default constructor representing a new `C8yDevice`
 	*/
@@ -230,6 +221,7 @@ public class C8yMutableDevice: ObservableObject  {
         self.device = C8yDevice()
 		self.maintenanceMode = false;
 		self.isDeployed = false;
+		self.model = C8yModel()
     }
 	
     /**
@@ -237,77 +229,140 @@ public class C8yMutableDevice: ObservableObject  {
 	- parameter device: Device to which we want to fetch mutable data
 	- parameter connection: Connection details in order to connect to Cumulocity
 	*/
-    public init(_ device: C8yDevice, connection: C8yCumulocityConnection) {
+	public init(_ device: C8yDevice, connection: C8yCumulocityConnection, deviceModels: C8yDeviceModels? = nil) {
         
         self.device = device
         self.conn = connection
 		self.maintenanceMode = device.requiredResponseInterval == -1
 		self.isDeployed = device.isDeployed;
-		self._primaryMeasurementInterval = Double(device.requiredResponseInterval == nil ? 60 : device.requiredResponseInterval! * 60)
 
+		self.model = C8yModel(device.revision ?? "", name: device.model, category: .Unknown, link: nil)
+		
+		if (self.device.wrappedManagedObject.properties[C8Y_MEASUREMENT_BATTERY] != nil) {
+			self.batteryLevel = (self.device.wrappedManagedObject.properties[C8Y_MEASUREMENT_BATTERY]! as! C8yDoubleCustomAsset).value
+		} else if (self.device.wrappedManagedObject.properties[C8Y_ALT_MEASUREMENT_BATTERY] != nil) {
+			self.batteryLevel = (self.device.wrappedManagedObject.properties[C8Y_ALT_MEASUREMENT_BATTERY]! as! C8yDoubleCustomAsset).value
+		}
+		
         if (self.device.position != nil) {
             self.position = CLLocationCoordinate2D(latitude: device.position!.lat, longitude: device.position!.lng)
         }
+		
+		if (deviceModels != nil) {
+			deviceModels!.modelFor(device: self.device)
+				.receive(on: RunLoop.main)
+				.subscribe(Subscribers.Sink(receiveCompletion: { completion in
+					print("No model available")
+				}, receiveValue: { result in
+					
+					self.model = result
+				}))
+		}
+		self._deviceMetricsNotifier.conn = self.conn
+		self._deviceEventsNotifier.conn = self.conn
+		self._deviceAlarmsNotifier.conn = self.conn
+		self._deviceOperationsNotifier.conn = self.conn
+
+		self.getExternalIds()
     }
     
     deinit {
-        self.stopMonitoring()
+		self.stopMonitoring()
     }
 	
-	private var _loadBatteryAndPrimaryMetricValuesDONE: Bool = false
-	private var _preferredMetric: String? = nil
+	public func reloadDevice() {
+		
+		C8yManagedObjectsService(self.conn!).get(self.device.c8yId!)
+			.receive(on:RunLoop.main)
+			.subscribe(Subscribers.Sink(receiveCompletion: { completion in
+				self.reloadAllAssociatedData()
+				self.reload = false
+			}, receiveValue: { response in
+				
+				if (response.content != nil) {
+					do {
+						self.device = try C8yDevice(response.content!)
+					} catch {
+						//TODO: is it okay to ignore error
+					}
+				}
+			}))
+	}
+	       
+	public func reloadAllAssociatedData() {
+	
+		self._deviceMetricsNotifier.reload(self, conn: self.conn!)
+		self._deviceOperationsNotifier.reload(self, conn: self.conn!)
+		self._deviceEventsNotifier.reload(self, conn: self.conn!)
+		self._deviceAlarmsNotifier.reload(self, conn: self.conn!)
+	}
+	
+	public func startMonitorForPrimaryMetric(_ preferredMetric: String?, refreshInterval: Double) {
+	
+		self._deviceMetricsNotifier.deviceWrapper = self
+		self._deviceMetricsNotifier.conn = self.conn!
+		
+		self._deviceMetricsNotifier.startMonitorForPrimaryMetric(preferredMetric, refreshInterval: refreshInterval)
+	}
+	
+	public func stopMonitoring() {
+		
+		self._deviceMetricsNotifier.stopMonitoring()
+		self._deviceOperationsNotifier.stopMonitoring()
+		self._deviceEventsNotifier.stopMonitoring()
+		self._deviceAlarmsNotifier.stopMonitoring()
+	}
+	
+	public func trackDevice() {
+	
+		self._deviceEventsNotifier.listenForNewEvents().receive(on: RunLoop.main).subscribe(Subscribers.Sink(receiveCompletion: { completed in
+			
+		}, receiveValue: { event in
+						
+			if (event.type == C8yLocationUpdate_EVENT && event.position != nil) {
+				let p = CLLocationCoordinate2D(latitude: event.position!.lat, longitude: event.position!.lng)
+				
+				self.position = p
+				self.tracking.insert(p, at: 0)
+			}
+		}))
+	}
+	
+	public func stopTracking() {
+		self._deviceEventsNotifier.stopMonitoring()
+	}
 	
 	/**
-	Provides a publisher that can be used to listen for periodic updates to primary metric
-	The refresh is based on the devices `C8yDevice.requiredResponseInterval` property
-	
-	- parameter preferredMetric: label of the measurement to periodically fetched requires both name and series separated by a dot '.' e.g. 'Temperature.T'
-	- parameter autoRefresh: set to true if you want the value to be refreshed automatically, false to only update once
-	- returns: Publisher that will issue updated metrics periodically
+	Sets the device's requiredResponseInterval to -1 to trigger Cumulocity's maintenance mode.
+	Maintenance mode deactivates all of the devices alarms to avoid false flags.
+	Calling this method if already in maintenance mode sets the requiredResponseInterval back to the last know value or 30 minutes if not known.
 	*/
-	public func primaryMetricPublisher(preferredMetric: String?, autoRefresh: Bool = false) -> AnyPublisher<Measurement, Never> {
-	
-		if (_loadBatteryAndPrimaryMetricValuesDONE && self._preferredMetric == preferredMetric) {
-			return self._monitorPublisher!.eraseToAnyPublisher()
+	public func toggleMaintainanceMode() throws {
+			
+		if (device.wrappedManagedObject.requiredAvailability == nil) {
+			self.device.wrappedManagedObject.requiredAvailability = C8yManagedObject.RequiredAvailability(responseInterval: -1)
+		} else if (device.operationalLevel == .maintenance) {
+			self.device.wrappedManagedObject.requiredAvailability!.responseInterval = self._cachedResponseInterval
+		} else {
+			self._cachedResponseInterval = self.device.wrappedManagedObject.requiredAvailability!.responseInterval
+			self.device.wrappedManagedObject.requiredAvailability!.responseInterval = -1
 		}
+		
+		try C8yManagedObjectsService(self.conn!).put(C8yManagedObject.init(self.device.c8yId!, requiredAvailability: self.device.wrappedManagedObject.requiredAvailability!))
+			.receive(on: RunLoop.main)
+			.subscribe(Subscribers.Sink(receiveCompletion: { (completion) in
+				// nothing to do
 				
-		self._loadBatteryAndPrimaryMetricValuesDONE = true
-		self._preferredMetric = preferredMetric
-		
-		if (device.externalIds.count == 0) {
-			self.getExternalIds()
-		}
-		
-		// setup monitoring
-		
-		let interval: Double = Double((device.requiredResponseInterval ?? 60)) * 60.0
-
-		print("setting up thread for primary metric '\(preferredMetric ?? "nil")' for \(self.device.name) to \(autoRefresh)")
-
-		self.startMonitorForPrimaryMetric(preferredMetric, refreshInterval:interval) { successfulInterval in
-		
-			// get battery level
-
-			self.getMeasurementSeries(self.device, type: C8Y_MEASUREMENT_BATTERY, series: C8Y_MEASUREMENT_BATTERY_TYPE, interval: successfulInterval, connection: self.conn!)
-				.receive(on: RunLoop.main)
-				.sink { completion in
-				switch completion {
-					case .failure:
-						self.batteryLevel = -1
-					case .finished:
-						// do nothing
-						print("nowt")
-				}
-			} receiveValue: { series in
-				if (series.values.count > 0) {
-					self.batteryLevel = series.values.last!.values[0].min
-				}
-			}.store(in: &self._cancellable)
-		}
-		
-		return _monitorPublisher!.eraseToAnyPublisher()
+				self._ignore = true
+				self.maintenanceMode = self.device.requiredResponseInterval == -1
+				self._ignore = false
+				
+			}) { response in
+				
+				self.device.wrappedManagedObject.availability = C8yManagedObject.Availability(status: self.device.wrappedManagedObject.requiredAvailability!.responseInterval == -1 ? .MAINTENANCE : .AVAILABLE, lastMessage: self.device.wrappedManagedObject.availability?.lastMessage ?? Date())
+		})
 	}
-	        
+	
 	/**
 	Submits an operation to Cumulocity to ask the device to restart
 	*NOTE* This will only work if supported by the device and its agent and might take several minutes or even hours before it is enacted
@@ -323,65 +378,33 @@ public class C8yMutableDevice: ObservableObject  {
 			self.isRestarting = true
 			
 			let op = C8yOperation(forSource: self.device.c8yId!, type: C8Y_OPERATION_RESTART, description: "request made from device manager app")
-								  
-			try C8yOperationService(self.conn!).post(operation: op)
-				.receive(on: RunLoop.main)
-				.sink(receiveCompletion: { (completion) in
+				
+			try self.sendOperation(op)
+			.subscribe(Subscribers.Sink(receiveCompletion: { (completion) in
 					
-					switch completion {
-						case .failure(let error):
-							print(error)
-							self.isRestarting = false
-						case .finished:
-							// need to do this so we can find out when restart has completed
-							self.startMonitoringForOperationHistory(30)
-					}
-				}) { (response) in
-					self.operationHistory.insert(op, at: 0)
-					self.objectWillChange.send()
+				switch completion {
+					case .failure(let error):
+						print(error)
+					case .finished:
+						print("done")
+				}
 					
-				}.store(in: &self._cancellable)
+				self.isRestarting = false
+
+			}) { (response) in
+				self.operationHistory.insert(op, at: 0)
+				self.objectWillChange.send()
+			})
 		} catch {
 			self.isRestarting = false
 		}
 	}
-		
-	/**
-	Sets the device's requiredResponseInterval to -1 to trigger Cumulocity's maintenance mode.
-	Maintenance mode deactivates all of the devices alarms to avoid false flags.
-	Calling this method if already in maintenance mode sets the requiredResponseInterval back to the last know value or 30 minutes if not known.
-	*/
-    public func toggleMaintainanceMode() throws {
-            
-        if (device.wrappedManagedObject.requiredAvailability == nil) {
-            self.device.wrappedManagedObject.requiredAvailability = C8yManagedObject.RequiredAvailability(responseInterval: -1)
-        } else if (device.operationalLevel == .maintenance) {
-            self.device.wrappedManagedObject.requiredAvailability!.responseInterval = self._cachedResponseInterval
-        } else {
-            self._cachedResponseInterval = self.device.wrappedManagedObject.requiredAvailability!.responseInterval
-            self.device.wrappedManagedObject.requiredAvailability!.responseInterval = -1
-        }
-		
-		try C8yManagedObjectsService(self.conn!).put(C8yManagedObject.init(self.device.c8yId!, requiredAvailability: self.device.wrappedManagedObject.requiredAvailability!))
-			.receive(on: RunLoop.main)
-			.sink(receiveCompletion: { (completion) in
-				// nothing to do
-				
-				self._ignore = true
-				self.maintenanceMode = self.device.requiredResponseInterval == -1
-				self._ignore = false
-				
-			}) { response in
-				
-				self.device.wrappedManagedObject.availability = C8yManagedObject.Availability(status: self.device.wrappedManagedObject.requiredAvailability!.responseInterval == -1 ? .MAINTENANCE : .AVAILABLE, lastMessage: self.device.wrappedManagedObject.availability?.lastMessage ?? Date())
-		}.store(in: &self._cancellable)
-    }
 	
 	/**
 	Submits an operation to switch the relay and also synchronises the device relay attribute `C8yDevice.relayState`.
 	*NOTE* - Only applicable if the device or agent supports it.
 	*/
-    public func toggleRelay() throws {
+    public func toggleRelay() throws -> AnyPublisher<C8yOperation, Error> {
     
         var state: C8yManagedObject.RelayStateType = .CLOSED
         
@@ -392,123 +415,45 @@ public class C8yMutableDevice: ObservableObject  {
                 state = .CLOSED
             }
         }
-        
-        var op = C8yOperation(forSource: self.device.c8yId!, type: C8Y_OPERATION_RELAY, description: "Relay Operation")
-        op.operationDetails = C8yOperation.OperationDetails(C8Y_OPERATION_RELAY_STATE, value: state.rawValue)
-        
-        try C8yOperationService(self.conn!).post(operation: op)
-            .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { (completion) in
-                // nothing to do
-				
-				print("here")
-
-            }) { (response) in
-                if (state == .CLOSED) {
-                    self.device.wrappedManagedObject.relayState = .CLOSE_PENDING
-                } else {
-                    self.device.wrappedManagedObject.relayState = .OPEN_PENDING
-                }
-                self.operationHistory.insert(op, at: 0)
-				
-				// update managed object in c8y to reflect relay position
-				
-				do {
-					try C8yManagedObjectsService(self.conn!).put(self.device.wrappedManagedObject)
-						.receive(on: RunLoop.main)
-						.sink(receiveCompletion: { error in
-							self.objectWillChange.send()
-						}, receiveValue: { obj in
-							// do nothing
-						}).store(in: &self._cancellable)
-				} catch {
-					//do nothing
-					print("failed \(error.localizedDescription)")
-				}
-        }.store(in: &self._cancellable)
-    }
-    
-	/**
-	Updates the server side Cumulocity Managed Object based on the properties provided here.
-	- parameter withKey: name of the managed object attribute to updated/added
-	- parameter value: The value to be assigned
-	- throws: Invalid key/value pair
-	*/
-	public func updateDeviceProperty(withKey key: String, value: String) throws  {
 		
-		try C8yManagedObjectsService(self.conn!).put(C8yManagedObject.init(self.device.c8yId!, properties: Dictionary(uniqueKeysWithValues: zip([key], [value]))))
-			.receive(on: RunLoop.main)
-			.sink(receiveCompletion: { error in
-				self.objectWillChange.send()
-			}, receiveValue: { obj in
-				// do nothing
-			}).store(in: &self._cancellable)
+		var op = C8yOperation(forSource: self.device.c8yId!, type: C8Y_OPERATION_RELAY, description: "set relay state to '\(state.rawValue)'")
+		op.operationDetails = C8yOperation.OperationDetails(C8Y_OPERATION_RELAY_STATE, value: state.rawValue)
+
+		return try self.sendOperation(op).map({ op -> C8yOperation in
+			
+			self.device.relayState = state
+			
+			print("========= toggle response")
+
+			do { try self.updateDeviceProperty(withKey: C8Y_OPERATION_RELAY, value: C8yStringCustomAsset(state.rawValue))
+			} catch {
+				// ignore
+				
+			}
+			
+			return op
+		}).eraseToAnyPublisher()
 	}
+    
+	public func operation(for type: String) -> C8yOperation {
+	
+		let template = self.model.operationTemplate(for: type)
+		var op = C8yOperation(forSource: self.device.c8yId!, type: type, description: template.description ?? "Operation sent from c8y iphone app")
 		
-	/**
-	Provisions the netwok connection for the device.
-	The implementation is provided via the appropriate network type `C8yNetworks.provision(_:conn)`
-	
-	This method does nothing If no specific network type is specified i.e. the device connects over standard ip public network
-	
-	- returns: Publisher with updated device
-	- throws: If network is invalid or not recognised
-	*/
-	public func provision() throws -> AnyPublisher<C8yDevice, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
-    
-		return try C8yNetworks.provision(device, conn: self.conn!)
-			.receive(on: RunLoop.main)
-			.map({device -> C8yDevice in
-				self.device = device
-				self.isDeployed = true
-				return device
-			}).eraseToAnyPublisher()
-    }
-    
-	/**
-	Deprovisions the netwok connection from the device.
-	The implementation is provided via the appropriate network type `C8yNetworks.deprovision(_:conn)`
-	
-	This method does nothing If no specific network type is specified i.e. the device connects over standard ip public network
-
-	- returns: Publisher with updated device
-	- throws: If network is invalid or not recognised
-	*/
-	public func deprovision() throws -> AnyPublisher<C8yDevice, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
-    
-		return try C8yNetworks.deprovision(device, conn: self.conn!)
-			.receive(on: RunLoop.main)
-			.map({device -> C8yDevice in
-				self.device = device
-				self.isDeployed = false
-				return device
-			}).eraseToAnyPublisher()
-    }
-    
-	/**
-	Deletes the device from Cumulocity, will first deprovision the device from it's related network if it flagged as still being deployed `isDeployed`
-	
-	NOTE: If you are the using the `C8yAssetCollection` class to present your assets then you will need to also call the AssetCollection
-	`remove()` method to remove the device locally.
-	
-	- returns: Publisher with success/failure of operation
-	- throws: if provisioned and network deprobvisioning failed.
-	*/
-	public func delete() throws -> AnyPublisher<Bool, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
+		op.model = template
 		
-		if self.device.network.isProvisioned {
-			return try self.deprovision().flatMap({ response -> AnyPublisher<Bool, JcConnectionRequest<C8yCumulocityConnection>.APIError> in
-				return C8yManagedObjectsService(self.conn!).delete(id: self.device.c8yId!).map({ response -> Bool in
-					return response.content!
-				}).eraseToAnyPublisher()
-			}).eraseToAnyPublisher()
-		} else {
-			return C8yManagedObjectsService(self.conn!).delete(id: self.device.c8yId!).map({ response -> Bool in
-				return response.content!
-			}).eraseToAnyPublisher()
+		if (template.value != nil) {
+			let v = self.device.wrappedManagedObject.properties[template.value!]
+			
+			if (v != nil && v is C8yStringCustomAsset) {
+				op.operationDetails = C8yOperation.OperationDetails(template.value!, value: (v as! C8yStringCustomAsset).value)
+			} else {
+				op.operationDetails = C8yOperation.OperationDetails(template.value!, value: "")
+			}
 		}
+		
+		return op
 	}
-	
 	/**
 	Submits the given operation to Cumulocity and records it in `operationHistory`
 	The operation will have an initial status of PENDING
@@ -517,22 +462,103 @@ public class C8yMutableDevice: ObservableObject  {
 	- returns: Publisher with cumulocity internal id of new operation.
 	- throws: Invalid operation
 	*/
-    public func sendOperation(_ op: C8yOperation) throws -> AnyPublisher<String, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
-    		
-        try C8yOperationService(self.conn!).post(operation: op)
+	public func sendOperation(_ op: C8yOperation) throws -> AnyPublisher<C8yOperation, Error> {
+					
+		return try self._deviceOperationsNotifier.run(op, deviceWrapper: self, conn: self.conn!)
 			.receive(on: RunLoop.main)
-			.map({ response -> String in
+			.map({ updatedOperation -> C8yOperation in
 				
-				let nop = response.content
-				self.operationHistory.insert(nop!, at: 0)
-				return nop!.id!
+				print("========= send operation responded")
+				
+				if (updatedOperation.model.value != nil) {
+										
+					do {
+						
+						let simpleValue = updatedOperation.operationDetails.values[updatedOperation.model.value!]
+												
+						if (simpleValue is C8yStringCustomAsset) {
+							try self.updateDeviceProperty(withKey: updatedOperation.model.value!, value: simpleValue as! C8yStringCustomAsset)
+						} else if (simpleValue is C8yDoubleCustomAsset) {
+							try self.updateDeviceProperty(withKey: updatedOperation.model.value!, value: simpleValue as! C8yDoubleCustomAsset)
+						} else if (simpleValue is C8yBoolCustomAsset) {
+							try self.updateDeviceProperty(withKey: updatedOperation.model.value!, value: simpleValue as! C8yBoolCustomAsset)
+						}
+					} catch {
+						// ignore
+					}
+				}
+				
+				return updatedOperation
 			}).eraseToAnyPublisher()
-    }
+	}
+	
+	/**
+	Returns the current status for given operation type, Will return only latest valeu if multiple operations exist for the same type
+	- parameter type: The type of operation to be queried
+	- returns: The latest operation for the given type or nil if none found
+	*/
+	public func statusForOperation(_ type: String) -> C8yOperation? {
+	
+		var op: C8yOperation? = nil
+		
+		for o in self.operationHistory {
+			
+			if (o.type == type) {
+				op = o
+				break
+			}
+		}
+		
+		return op
+	}
+	
+	/**
+	Updates the server side Cumulocity Managed Object based on the properties provided here.
+	- parameter withKey: name of the managed object attribute to updated/added
+	- parameter value: The value to be assigned
+	- throws: Invalid key/value pair
+	*/
+	public func updateDeviceProperty<T:C8ySimpleAsset>(withKey key: String, value: T) throws  {
+		
+		try C8yManagedObjectsService(self.conn!).put(C8yManagedObject.init(self.device.c8yId!, properties: Dictionary(uniqueKeysWithValues: zip([key], [value]))))
+			.receive(on: RunLoop.main)
+			.subscribe(Subscribers.Sink(receiveCompletion: { error in
+				self.objectWillChange.send()
+			}, receiveValue: { obj in
+				// reflect changes in local copy
+				
+				self.device.wrappedManagedObject.properties[key] = value
+			}))
+	}
+    
+	/**
+	Deletes the device from Cumulocity, device must have been deprovisioned beforehand.
+	
+	NOTE: If you are the using the `C8yAssetCollection` class to present your assets then you will need to also call the AssetCollection
+	`remove()` method to remove the device locally.
+	
+	- returns: Publisher with success/failure of operation
+	- throws: if device is provisioned
+	*/
+	public func delete() throws -> AnyPublisher<Bool, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
+		
+		guard !self.device.network.provisioned else {
+			throw OperationError.deprovisionBeforehand
+		}
+			
+		return C8yManagedObjectsService(self.conn!).delete(id: self.device.c8yId!).map({ response -> Bool in
+			return response.content!
+		}).eraseToAnyPublisher()
+	}
+	
+	public enum OperationError: Error {
+		case deprovisionBeforehand
+	}
 	
 	/**
 	Submits the given event to Cumulocity and records it in `events`
 	
-	*NOTE* - `C8yLocationUpdate_EVENT` type events will also update the devices `C8yMutableDevice.postion` attribute as a side effect
+	*NOTE* - `C8yLocationUpdate_EVENT` type events will also update the devices `C8yMutableDevice.position` attribute as a side effect
 	
 	- parameter event: The `C8yEvent` to be posted to Cumulocity for eventual execution by the device.
 	- returns: Publisher with cumulocity internal id of new event.
@@ -642,369 +668,6 @@ public class C8yMutableDevice: ObservableObject  {
         
         return pd
     }
-
-	/**
-	Fetches latest device metrics, views will be updated automatically via published  attribute `measurements`
-	You must ensure that your SwiftUI View references this class object either as a @ObservedObject or @StateObject
-	*/
-    public func updateMetricsForToday() {
-        self.fetchAllMetricsForToday()
-            .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { (completion) in
-                self.reloadMetrics = false
-                switch completion {
-                case .failure(let error):
-                    print("failed due to \(error)")
-                default:
-                    print("done")
-                }
-				
-				self.reloadMetrics = false
-            }) { results in
-                self.measurements = results
-        }.store(in: &self._cancellable)
-    }
-    
-	/**
-	Fetches latest device metrics from Cumulocity
-	- returns: Publisher containing latest device measurements
-	*/
-    public func fetchAllMetricsForToday() -> AnyPublisher<[String:[C8yMeasurement]], JcConnectionRequest<C8yCumulocityConnection>.APIError> {
-                    
-        return C8yMeasurementsService(self.conn!).get(forSource: self.device.c8yId!, pageNum: 0, from: Date().advanced(by: -86400), to: Date(), reverseDateOrder: true).map({response in
-            
-            var results: [String:[C8yMeasurement]] = [:]
-            
-            for m in response.content!.measurements {
-                let type = self.generaliseType(type: m.type!)
-                var measurements: [C8yMeasurement]? = results[type]
-                
-                if (measurements == nil) {
-                    measurements = []
-                }
-                
-                measurements!.append(m)
-                results[type] = measurements
-            }
-            
-            return results
-
-            }).eraseToAnyPublisher()
-    }
-    
-	/**
-	Fetches latest device event logs, views will be updated automatically via published  attribute `events`
-	You must ensure that your SwiftUI View references this class object either as a @ObservedObject or @StateObject
-	*/
-    public func updateEventLogsForToday() {
-        
-        self.fetchEventLogsForToday()
-            .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { completion in
-                self.reloadLogs = false
-                switch completion {
-                case .failure(let error):
-                    print("failed due to \(error)")
-                default:
-                    print("done")
-                }
-				
-				self.reloadLogs = false
-            }) { results in
-                self.events = results
-        }.store(in: &self._cancellable)
-    }
-    
-	/**
-	Fetches latest device events from Cumulocity
-	- returns: Publisher containing latest device events
-	*/
-    public func fetchEventLogsForToday() -> AnyPublisher<[C8yEvent], JcConnectionRequest<C8yCumulocityConnection>.APIError> {
-                    
-        return C8yEventsService(self.conn!).get(source: self.device.c8yId!, pageNum: 0).map({response in
-            
-            return response.content!.events
-            
-        }).eraseToAnyPublisher()
-    }
-
-	/**
-	Fetches latest device operation history, views will be updated automatically via published  attribute `operationHistory`
-	You must ensure that your SwiftUI View references this class object either as a @ObservedObject or @StateObject
-	*/
-    public func updateOperationHistory() {
-        
-        self.fetchOperationHistory()
-            .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { completion in
-                self.reloadOperations = false
-                switch completion {
-                case .failure(let error):
-                    print("failed due to \(error)")
-                default:
-                    print("done")
-                }
-				
-				self.reloadOperations = false
-            }) { results in
-                self.operationHistory = results.reversed()
-                
-                for op in self.operationHistory {
-                    if op.type == C8Y_OPERATION_RELAY {
-                        if (op.status == .SUCCESSFUL) {
-                            self.device.wrappedManagedObject.relayState = C8yManagedObject.RelayStateType(rawValue: op.type!)
-                        } else if (op.status == .FAILED) {
-                            if (op.type == C8yManagedObject.RelayStateType.OPEN.rawValue) {
-                                self.device.wrappedManagedObject.relayState = C8yManagedObject.RelayStateType.CLOSED
-                            } else {
-                                self.device.wrappedManagedObject.relayState = C8yManagedObject.RelayStateType.OPEN
-                            }
-                        }
-                    }
-					
-					if (self.isRestarting && op.type == C8Y_OPERATION_RESTART && (op.status == .SUCCESSFUL || op.status == .FAILED) && op.creationTime! > self._restartTime!) {
-						self.isRestarting = false
-					}
-                }
-        }.store(in: &self._cancellable)
-    }
-    
-	/**
-	Fetches latest device operation history from Cumulocity
-	- returns: Publisher containing latest operation history
-	*/
-    public func fetchOperationHistory() -> AnyPublisher<[C8yOperation], JcConnectionRequest<C8yCumulocityConnection>.APIError> {
-                      
-        return C8yOperationService(self.conn!).get(self.device.c8yId!).map({response in
-            return response.content!.operations
-        }).eraseToAnyPublisher()
-    }
-    
-	/**
-	Fetches latest device alarms,  views will be updated automatically via published  attribute `alarms`
-	You must ensure that your SwiftUI View references this class object either as a @ObservedObject or @StateObject
-	*/
-    public func updateAlarmsForToday() {
-        
-        self.fetchActiveAlarmsForToday()
-            .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { completion in
-                self.reloadAlarms = false
-                switch completion {
-                case .failure(let error):
-                    print("failed due to \(error)")
-                default:
-                    print("done")
-                }
-				
-				self.reloadAlarms = false
-            }) { results in
-                self.alarms = results
-        }.store(in: &self._cancellable)
-    }
-    
-	/**
-	Fetches latest device alarms from Cumulocity
-	- returns: Publisher containing latest alarms
-	*/
-    public func fetchActiveAlarmsForToday() -> AnyPublisher<[C8yAlarm], JcConnectionRequest<C8yCumulocityConnection>.APIError> {
-            
-        return C8yAlarmsService(self.conn!).get(source: self.device.c8yId!, status: .ACTIVE, pageNum: 0)
-            .merge(with: C8yAlarmsService(self.conn!).get(source: self.device.c8yId!, status: .ACKNOWLEDGED, pageNum: 0))
-            .collect()
-            .map({response in
-                var array: [C8yAlarm] = []
-        
-                for p in response {
-                    array.append(contentsOf: p.content!.alarms)
-                }
-                
-                return array
-        }).eraseToAnyPublisher()
-    }
-    
-	enum CombineError: Error {
-		case impossible
-	}
-	/**
-	Fetches latest device prefered metric from Cumulocity
-	- returns: Publisher containing latest preferred metric
-	*/
-    public func fetchMostRecentPrimaryMetric(_ preferredMetric: String?) -> AnyPublisher<C8yMutableDevice.Measurement, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
-           
-        if (device.c8yId! != "_new_") {
-            
-            var mType: String? = nil
-            var mSeries: String? = nil
-            
-			if (preferredMetric != nil && preferredMetric!.contains(".")) {
-                let parts = preferredMetric!.split(separator: ".")
-				
-				if (parts.count >= 2) {
-					mType = String(parts[0])
-					mSeries = String(parts[1])
-				}
-            } else if (self.primaryDataPoint().count > 0) {
-                let metric: [C8yDataPoints.DataPoint] = self.primaryDataPoint()
-                mType = metric[0].reference
-                mSeries = metric[0].value.series
-            }
-            
-            if (mType != nil) {
-				return self.getMeasurementSeries(device, type: mType!, series: mSeries!, interval: self._primaryMeasurementInterval, connection: self.conn!)
-					.receive(on: RunLoop.main)
-					.map {response in
-						return self.populatePrimaryMetric(response, type: mType!)
-
-					}.flatMap { measurement -> AnyPublisher<C8yMutableDevice.Measurement, JcConnectionRequest<C8yCumulocityConnection>.APIError> in
-						if (measurement.type == nil && self._attempts < 3) {
-							self._attempts += 1
-							// perhaps we need to look back further
-							self._primaryMeasurementInterval = self._primaryMeasurementInterval * 2
-							
-							return self.fetchMostRecentPrimaryMetric(preferredMetric)
-						} else {
-							return Just(measurement).mapError({ _ -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
-								return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
-							}).eraseToAnyPublisher()
-						}
-					}
-                .eraseToAnyPublisher()
-            } else {
-                return Just(C8yMutableDevice.Measurement()).mapError({ _ -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
-					return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
-			 }).eraseToAnyPublisher() // dummy
-            }
-        } else {
-            return Just(C8yMutableDevice.Measurement()).mapError({ _ -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
-				return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
-			}).eraseToAnyPublisher() // dummy
-        }
-    }
-     
-	/**
-	Initiates a background thread to periodically refetch the preferred metric from Cumulocity.
-	Changes will be issued via the publisher returned from the method `primaryMetricPublisher(preferredMetric:refreshInterval:)`
-	- parameter preferredMetric: label of the measurement to periodically fetched requires both name and series separated by a dot '.' e.g. 'Temperature.T', if not provided will attempt to use first data point in `dataPoints`
-	- parameter refreshInterval: period in seconds in which to refresh values
-	- parameter onFirstLoad: callback, executed once first metrics have been successfully fetched, successful interval value is given
-	*/
-	public func startMonitorForPrimaryMetric(_ preferredMetric: String?, refreshInterval: Double, onFirstLoad: ((Double) -> Void)? = nil) {
-        
-		self._monitorPublisher = CurrentValueSubject<Measurement, Never>(Measurement())
-		
-		self.fetchMostRecentPrimaryMetric(preferredMetric)
-			.receive(on: RunLoop.main)
-			.replaceError(with:C8yMutableDevice.Measurement())
-			.sink(receiveValue: { (v) in
-				self._monitorPublisher?.send(self.primaryMetric)
-				
-				if (v.type != nil && onFirstLoad != nil) {
-					onFirstLoad!(self._primaryMeasurementInterval)
-				}
-			}).store(in: &self._cancellable)
-		
-		if (self.device.requiredResponseInterval != nil && self.device.requiredResponseInterval! > 0 && Double(self.device.requiredResponseInterval!*60) > refreshInterval) {
-			
-			// don't refresh quicker than the device's own
-			self._refreshInterval = Double(self.device.requiredResponseInterval!) * 60
-		} else if (refreshInterval > -1) {
-			self._refreshInterval = refreshInterval
-		}
-		
-		if (self._deviceMetricsTimer != nil) {
-			self._deviceMetricsTimer!.suspend()
-		}
-		
-		if (self._refreshInterval > -1 && (preferredMetric != nil || self.primaryDataPoint().count > 0)) {
-			self._deviceMetricsTimer = JcRepeatingTimer(timeInterval: self._refreshInterval)
-			
-			self.isMonitoring = true
-			
-			self._deviceMetricsTimer!.eventHandler = {
-				
-				self.fetchMostRecentPrimaryMetric(preferredMetric)
-					.receive(on: RunLoop.main)
-					.replaceError(with:C8yMutableDevice.Measurement())
-					.sink(receiveValue: { (v) in
-						self._monitorPublisher?.send(self.primaryMetric)
-					}).store(in: &self._cancellable)
-			}
-			
-			self._deviceMetricsTimer!.resume()
-		}
-	}
-    
-	/**
-	Stops the background thread for the preferred metric refresh and operation history. The thread must have been started by either `startMonitorForPrimaryMetric(_:refreshInterval)` or
-	`primaryMetricPublisher(preferredMetric:refreshInterval:)`
-	*/
-    public func stopMonitoring() {
-        
-        if (self._deviceMetricsTimer != nil) {
-            
-            if (self._monitorPublisher != nil) {
-                self._monitorPublisher!.send(completion: .finished)
-            }
-            
-            for c in self._cancellable {
-                c.cancel()
-            }
-            
-            self._deviceMetricsTimer?.suspend()
-            self.isMonitoring = false
-        }
-		
-		if (_deviceOperationHistoryTimer != nil) {
-			self._deviceOperationHistoryTimer?.suspend()
-		}
-    }
-    
-	/**
-	Starts a background thread to refresh operation history periodically
-	- parameter refreshInterval: period in seconds in which to refresh values
-	*/
-	public func startMonitoringForOperationHistory(_ interval: TimeInterval = -1) {
-			
-		if (self._deviceOperationHistoryTimer != nil) {
-			self._deviceOperationHistoryTimer!.suspend()
-		}
-		
-		self.updateOperationHistory()
-
-		if (self._deviceOperationHistoryTimer == nil && (interval > -1 || self._refreshInterval > -1)) {
-			
-			self._deviceOperationHistoryTimer = JcRepeatingTimer(timeInterval: self._refreshInterval > -1 ? self._refreshInterval : interval)
-			self._deviceOperationHistoryTimer!.eventHandler = {
-				
-				self.updateOperationHistory()
-			}
-		}
-		
-		if (self._deviceOperationHistoryTimer != nil) {
-			self._deviceOperationHistoryTimer!.resume()
-		}
-	}
-	
-	/**
-	Returns the current status for given operation type, Will return only latest valeu if multiple operations exist for the same type
-	- parameter type: The type of operation to be queried
-	- returns: The latest operation for the given type or nil if none found
-	*/
-    public func statusForOperation(_ type: String) -> C8yOperation? {
-    
-        var op: C8yOperation? = nil
-        
-        for o in self.operationHistory {
-            
-            if (o.type == type) {
-                op = o
-                break
-            }
-        }
-        
-        return op
-    }
     
 	/**
 	Downloads a binary attachment with the given id from Cumolocity and also caches the result in `lastAttachment`
@@ -1050,7 +713,9 @@ public class C8yMutableDevice: ObservableObject  {
             }
         }
         
-        return C8yBinariesService(self.conn!).post(name: "\(device.c8yId!)-\(fname)", contentType: fileType, content: content).map({ response in
+        return C8yBinariesService(self.conn!).post(name: "\(device.c8yId!)-\(fname)", contentType: fileType, content: content)
+			.receive(on: RunLoop.main)
+			.map({ response in
             
             self.lastAttachment = response.content!.parts[0]
             self.device.attachments.insert(self.lastAttachment!.id!, at: 0)
@@ -1086,7 +751,23 @@ public class C8yMutableDevice: ObservableObject  {
             return response.content!.parts[0]
         }).eraseToAnyPublisher()
     }
-    
+	
+	/**
+	Provides a publisher that can be used to listen for periodic updates to primary metric
+	The refresh is based on the devices `C8yDevice.requiredResponseInterval` property
+	
+	- parameter preferredMetric: label of the measurement to periodically fetched requires both name and series separated by a dot '.' e.g. 'Temperature.T'
+	- parameter autoRefresh: set to true if you want the value to be refreshed automatically, false to only update once
+	- returns: Publisher that will issue updated metrics periodically
+	*/
+	public func primaryMetricPublisher(preferredMetric: String?, autoRefresh: Bool = false) -> AnyPublisher<C8yDeviceMetricsNotifier.Measurement, Never> {
+		
+		self._deviceMetricsNotifier.deviceWrapper = self
+		self._deviceMetricsNotifier.conn = self.conn!
+		
+		return self._deviceMetricsNotifier.primaryMetricPublisher(preferredMetric: preferredMetric ?? self.model.preferredMetric, autoRefresh: autoRefresh)
+	}
+	
     private func primaryDataPoint() -> [C8yDataPoints.DataPoint] {
                
        //TODO: link this to C8yModels
@@ -1094,6 +775,7 @@ public class C8yMutableDevice: ObservableObject  {
         if (device.dataPoints != nil && device.dataPoints!.dataPoints.count > 0) {
             return device.dataPoints!.dataPoints
        } else {
+	
             return []
        }
     }
@@ -1102,44 +784,12 @@ public class C8yMutableDevice: ObservableObject  {
 	
 		C8yManagedObjectsService(self.conn!).externalIDsForManagedObject(device.wrappedManagedObject.id!)
 			.receive(on: RunLoop.main)
-			.sink(receiveCompletion: { completion in
+			.subscribe(Subscribers.Sink(receiveCompletion: { completion in
 
 		}, receiveValue: { response in
 			self.device.setExternalIds(response.content!.externalIds)
 			
-		}).store(in: &self._cancellable)
-	}
-	
-	private func populatePrimaryMetric(_ m: C8yMeasurementSeries, type: String) -> Measurement {
-	 
-		if (m.values.count > 0) {
-			self.primaryMetric = Measurement(min: m.values.last!.values[0].min, max: m.values.last!.values[0].max, unit: m.series.last!.unit, label: m.series.last!.name, type: type)
-			
-			var v: [Double] = []
-			var t: [String] = []
-			
-			for r in m.values {
-				v.append(r.values[0].min)
-				t.append(r.time.timeString())
-			}
-			
-			DispatchQueue.main.async {
-				self.primaryMetricHistory = MeasurementSeries(name: m.series.last!.name, label: type, unit: m.series.last!.unit, yValues: v, xValues: t)
-			}
-		}
-
-		print("setting primary metric to \(String(describing: self.primaryMetric.min)) for \(self.device.name)")
-	
-		return self.primaryMetric
-	}
-	
-	private func getMeasurementSeries(_ device: C8yDevice, type: String, series: String, interval: Double, connection: C8yCumulocityConnection) -> AnyPublisher<C8yMeasurementSeries, JcConnectionRequest<C8yCumulocityConnection>.APIError> {
-		
-		print("Fetching metrics for device \(device.name), \(type), \(series)")
-		
-		return C8yMeasurementsService(connection).getSeries(forSource: device.c8yId!, type: type, series: series, from: Date().addingTimeInterval(-interval), to: Date(), aggregrationType: .MINUTELY).map({response in
-			return response.content!
-			}).eraseToAnyPublisher()
+		}))
 	}
 	
     private func makeError<T>(_ response: JcRequestResponse<T>) -> Error? {
@@ -1154,47 +804,6 @@ public class C8yMutableDevice: ObservableObject  {
             }
         } else {
             return nil
-        }
-    }
-    
-    private func generaliseType(type: String) -> String {
-        
-        if (type.lowercased().starts(with: "min") || type.lowercased().starts(with:"max") || type.lowercased().starts(with:"avg")) {
-            return type.substring(from: 4)
-        } else if (type.lowercased().starts(with: "mean")) {
-            return type.substring(from: 5)
-        } else if (type.lowercased().starts(with: "average")) {
-            return type.substring(from: 8) // TODO: Find labels for average, mean, median and standard deviation)
-        } else {
-            return type
-        }
-    }
-	
-    public struct MeasurementSeries {
-        public var name: String?
-        public var label: String?
-        public var unit: String?
-        public var yValues: [Double] = []
-        public var xValues: [String] = []
-    }
-    
-    public struct Measurement {
-        public var min: Double?
-        public var max: Double?
-        public var unit: String?
-        public var label: String?
-        public var type: String?
-        
-        public init() {
-            
-        }
-        
-        public init(min: Double, max: Double, unit: String, label: String, type: String) {
-            self.min = min
-            self.max = max
-            self.unit = unit
-            self.label = label
-            self.type = type
         }
     }
 	

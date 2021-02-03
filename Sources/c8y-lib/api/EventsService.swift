@@ -16,7 +16,7 @@ let C8Y_EVENTS_API = "event/events"
  
 Refer to the [c8y API documentation](https://cumulocity.com/guides/reference/events/) for more information
  */
-public class C8yEventsService: JcConnectionRequest<C8yCumulocityConnection> {
+public class C8yEventsService: C8ySubscriber {
 
     /**
      Used when fetching `C8yEvent`s to determines the maximum number allowed in a single request,
@@ -99,6 +99,14 @@ public class C8yEventsService: JcConnectionRequest<C8yCumulocityConnection> {
         }).eraseToAnyPublisher()
     }
     
+	/**
+	
+	*/
+	public func subscribeForNewEvents(c8yIdOfDevice: String) -> AnyPublisher<C8yEvent, Error> {
+	
+		return self.connect(subscription: "/events/\(c8yIdOfDevice)")
+	}
+	
     private func args(id: String) -> String {
         
         return String(format: "%@/%@&timeStamp", C8Y_EVENTS_API, id, self.timeStamp())

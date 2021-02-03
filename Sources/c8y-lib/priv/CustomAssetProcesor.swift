@@ -34,13 +34,11 @@ public struct C8yCustomAssetProcessor {
         C8yPlanningAssetDecoder.register()
         C8yAddressAssetDecoder.register()
         C8yContactInfoAssetDecoder.register()
-        C8yLoRaNetworkInfoAssetDecoder.register()
-        C8yAssignedNetworkDecoder.register()
-        C8ySupplierAssetDecoder.register()
-        C8yModelAssetDecoder.register()
+        C8yModelInfoAssetDecoder.register()
+		C8yNetworkProviderPropertiesWrapperDecoder.register()
     }
    
-    public static func registerCustomPropertyClass(property: String, decoder: C8yCustomAssetFactory) {
+	public static func registerCustomPropertyClass(property: String, decoder: C8yCustomAssetFactory) {
        
        _customPropertyCodable[property] = decoder
     }
@@ -73,7 +71,7 @@ public struct C8yCustomAssetProcessor {
             
             properties[key.stringValue] = try C8yCustomAssetProcessor.decode(key, container: container)
         
-        } else if (key.stringValue.hasPrefix("x")) {
+		} else {//if (key.stringValue.hasPrefix("x")) {
                 
             // may have a custom class for simple attributes in top-level starting with some kind of prefix preceded by "x"
             // e.g. xPlanningName xPlanningDate could be associated with a custom class xPlanning with attributes name and date
@@ -84,36 +82,51 @@ public struct C8yCustomAssetProcessor {
                 
                 if (key.stringValue.hasPrefix(pk)) {
                            
-                    // got one, however check if we have already created it, remember potentially may have more than one attribute
-                    if (properties[pk] == nil) {
-                        properties[pk] = try pv.make()
-                    }
-                    
-                    try properties[pk]?.decode(container, forKey: key)
-                    
-                    done = true
+					do {
+						// got one, however check if we have already created it, remember potentially may have more than one attribute
+						if (properties[pk] == nil) {
+							properties[pk] = try pv.make()
+						}
+						
+						try properties[pk]?.decodex(container, forKey: key)
+						
+						done = true
+						
+					} catch {
+						// ignore
+					}
+					
                     break
                 }
             }
                
-            // no specify class to decode, so just decode as simple string(s) into properties
+            // no specific class to decode, so just decode as simple string(s) into properties
             
             if (!done) {
-                do {
-                    let v: String = try container.decode(String.self, forKey: key)
-                    properties[key.stringValue] = C8yStringCustomAsset(v)
-                } catch {
-                    // h'mm it's not a String, need to flatten it
-                 
-                    self.flatten(key: key, container: container, propertiesHolder: properties)
-                }
+                do { properties[key.stringValue] = C8yStringCustomAsset(try container.decode(String.self, forKey: key))
+				} catch {
+					do { properties[key.stringValue] = C8yDoubleCustomAsset(try container.decode(Double.self, forKey: key))
+					} catch {
+						do { properties[key.stringValue] = C8yBoolCustomAsset(try container.decode(Bool.self, forKey: key))
+						} catch {
+							// h'mm it's not a simple type, maybe it's a complex structure so we need to try and flatten it
+
+							do { properties[key.stringValue] = try C8yDictionaryCustomAsset(container, forKey: key)
+							} catch {
+								// ignore
+							}
+						}
+					}
+				}
             }
         }
         
         return properties
     }
         
-    private static func flatten(key: AssetObjectKey, container: KeyedDecodingContainer<AssetObjectKey>, propertiesHolder: Dictionary<String, C8yCustomAsset>) -> Void {
+	// replaced with Dictionary!!
+	
+    /*private static func flatten(key: AssetObjectKey, container: KeyedDecodingContainer<AssetObjectKey>, propertiesHolder: Dictionary<String, C8yCustomAsset>) -> Void {
             
         self._flatten(key: key, container: container, path: key.stringValue, propertiesHolder: propertiesHolder)
     }
@@ -149,5 +162,5 @@ public struct C8yCustomAssetProcessor {
             // ignore it
         
         }
-    }
+    }*/
 }

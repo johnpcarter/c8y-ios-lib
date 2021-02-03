@@ -9,13 +9,13 @@
 import Foundation
 
 public let C8yLocationUpdate_EVENT = "c8y_LocationUpdate"
-
+public let C8yPosition = "c8y_Position"
 /**
 Represents an c8y event, refer to [c8y API Reference Guide](https://cumulocity.com/guides/reference/events/#event) for more info
 */
 public struct C8yEvent: JcEncodableContent, Identifiable {
     
-    public internal (set) var id: String?
+    public internal (set) var id: String = UUID().uuidString
     
     public private (set) var source: String
     public private (set) var type: String?
@@ -71,7 +71,7 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
 	- parameter text free form text describing the event
 	- parameter properties Implementation of protocol `C8yCustomAsset` to define attributes to be included
 	*/
-    public init(forSource: String, type: String, text: String, properties: C8yCustomAsset) {
+    public init(forSource: String, type: String, text: String, properties: C8yCustomAsset?) {
         
         self.source = forSource
         self.time = Date()
@@ -79,7 +79,10 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         self.text = text
         
         self.info = Dictionary()
-        self.info![type] = properties
+		
+		if (properties != nil) {
+			self.info![type] = properties
+		}
     }
     
     public init(from decoder:Decoder) throws {
@@ -92,6 +95,8 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         
         for (key) in values.allKeys {
             
+			print("===============================> event key is \(key)")
+			
             switch (key.stringValue) {
             case "id":
                 self.id = try values.decode(String.self, forKey: key)
@@ -107,7 +112,7 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
                 self.source = try C8yEvent.getIdFromSourceContainer(key, container: values)
             case "self":
                 break
-            case C8yLocationUpdate_EVENT:
+            case C8yPosition:
                 self.position = try values.decode(C8yManagedObject.Position.self, forKey: key)
             default:
                 if (self.info == nil) {
@@ -124,6 +129,15 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         }
     }
     
+	public mutating func addInfo(_ key: String, subject: String) {
+		
+		if (self.info == nil) {
+			self.info = [:]
+		}
+		
+		self.info![key] = C8yStringCustomAsset(subject)
+	}
+	
     public func encode(to encoder: Encoder) throws {
         
         var container = encoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
@@ -136,7 +150,7 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         try container.encode(self.text, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "text")!)
 
         if (self.position != nil) {
-            try container.encode(self.position, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: C8yLocationUpdate_EVENT)!)
+            try container.encode(self.position, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: C8yPosition)!)
         }
         
         if (info != nil) {
@@ -145,7 +159,7 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
                 if (v is C8yStringCustomAsset) {
                     try container.encode((v as! C8yStringCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue:k)!)
                 } else {
-                    _ = try v.encode(container, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: k)!)
+                    _ = try v.encodex(container, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: k)!)
                 }
                 
                 //try container.encode(v, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: k)!)

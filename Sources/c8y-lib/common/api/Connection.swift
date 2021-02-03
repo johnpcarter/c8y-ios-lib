@@ -191,29 +191,23 @@ public class JcRequestResponse<ResponseContent:Codable> {
         
         self.httpStatus = original.httpStatus
         self.httpMessage = original.httpMessage
-        self.httpHeaders = original.httpHeaders
-        
-        //do {
-            let decoder = JSONDecoder()
-            
-            if (dateFormatter == nil) {
-                decoder.dateDecodingStrategy = .iso8601
-            } else {
-                decoder.dateDecodingStrategy = .formatted(dateFormatter!)
-            }
-            
-            if (original.content != nil) {
-                self.content = try decoder.decode(ResponseContent.self, from: original.content!)
-            } else {
-                self.content = nil
-            }
-            
-            self.error = nil
-
-        /*} catch {
-            self.content = nil
-            self.error = error
-        }*/
+		self.httpHeaders = original.httpHeaders
+		
+		let decoder = JSONDecoder()
+		
+		if (dateFormatter == nil) {
+			decoder.dateDecodingStrategy = .iso8601
+		} else {
+			decoder.dateDecodingStrategy = .formatted(dateFormatter!)
+		}
+		
+		if (original.content != nil) {
+			self.content = try decoder.decode(ResponseContent.self, from: original.content!)
+		} else {
+			self.content = nil
+		}
+		
+		self.error = nil
     }
     
     init (_ original: JcRequestResponse<Data>, error: Error) {

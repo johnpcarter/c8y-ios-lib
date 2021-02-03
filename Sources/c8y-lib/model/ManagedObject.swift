@@ -19,6 +19,8 @@ let C8Y_MANAGED_OBJECTS_GROUPx = "c8y_IsDeviceGroup"
 let C8Y_MANAGED_OBJECTS_GROUP_TYPE = "c8y_DeviceGroup"
 let C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE = "c8y_DeviceSubgroup"
 
+let C8Y_MANAGED_OBJECT_ISAGENT = "com_cumulocity_model_Agent"
+
 /**
 Wraps a c8y ManagedObject, refer to [c8y API Reference guid](https://cumulocity.com/guides/reference/inventory/#managed-object) for more info
  
@@ -43,7 +45,7 @@ here through the dictionary property `properties`, keyed by the name of the attr
  If you cannot prefix your custom property with 'x' or you don't want flattened Strings then you will need to the custom processor to identify a class of your own
  to encode/decode the custom structure, refer to `C8yCustomAssetProcessor` class for more information
 */
-public struct C8yManagedObject: JcEncodableContent {
+public struct C8yManagedObject: JcEncodableContent, JcProperties {
         
     public private(set) var id: String?
     
@@ -63,6 +65,8 @@ public struct C8yManagedObject: JcEncodableContent {
     
     public var firmware: Firmware?
 
+	public var codec: String?
+	
     public private(set) var childDevices: ChildReferences?
     public private(set) var childAssets: ChildReferences?
     
@@ -80,7 +84,7 @@ public struct C8yManagedObject: JcEncodableContent {
 	Used to record current stated of a device that acts as a relay, i.e. open or closed
 	This attribute is passive and should be updated only following an operation.
 	*/
-    public var relayState: RelayStateType?
+    public internal(set) var relayState: RelayStateType?
     
 	/**
 	GPS postion of device, dynamic GPS tracking of mobile devices should be managed via
@@ -99,8 +103,14 @@ public struct C8yManagedObject: JcEncodableContent {
 	/**
 	Indicates the type of network that is used to communicate with the device
 	*/
-	public internal(set) var network: C8yAssignedNetwork?
+	public internal(set) var network: C8yNetwork? //C8yCustomNetworkProvider?
     
+	/**
+	Indicates whether this device also represents a device agent, this ensures that any child device belonging to this
+	device can submit operations to c8y. Devices that do not belong to an agent cannot submit operations to c8y.
+	*/
+	public var isAgent: Bool = false
+	
     /**
      Access custom properties through this class, only properties prefixed with 'x' or provided with a dedicated custom processor class will be available
      */
@@ -144,13 +154,12 @@ public struct C8yManagedObject: JcEncodableContent {
 	*/
     public struct ChildReferences: Decodable {
         
-        public  let ref: String?
+        public let ref: String?
         public let references: [ReferencedObject]?
         
         public struct ReferencedObject: Decodable {
             
             public let id: String?
-            public let name: String?
             public let ref: String?
             
             enum WrapperKey: String, CodingKey {
@@ -159,7 +168,6 @@ public struct C8yManagedObject: JcEncodableContent {
             
             enum CodingKeys: String, CodingKey {
                 case id
-                case name
                 case ref = "self"
             }
             
@@ -169,7 +177,6 @@ public struct C8yManagedObject: JcEncodableContent {
                 let nestedContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .managedObject)
                 
                 self.id = try nestedContainer.decode(String.self, forKey: .id)
-                self.name = try nestedContainer.decode(String.self, forKey: .name)
                 self.ref = try nestedContainer.decode(String.self, forKey: .ref)
             }
         }
@@ -341,7 +348,7 @@ public struct C8yManagedObject: JcEncodableContent {
 	/**
 	Represents a GPS position
 	*/
-    public struct Position: Codable {
+    public struct Position: Codable, JcProperties {
         
         public var lat: Double
         public var lng: Double
@@ -477,11 +484,11 @@ public struct C8yManagedObject: JcEncodableContent {
 	- parameter id c8y internal id of the ManagedObject to be updated
 	- parameter set of properties to be updated
 	*/
-	public init(_ id: String, properties: Dictionary<String, String>) {
+	public init<T:C8ySimpleAsset>(_ id: String, properties: Dictionary<String, T>) {
 		self.id = id
 		
 		for p in properties {
-			self.properties[p.key] = C8yStringCustomAsset(p.value)
+			self.properties[p.key] = p.value
 		}
 	}
 	
@@ -531,82 +538,85 @@ public struct C8yManagedObject: JcEncodableContent {
         }
     }
     
-    public init(from decoder: Decoder) throws {
-           
-        let container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey> = try decoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
-           
-        do {
-        for key in container.allKeys {
-               
-            switch key.stringValue {
-                case "id":
-                    self.id = try container.decode(String.self, forKey: key)
-                case "type":
-                    self.type = try container.decode(String.self, forKey: key)
-                case "name":
-                    self.name = try container.decode(String.self, forKey: key)
-                case "createdTime":
-                    self.createdTime = try container.decode(Date.self, forKey: key)
-                case "lastUpdated":
-                    self.lastUpdated = try container.decode(Date.self, forKey: key)
-                case "owner":
-                    self.owner = try container.decode(String.self, forKey: key)
-                case "applicationId":
-                    self.applicationId = try container.decode(String.self, forKey: key)
-                case "applicationOwner":
-                    self.applicationOwner = try container.decode(String.self, forKey: key)
-                case "c8y_Status":
-                    self.status = try container.decode(Status.self, forKey: key)
-                case "c8y_Notes":
-                    self.notes = try container.decode(String.self, forKey: key)
-                case "c8y_Firmware":
-                    self.firmware = try container.decode(Firmware.self, forKey: key)
-                case "childAssets":
-                    self.childAssets = Self.safeDecodeChildAssets(key, container: container)
-                case "childDevices":
-                    self.childDevices = Self.safeDecodeChildReferences(key, container: container)
-                case C8Y_MANAGED_OBJECTS_DEVICEx:
-                    self.isDevice = true
-				case C8Y_MANAGED_OBJECTS_GROUPx:
-					self.isGroup = true
-                case "c8y_Connection":
-                    self.connectionStatus = try container.decode(ConnectionStatus.self, forKey: key)
-                case "c8y_Availability":
-                    self.availability = try container.decode(Availability.self, forKey: key)
-                case "c8y_RequiredAvailability":
-                    self.requiredAvailability = try container.decode(RequiredAvailability.self, forKey: key)
-                case "c8y_Position":
-                    self.position = try container.decode(Position.self, forKey: key)
-                case "c8y_Relay":
-                    self.relayState = try container.decode(RelayStateType.self, forKey: key)
-                case "c8y_Hardware":
-                    self.hardware = try container.decode(Hardware.self, forKey: key)
-                case "c8y_DataPoint":
-                    self.dataPoints = try container.decode(C8yDataPoints.self, forKey: key)
-                case "c8y_SupportedOperations":
-                    self.supportedOperations = try container.decode([String].self, forKey: key)
-                case "c8y_ActiveAlarmsStatus":
-                    self.activeAlarmsStatus = try container.decode(ActiveAlarmsStatus.self, forKey: key)
-                default:
-                
-                    let sensorType = SensorType(rawValue: key.stringValue)
-                    
-                    if (sensorType != nil) {
-                        self.sensorType.append(sensorType!)
-                    } else {
-                        
-                        if (self.network == nil && (key.stringValue == JC_MANAGED_OBJECT_NETWORK_INSTANCE || key.stringValue == JC_MANAGED_OBJECT_NETWORK_LPWAN || key.stringValue == JC_MANAGED_OBJECT_NETWORK_EUI)) {
-                            self.network = try Self.setupNetwork(container, keys: container.allKeys)
-                        } else {
-                            self.properties = try C8yCustomAssetProcessor.decode(key: key, container: container, propertiesHolder: self.properties)
-                        }
-                    }
-                }
-            }
-        } catch {
-            throw error
-        }
-    }
+	public init(from decoder: Decoder) throws {
+		
+		let container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey> = try decoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
+		
+		do {
+			for key in container.allKeys {
+				
+				switch key.stringValue {
+					case "id":
+						self.id = try container.decode(String.self, forKey: key)
+					case "type":
+						self.type = try container.decode(String.self, forKey: key)
+					case "name":
+						self.name = try container.decode(String.self, forKey: key)
+					case "createdTime":
+						self.createdTime = try container.decode(Date.self, forKey: key)
+					case "lastUpdated":
+						self.lastUpdated = try container.decode(Date.self, forKey: key)
+					case "owner":
+						self.owner = try container.decode(String.self, forKey: key)
+					case "applicationId":
+						self.applicationId = try container.decode(String.self, forKey: key)
+					case "applicationOwner":
+						self.applicationOwner = try container.decode(String.self, forKey: key)
+					case "c8y_Status":
+						self.status = try container.decode(Status.self, forKey: key)
+					case "c8y_Notes":
+						self.notes = try container.decode(String.self, forKey: key)
+					case "c8y_Firmware":
+						self.firmware = try container.decode(Firmware.self, forKey: key)
+					case "childAssets":
+						self.childAssets = Self.safeDecodeChildAssets(key, container: container)
+					case "childDevices":
+						self.childDevices = Self.safeDecodeChildReferences(key, container: container)
+					case C8Y_MANAGED_OBJECTS_DEVICEx:
+						self.isDevice = true
+					case C8Y_MANAGED_OBJECTS_GROUPx:
+						self.isGroup = true
+					case "c8y_Connection":
+						self.connectionStatus = try container.decode(ConnectionStatus.self, forKey: key)
+					case "c8y_Availability":
+						self.availability = try container.decode(Availability.self, forKey: key)
+					case "c8y_RequiredAvailability":
+						self.requiredAvailability = try container.decode(RequiredAvailability.self, forKey: key)
+					case "c8y_Position":
+						self.position = try container.decode(Position.self, forKey: key)
+					case "c8y_Relay":
+						self.relayState = try container.decode(RelayStateType.self, forKey: key)
+					case "c8y_Hardware":
+						self.hardware = try container.decode(Hardware.self, forKey: key)
+					case "c8y_DataPoint":
+						self.dataPoints = try container.decode(C8yDataPoints.self, forKey: key)
+					case "c8y_SupportedOperations":
+						self.supportedOperations = try container.decode([String].self, forKey: key)
+					case "c8y_ActiveAlarmsStatus":
+						self.activeAlarmsStatus = try container.decode(ActiveAlarmsStatus.self, forKey: key)
+					case "c8y_Network":
+						self.network = try container.decode(C8yNetwork.self, forKey: key)
+					case "childAdditions":
+						//ignore
+						print("ignore")
+					case C8Y_MANAGED_OBJECT_ISAGENT:
+						self.isAgent = true
+					default:
+												
+						let sensorType = SensorType(rawValue: key.stringValue)
+						
+						if (sensorType != nil) {
+							self.sensorType.append(sensorType!)
+						} else {
+							
+							self.properties = try C8yCustomAssetProcessor.decode(key: key, container: container, propertiesHolder: self.properties)
+						}
+				}
+			}
+		} catch {
+			throw error
+		}
+	}
        
     public func encode(to encoder: Encoder) throws {
            
@@ -664,46 +674,31 @@ public struct C8yManagedObject: JcEncodableContent {
             try container.encode(self.supportedOperations, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "c8y_SupportedOperations")!)
         }
         
+		if (self.codec != nil) {
+			try container.encode(self.codec, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "codec")!)
+		}
+		
         if (self.network != nil) {
                 
-            if (self.network!.type != nil) {
-                try container.encode(self.network!.type!, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_TYPE)!)
-				
-				// isprovisioned
-				let lpwan = LpwanDevice(provisioned: self.network!.isProvisioned)
-				try container.encode(lpwan, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_LPWAN)!)				
-            }
-            
-            if (self.network!.provider != nil) {
-                try container.encode(self.network!.provider!, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_PROVIDER)!)
-            }
-            
-            if (self.network!.instance != nil) {
-                try container.encode(self.network!.instance!, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_INSTANCE)!)
-            }
-            
-            if (self.network!.appEUI != nil) {
-                try container.encode(self.network!.appEUI!, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_EUI)!)
-            }
-            
-            if (self.network!.appKey != nil) {
-                try container.encode(self.network!.appKey!, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_KEY)!)
-            }
-            
-            if (self.network!.codec != nil) {
-                try container.encode(self.network!.codec!, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: JC_MANAGED_OBJECT_NETWORK_CODEC)!)
-            }
+			try container.encode(self.network, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "c8y_Network")!)
         }
         
+		if (self.isAgent) {
+			try container.encode(EmptyFragment(), forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: C8Y_MANAGED_OBJECT_ISAGENT)!)
+		}
         for (k, v) in properties {
             
-            // cannot serialise complex structures that have been flattened by decoder below (need to declare explicit class that case via registerCustomDecoder)
-            if (!k.contains(".")) {
+            // cannot serialise complex structures that have been flattened by decoder below (need to declare explicit class in that case via registerCustomDecoder)
+            if (!k.contains(".") && k != "id") {
                 
                 if (v is C8yStringCustomAsset) {
                     try container.encode((v as! C8yStringCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue:k)!)
-                } else {
-                    _ = try v.encode(container, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: k)!)
+                } else if (v is C8yDoubleCustomAsset) {
+					try container.encode((v as! C8yDoubleCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue:k)!)
+				} else if (v is C8yBoolCustomAsset) {
+					try container.encode((v as! C8yBoolCustomAsset).value, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue:k)!)
+				} else {
+                    _ = try v.encodex(container, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: k)!)
                 }
             }
         }
@@ -740,16 +735,6 @@ public struct C8yManagedObject: JcEncodableContent {
         } catch {
             return nil
         }
-    }
-    
-    private static func setupNetwork(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, keys: [C8yCustomAssetProcessor.AssetObjectKey]) throws -> C8yAssignedNetwork {
-        var network = C8yAssignedNetwork()
-        
-        for key in keys {
-            try network.decode(container, forKey: key)
-        }
-        
-        return network
     }
 
     static func dateFormatter() -> DateFormatter {

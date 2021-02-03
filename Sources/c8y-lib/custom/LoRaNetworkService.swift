@@ -90,8 +90,8 @@ internal class C8yLoRaNetworkService: JcConnectionRequest<C8yCumulocityConnectio
 	
 		var m: C8yManagedObject = C8yManagedObject(device.c8yId!)
 		
-		m.network = C8yAssignedNetwork(isProvisioned: isProvisioned)
-		m.network!.type = C8yNetworkType.lora.rawValue
+		m.networkProvider = C8yCustomNetworkProvider(isProvisioned: isProvisioned)
+		m.network!.type = C8yNetworkAgent.lora.rawValue
 		
 		return try C8yManagedObjectsService(self._connection).put(m)
 			.tryMap({ response -> Void in

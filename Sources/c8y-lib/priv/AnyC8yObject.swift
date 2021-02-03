@@ -40,6 +40,10 @@ public struct AnyC8yObject: Identifiable, Equatable, Hashable {
 	*/
     public let type: WrappedType
     
+	public var hasChildren: Bool {
+		return self.children.count > 0
+	}
+	
 	/**
 	The name attributed to the wrapped object
 	*/
@@ -71,6 +75,19 @@ public struct AnyC8yObject: Identifiable, Equatable, Hashable {
                 return g.children
             }
         }
+		set(a) {
+			if (self.type == .C8yDevice) {
+				var d: C8yDevice = self.wrappedValue()
+				d.children = a
+				
+				self._t = d
+			} else {
+				var g: C8yGroup = self.wrappedValue()
+				g.children = a
+				
+				self._t = g
+			}
+		}
     }
     
     private var _t: Any?
@@ -103,6 +120,131 @@ public struct AnyC8yObject: Identifiable, Equatable, Hashable {
            
         hasher.combine(self.id.hashValue)
     }
+	
+	func objectFor(_ c8yId: String) -> (path: [String], object: AnyC8yObject?) {
+	
+		var found: AnyC8yObject? = nil
+		var path: [String] = []
+		
+		if (self.c8yId != nil) {
+			path.append(self.c8yId!)
+		}
+		
+		for c in self.children {
+			if (c.c8yId == c8yId) {
+				found = c
+				break
+			}
+		}
+		
+		if (found == nil) {
+			for c in self.children {
+				
+				if (c.c8yId == c8yId) {
+					// found it
+				} else if (c.hasChildren) {
+				
+					let wrapper = c.objectFor(c8yId)
+					if (wrapper.object != nil) {
+						found = wrapper.object
+						path.append(contentsOf: wrapper.path)
+						break
+					}
+				}
+			}
+		}
+		
+		return (path, found)
+	}
+	
+	func deviceFor(externalId: String, externalIdType type: String) -> C8yDevice? {
+		
+		var found: C8yDevice? = nil
+		
+		for o in self.children {
+			
+			if (o.type == .C8yDevice) {
+				let device: C8yDevice = o.wrappedValue()
+				
+				if (device.match(forExternalId: externalId, type: type)) {
+					found = device
+					break
+				}
+			}
+			
+			// check children if not matched
+			
+			found = o.deviceFor(externalId: externalId, externalIdType: type)
+			
+			if (found != nil) {
+				break
+			}
+		}
+		
+		return found
+	}
+	
+	/**
+	Removes the specified asset from the group or sub group of one of its children
+	
+	- parameter c8yId: id of the asset to be removed
+	- returns: true if the asset was found and removed
+	*/
+	public mutating func removeChild(_ c8yId: String) -> Bool {
+		
+		// use replace with a dummy object, replace function will remove
+
+		return self.replaceOrRemove(c8yId, object: C8yGroup(""))
+	}
+	
+	/**
+	Replaces the current asset in the group or sub group of one of its children
+	- parameter object: The object to be replaced
+	- returns: true if the asset was found and replaced, false if not
+	*/
+	public mutating func replaceChild<T:C8yObject>(_ object: T) -> Bool {
+		
+		return self.replaceOrRemove(object.c8yId!, object: object)
+	}
+	
+	private mutating func replaceOrRemove<T:C8yObject>(_ c8yId: String, object: T? = nil) -> Bool {
+		
+		var matched: Bool = false
+		
+		if (self.hasChildren) {
+			
+			var i: Int = 0
+			
+			for c in self.children {
+								
+				if (c.c8yId == c8yId) {
+					// if replacement object is a dummy, then assume we are removing not replacing!!
+					
+					if (object == nil || object!.c8yId!.isEmpty) {
+						self.children.remove(at: i)
+					} else {
+						self.children[i] = AnyC8yObject(object!)
+					}
+					
+					matched = true
+				} else {
+					// check subgroups
+								
+					var copy = c
+					if (copy.replaceOrRemove(c8yId, object: object)) {
+						self.children[i] = copy
+					
+						matched = true
+					}
+				}
+			
+				i += 1
+			}
+		}
+		
+		return matched
+	}
+	
 	/**
 	Enumerator type for possoble content types
 	*/
@@ -131,9 +273,9 @@ public protocol C8yObject: Equatable {
     var c8yId: String? { get }
     var name: String { get }
     
-    var groupCategory: C8yGroupCategory { get }
+    var groupCategory: C8yGroup.Category { get }
     var orgCategory: C8yOrganisationCategory { get }
-    var deviceCategory: C8yDevice.DeviceCategory { get }
+    var deviceCategory: C8yDevice.Category { get }
 
     var operationalLevel: C8yOperationLevel { get }
     var status: C8yManagedObject.AvailabilityStatus { get }
@@ -158,7 +300,7 @@ public protocol C8yObject: Equatable {
     
     var wrappedManagedObject: C8yManagedObject { get set }
     
-    var children: [AnyC8yObject] { get }
+    var children: [AnyC8yObject] { get set }
     
     var externalIds: [String:C8yExternalId] { get set }
     
@@ -167,7 +309,6 @@ public protocol C8yObject: Equatable {
     func defaultIdAndType() -> String
 
     func match(forExternalId id: String, type: String?) -> Bool
-
 }
 
 public enum C8yNoValidIdError : Error {
@@ -217,7 +358,7 @@ extension C8yObject {
         
     }
     
-    public var deviceCategory: C8yDevice.DeviceCategory {
+    public var deviceCategory: C8yDevice.Category {
         get {
             return .Group
         }
@@ -347,41 +488,6 @@ extension C8yObject {
         self.wrappedManagedObject.updateId(id)
     }
         
-    func objectFor(_ c8yId: String) -> (path: [String], object: AnyC8yObject?) {
-    
-        var found: AnyC8yObject? = nil
-        var path: [String] = []
-		
-		if (self.c8yId != nil) {
-			path.append(self.c8yId!)
-		}
-        
-        for c in self.children {
-            if (c.c8yId == c8yId) {
-                found = c
-                break
-            }
-        }
-        
-        if (found == nil) {
-            for c in self.children {
-				if (c.type == .C8yGroup) {
-                    let g: C8yGroup = c.wrappedValue()
-                    let x = g.objectFor(c8yId)
-                    
-                    if (x.object != nil) {
-                        found = x.object!
-                        path.append(contentsOf: x.path)
-                        
-                        break
-                    }
-                }
-            }
-        }
-        
-        return (path, found)
-    }
-    
     func indexOfChild(_ c8yId: String) -> Int {
         
         for i in self.children.indices {
@@ -460,40 +566,6 @@ struct C8yCounter {
     }
 }
 
-public enum C8yGroupCategory: String, CaseIterable, Hashable, Identifiable {
-    case unknown = ""
-    case empty = "empty"
-    case group = "group"
-    case organisation = "organisation"
-    case building = "building"
-    case room = "room"
-    case asset = "asset"
-    case device = "device"
-    
-    public var id: C8yGroupCategory {self}
-    
-    static public func displayableForHighLevel() -> [C8yGroupCategory] {
-        
-        var out:[C8yGroupCategory] = []
-        out.append(.organisation)
-        out.append(.building)
-        out.append(.group)
-
-        return out
-    }
-    
-    static public func displayableForLowLevel() -> [C8yGroupCategory] {
-        
-        var out:[C8yGroupCategory] = []
-        out.append(.group)
-        out.append(.building)
-        out.append(.room)
-        out.append(.asset)
-
-        return out
-    }
-}
-
 public enum C8yOrganisationCategory: String, CaseIterable, Hashable, Identifiable {
 
     case undefined
@@ -514,12 +586,12 @@ public enum C8yOperationLevel: String {
     case operating // ok with minor alarms
     case failing // ok with major alarms
     case error // critical alarms
-    case offline // no status
+    case offline  // no status
     case maintenance
 	case unknown // value is nil
     case undeployed // never deployed
 }
 
-enum C8yDeviceUpdateError: Error {
+enum C8yDeviceUpdateError: LocalizedError {
     case reason (String?)
 }

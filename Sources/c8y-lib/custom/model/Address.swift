@@ -100,7 +100,7 @@ public struct C8yAddress: C8yCustomAsset {
         }
     }
     
-    public func encode(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
+    public func encodex(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
 
         var copy = container
         
@@ -109,7 +109,7 @@ public struct C8yAddress: C8yCustomAsset {
         return copy
     }
     
-    mutating public func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> Void {
+    mutating public func decodex(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> Void {
         
         switch forKey.stringValue {
             case CodingKeys.addressSummary.stringValue:

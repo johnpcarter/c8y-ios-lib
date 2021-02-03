@@ -18,6 +18,43 @@ Also includes a number of custom atributes to better categorise devices such as 
 */
 public struct C8yGroup: C8yObject {
 
+	public enum Category: String, CaseIterable, Hashable, Identifiable {
+		case unknown = ""
+		case empty = "empty"
+		case group = "group"
+		case organisation = "organisation"
+		case home = "home"
+		case building = "building"
+		case room = "room"
+		case asset = "asset"
+		case device = "device"
+		
+		public var id: Category {
+			return self
+		}
+		
+		static public func displayableForHighLevel() -> [Category] {
+			
+			var out:[Category] = []
+			out.append(.organisation)
+			out.append(.building)
+			out.append(.group)
+
+			return out
+		}
+		
+		static public func displayableForLowLevel() -> [Category] {
+			
+			var out:[Category] = []
+			out.append(.group)
+			out.append(.building)
+			out.append(.room)
+			out.append(.asset)
+
+			return out
+		}
+	}
+	
 	/**
 	client side id, required by SwiftUI for display purposes
 	*/
@@ -33,10 +70,10 @@ public struct C8yGroup: C8yObject {
 	Implemented in accordance to protocol `C8yObject` in order to categorise the type of group
 	e.g. physical building, room etc. or logical folder, division etc.
 	*/
-    public var groupCategory: C8yGroupCategory {
+    public var groupCategory: C8yGroup.Category {
 		get {
 			if (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] != nil) {
-				return C8yGroupCategory(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] as! C8yStringCustomAsset).value) ?? .unknown
+				return C8yGroup.Category(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] as! C8yStringCustomAsset).value) ?? .unknown
 			} else if (self.children.count > self.deviceCount){
 				
 				// this group has sub-folders
@@ -134,7 +171,7 @@ public struct C8yGroup: C8yObject {
 	/**
 	Returns a list of all the subgroups and devices associated with this group
 	*/
-    public internal(set) var children: [AnyC8yObject] = [AnyC8yObject]()
+    public var children: [AnyC8yObject] = [AnyC8yObject]()
 	
 	/**
 	Represents the wrapped Managed Object that defines this group
@@ -161,7 +198,7 @@ public struct C8yGroup: C8yObject {
 	- parameter isTopLevelGroup: if true the group will be visible in groups menu navigation on the left hand side of the Cumulocity web app. Otherwise will only be available as a sub-folder once you have assigned it to a parent group
 	- parameter notes: optional notes to be associated with the group
 	*/
-	public init(_ c8yId: String?, name: String, isTopLevelGroup: Bool, category: C8yGroupCategory, notes: String?) {
+	public init(_ c8yId: String?, name: String, isTopLevelGroup: Bool, category: C8yGroup.Category, notes: String?) {
 		
 		self.init(C8yManagedObject(name: name, type: isTopLevelGroup ? C8Y_MANAGED_OBJECTS_GROUP_TYPE : C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE, notes: notes), parentGroupName: nil)
 		
@@ -174,7 +211,7 @@ public struct C8yGroup: C8yObject {
 		self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XGROUP_CATEGORY] = C8yStringCustomAsset(category.rawValue)
 	}
 	
-    internal init(_ c8yId: String?, name: String, category: C8yGroupCategory, parentGroupName: String?, notes: String?) {
+    internal init(_ c8yId: String?, name: String, category: C8yGroup.Category, parentGroupName: String?, notes: String?) {
         
 		self.init(C8yManagedObject(name: name, type: parentGroupName == nil ? C8Y_MANAGED_OBJECTS_GROUP_TYPE : C8Y_MANAGED_OBJECTS_SUBGROUP_TYPE, notes: notes), parentGroupName: parentGroupName)
 		
@@ -431,29 +468,6 @@ public struct C8yGroup: C8yObject {
 		return false
     }
     
-	/**
-	Removes the specified asset from the group or sub group of one of its children
-	
-	- parameter c8yId: id of the asset to be removed
-	- returns: true if the asset was found and removed
-	*/
-    public mutating func removeFromGroup(_ c8yId: String) -> Bool {
-        
-		// use replace with a dummy object, replace function will remove
-
-		return self.replaceOrRemove(c8yId, object: C8yGroup(""))
-    }
-    
-	/**
-	Replaces the current asset in the group or sub group of one of its children
-	- parameter object: The object to be replaced
-	- returns: true if the asset was found and replaced, false if not
-	*/
-    public mutating func replaceInGroup<T:C8yObject>(_ object: T) -> Bool {
-        
-		return self.replaceOrRemove(object.c8yId!, object: object)
-    }
-    
     private func indexOfManagedObject(_ obj: C8yManagedObject) -> Int {
            
         var index = -1
@@ -519,45 +533,6 @@ public struct C8yGroup: C8yObject {
 		}
 		
 		return found
-	}
-	
-	private mutating func replaceOrRemove<T:C8yObject>(_ c8yId: String, object: T? = nil) -> Bool {
-		
-		var matched: Bool = false
-		
-		if (self.hasChildren) {
-			
-			var i: Int = 0
-			
-			for c in self.children {
-								
-				if (c.c8yId == c8yId) {
-					// if replacement object is a dummy, then assume we are removing not replacing!!
-					
-					if (object == nil || object!.c8yId!.isEmpty) {
-						self.children.remove(at: i)
-					} else {
-						self.children[i] = AnyC8yObject(object!)
-					}
-					
-					matched = true
-				} else if (c.type == .C8yGroup) {
-					// check subgroups
-					
-					var v: C8yGroup = c.wrappedValue()
-				
-					if (v.replaceOrRemove(c8yId, object: object)) {
-						self.children[i] = AnyC8yObject(v)
-					
-						matched = true
-					}
-				}
-			
-				i += 1
-			}
-		}
-		
-		return matched
 	}
 	
     private mutating func _update<T:C8yObject>(_ obj: T, updateIfPresent: Bool) -> Bool {

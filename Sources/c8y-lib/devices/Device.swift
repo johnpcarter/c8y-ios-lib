@@ -26,7 +26,7 @@ public struct C8yDevice: C8yObject {
 	/**
 	Used to categorise the device typex
 	*/
-	public enum DeviceCategory: String, CaseIterable, Hashable, Identifiable, Encodable {
+	public enum Category: String, CaseIterable, Hashable, Identifiable, Encodable {
 		case Unknown
 		case Gauge
 		case Switch
@@ -50,15 +50,34 @@ public struct C8yDevice: C8yObject {
 		case Phone
 		case Computer
 		case Group
+		case Transport
+		case Cart
 		
-		public var id: DeviceCategory {self}
+		public var id: Category {self}
 	}
 	
+	private let _id = UUID().uuidString
+	
 	/**
-	client side id, required by SwiftUI for display purposes
+	client side id, required by SwiftUI for display purposes and to determine if object has been refreshed from c8y
 	*/
-    public var id = UUID().uuidString
+	public var id: String {
+		if self.c8yId != nil {
+			return self.c8yId!
+		} else {
+			return self._id
+		}
+	}
 
+	public static func == (lhs: Self, rhs: Self) -> Bool {
+		
+		return lhs.id == rhs.id
+	}
+	
+	/*public static func == (lhs: C8yDevice, rhs: C8yDevice) -> Bool {
+		lhs.c8yId == rhs.c8yId
+	}*/
+	
 	/**
 	Dictionary of all related external id's.
 	Not populated by default, unless you use the class `C8yAssetCollection` to manage your groups and devices
@@ -68,7 +87,7 @@ public struct C8yDevice: C8yObject {
 	/**
 	Implemented in accordance to protocol `C8yObject`, always returns .device
 	*/
-    public var groupCategory: C8yGroupCategory {
+	public var groupCategory: C8yGroup.Category {
          return .device
     }
      
@@ -85,12 +104,12 @@ public struct C8yDevice: C8yObject {
 	Returns the category to which the device belongs.
 	Represented by a custom attribute 'xC8yDeviceCategory' in the wrapped managed object
 	*/
-    public var deviceCategory: DeviceCategory {
+	public var deviceCategory: Category {
          get {
             if (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY] != nil) {
-                return DeviceCategory(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY] as! C8yStringCustomAsset).value) ?? .Unknown
+                return Category(rawValue: (self.wrappedManagedObject.properties[C8Y_MANAGED_OBJECTS_XDEVICE_CATEGORY] as! C8yStringCustomAsset).value) ?? .Unknown
             } else if self.wrappedManagedObject.sensorType.count > 0 {
-                return DeviceCategory(rawValue: self.wrappedManagedObject.sensorType[0].rawValue.substring(from: 3))!
+                return Category(rawValue: self.wrappedManagedObject.sensorType[0].rawValue.subString(from: 3))!
             } else {
                 return .Unknown
             }
@@ -177,11 +196,13 @@ public struct C8yDevice: C8yObject {
 	
 	/**
 	Reflects current state of relay either open, closed or pending
-	Refer to `C8yMutableDevice` if you want to change the relay state
 	*/
 	public var relayState: C8yManagedObject.RelayStateType? {
 		get {
 			return self.wrappedManagedObject.relayState
+		}
+		set(r) {
+			self.wrappedManagedObject.relayState = r
 		}
 	}
 	
@@ -198,6 +219,8 @@ public struct C8yDevice: C8yObject {
         get {
 			if (self.wrappedManagedObject.requiredAvailability?.responseInterval == -1) {
 				return .MAINTENANCE
+			} else if (self.wrappedManagedObject.network?.connectionError ?? false) {
+				return .UNAVAILABLE
 			} else {
 				return self.wrappedManagedObject.availability?.status ?? .UNKNOWN
 			}
@@ -309,9 +332,9 @@ public struct C8yDevice: C8yObject {
 	/**
 	Network settings describing what network the device uses to communicate.
 	*/
-    public var network: C8yAssignedNetwork {
+    public var network: C8yNetwork {
         get {
-            return self.wrappedManagedObject.network ?? C8yAssignedNetwork()
+            return self.wrappedManagedObject.network ?? C8yNetwork()
         }
         set {
             self.wrappedManagedObject.network = newValue
@@ -319,19 +342,26 @@ public struct C8yDevice: C8yObject {
     }
     
 	/**
-	Used in relation to `network` to determine if the device has been provisioned within the required network.
-	This attribute should be updated to reflect whether this has been done. The precise details for provisioning are network specific
-	and may in part be manual.
+	Determine if the device has been been successfully deployed.
+	This is not the same as `network.provisioned`, which may return false even if this property returns true.
 	
-	Refer to the class `C8yNetworks` for more information
+	This property will return true either if no specific networking requirements are set (Device Credentials), i.e. assuming device agent is remote
+	and will push data to c8y without specific setup on c8y side, or if an agent is being used then it has been provisioned successfully.
+	i.e. `network.provisioned` is true.
+	
+	Refer to the class `C8yNetwork` for more information
 	*/
 	public internal(set) var isDeployed: Bool {
 		get {
-			return self.network.type == nil || self.network.type == C8yNetworkType.none.rawValue || self.network.isProvisioned
+			if (self.network.type == C8Y_NETWORK_NONE) {
+				return true
+			} else {
+				return self.network.provisioned
+			}
 		}
 		set(v) {
 			
-			self.network.isProvisioned = v
+			self.network.provisioned = true
 		}
 	}
 	
@@ -433,10 +463,16 @@ public struct C8yDevice: C8yObject {
         }
     }
     
+	public internal(set) var hasChanges: Bool = false
+	
 	/**
 	Represents the wrapped Managed Object that defines this device
 	*/
-    public var wrappedManagedObject: C8yManagedObject
+	public var wrappedManagedObject: C8yManagedObject {
+		didSet {
+			self.hasChanges = true
+		}
+	}
 	
 	/**
 	String representing the hierachy in which device belongs, i.e. list the parent group in which device is nested.
@@ -453,9 +489,15 @@ public struct C8yDevice: C8yObject {
     public internal(set) var attachments: [String] = []
 	
 	/**
+	Indicates if this device is managed via a parent device, router etc,
+	that is responsible for managing it's connectivity.
+	*/
+	public internal(set) var isChildDevice: Bool = false
+	
+	/**
 	List of child devices associated with this device, only applicable for router or gateway type devices.
 	*/
-    public internal(set) var children: [AnyC8yObject] = []
+	public var children: [AnyC8yObject] = []
     
 	/**
 	Default constructor for an empty device
@@ -496,9 +538,16 @@ public struct C8yDevice: C8yObject {
                 self.attachments.append(String(s))
             }
         }
+		
+		// TODO: improve this, a bit hacky as it assumes the agent will set this
+		// need to find another way to know if it is a child device, unfortunately parentAsset references are nil even if it is a child device
+		
+		if (wrappedManagedObject.network?.type == "childDevice") {
+			self.isChildDevice = true
+		}
     }
     
-	internal init(_ c8yId: String?, serialNumber: String?, withName name: String, type: String, supplier: String?, model: String?, notes: String?, requiredResponseInterval: Int, revision: String, category: DeviceCategory?) {
+	internal init(_ c8yId: String?, serialNumber: String?, withName name: String, type: String, supplier: String?, model: String?, notes: String?, requiredResponseInterval: Int, revision: String, category: Category?) {
 	
 		self.wrappedManagedObject = C8yManagedObject(deviceWithSerialNumber: serialNumber, name: name, type: type, supplier: supplier, model: model!, notes: notes, revision: revision, requiredResponseInterval: requiredResponseInterval)
 				
@@ -525,8 +574,13 @@ public struct C8yDevice: C8yObject {
         self.hierachy = hierachy
     }
     
-	public static func == (lhs: C8yDevice, rhs: C8yDevice) -> Bool {
-		lhs.c8yId == rhs.c8yId
+	/**
+	Returns true if the given device is the same copy as this i.e. internal id assigned by this app when loading is the same.
+	Returns false if the given device is a different device or represents the same device but a different instance i.e. reloaded or updated.
+	*/
+	public func isSameCopy(_ d: C8yDevice) -> Bool {
+			
+		return d._id == self._id
 	}
 	
 	/**
@@ -631,7 +685,7 @@ public struct C8yDevice: C8yObject {
 				id = self.externalIds[type.lowercased()]
 			}
 			
-			return id != nil && id?.externalId == ref.lowercased().replacingOccurrences(of: " ", with: "").replacingOccurrences(of:":", with:"")
+			return id != nil && id?.externalId.lowercased() == ref.lowercased().replacingOccurrences(of: " ", with: "").replacingOccurrences(of:":", with:"")
 		} else {
 			
 			for id in self.externalIds.values {
@@ -689,16 +743,11 @@ public struct C8yDevice: C8yObject {
             idString += "\n"
             idString += "model=\(self.model)"
         }
-        
-		if (self.network.appKey != nil && !self.network.appKey!.isEmpty) {
-            idString += "\n"
-            idString += "appKey=\(self.network.appKey!)"
-        }
-        
-        if (self.network.appEUI != nil && !self.network.appEUI!.isEmpty) {
-            idString += "\n"
-            idString += "appEUI=\(self.network.appEUI!)"
-        }
+        			
+		self.network.properties.forEach( { k, v in
+			idString += "\n"
+			idString += "\(k)=\(v)"
+		})
                
         let data = Data(idString.utf8)
         

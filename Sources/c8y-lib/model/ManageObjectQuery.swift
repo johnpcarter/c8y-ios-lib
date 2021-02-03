@@ -17,6 +17,11 @@ Refer to the [c8y API documentation](https://cumulocity.com/guides/reference/inv
 */
 public struct C8yManagedObjectQuery {
 
+	/**
+	If true (default) all queries must match, otherwise only partial matches are allowed
+	*/
+	public var matchAll: Bool = true
+	
     /**
 	Represents the operator to be applied to the value of the query i.e. equals, not equals etc.
 	
@@ -68,26 +73,50 @@ public struct C8yManagedObjectQuery {
 		/**
 		Identifies the c8y attribute to queried
 		*/
-        let key: String
+		public let key: String
 		
 		/**
 		identifies the type of query to be performed, e.g. equals, not equals, less than etc. etc.
 		*/
-        let op: Operator?
+		public let op: Operator?
 		
 		/**
 		Identifies the value to be looked up, can included wildcards and also regular expressions
 		Refer to cumulocity documentation for more info
 		*/
-        let value: String
+		public let value: String
         
+		/**
+		By default (true) this condition must be included in search query, if set to false
+		will be conditional in relation to other search criteria (or)
+		*/
+		public var exclusive: Bool = true
+		
         public init(key: String, op: Operator?, value: String) {
         
             self.key = key
             self.op = op
-            self.value = value
+			
+			
+			if (value.starts(with: "*") || value.endsWith("*")) {
+				// assume they want case insensitivity too
+				
+				var b: String = ""
+				
+				value.forEach { c in
+					if (c.isLetter) {
+						b += "[\(String(c.uppercased()))|\(String(c.lowercased()))]"
+					} else {
+						b += String(c)
+					}
+				}
+				
+				self.value = b
+			} else {
+				self.value = value
+			}
         }
-
+		
         func toString() -> String {
 
             if (self.op != nil) {
@@ -100,9 +129,19 @@ public struct C8yManagedObjectQuery {
 
     private var queries: [Query] = []
 
-    public init() {
-        
-    }
+	public init() {
+		
+	}
+	
+	public init(queryString: String) {
+			
+		let i: Int = queryString.convertIndexToInt(queryString.firstIndex(of: "="))
+		
+		if (i != -1) {
+			
+			_ = self.add(Query(key: queryString.subString(to: i), op: .eq, value: queryString.subString(from: i)))
+		}
+	}
     
     /**
      Adds a new query to the existing set
@@ -131,18 +170,42 @@ public struct C8yManagedObjectQuery {
 
     public func build() -> String {
 
-        var b: String = ""
-        
+		var b: String = ""
+		var lastq: Query? = nil
+		
         for (q) in self.queries {
             
             if (b.isEmpty) {
                 b.append(q.toString())
             } else {
-                b.append(" and ")
+				if (!q.exclusive) {
+					// need to add parenthesis around this and last query
+					
+					if (lastq != nil && lastq!.exclusive) {
+						let i = b.lastIndex(of: "and")
+						b = b.subString(to: i+4) + "(" + b.subString(from: i+3)
+					}
+					
+					b.append(" or ")
+				} else {
+					
+					if (lastq != nil && !lastq!.exclusive) {
+						b.append(") ")
+					}
+					
+					b.append(self.matchAll ? " and " : " or ")
+				}
+				
                 b.append(q.toString())
             }
+			
+			lastq = q
         }
-        
+		
+		if (!lastq!.exclusive && self.queries.count > 1) {
+			b.append(")")
+		}
+		
         return b.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
     }
 }

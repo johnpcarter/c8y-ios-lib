@@ -16,8 +16,17 @@ let C8Y_OPERATIONS_API = "devicecontrol/operations/"
  
 Refer to the [c8y API documentation](https://cumulocity.com/guides/reference/device-control/#device-control-api) for more information
  */
-public class C8yOperationService: JcConnectionRequest<C8yCumulocityConnection> {
+public class C8yOperationService: C8ySubscriber {
     
+	private var _stopSubscriber: Bool = false
+	private var _cancellable: [AnyCancellable] = []
+
+	deinit {
+		for c in self._cancellable {
+			c.cancel()
+		}
+	}
+	
 	/**
 	Fetch a list of operations associated with the managed object given by the id
 	
@@ -60,8 +69,16 @@ public class C8yOperationService: JcConnectionRequest<C8yCumulocityConnection> {
             }
         }).eraseToAnyPublisher()
     }
-    
-    private func args(id: String) -> String {
-        return "\(C8Y_OPERATIONS_API)?deviceId=\(id)"
-    }
+
+	/**
+	
+	*/
+	public func subscribeForNewOperations(c8yIdOfDevice: String) -> AnyPublisher<C8yOperation, Error> {
+	
+		return self.connect(subscription: "/operations/\(c8yIdOfDevice)")
+	}
+	
+	private func args(id: String) -> String {
+		return "\(C8Y_OPERATIONS_API)?deviceId=\(id)"
+	}
 }

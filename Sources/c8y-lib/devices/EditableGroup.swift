@@ -54,7 +54,7 @@ public class C8yEditableGroup: ObservableObject {
 		}
 	}
 	
-    @Published public var category: C8yGroupCategory = .group {
+    @Published public var category: C8yGroup.Category = .group {
 		willSet(o) {
 			if self.category != o {
 				self.emitDidChange(o.rawValue)

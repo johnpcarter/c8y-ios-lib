@@ -17,7 +17,7 @@ let C8Y_ALARMS_API = "alarm/alarms"
  
 Refer to the [c8y API documentation](https://cumulocity.com/guides/reference/alarms/) for more information
  */
-public class C8yAlarmsService: JcConnectionRequest<C8yCumulocityConnection> {
+public class C8yAlarmsService: C8ySubscriber {
     
     /**
      Used when fetching `C8yAlarm`s to determines the maximum number allowed in a single request,
@@ -103,6 +103,14 @@ public class C8yAlarmsService: JcConnectionRequest<C8yCumulocityConnection> {
         }).eraseToAnyPublisher()
     }
     
+	/**
+	
+	*/
+	public func subscribeForNewAlarms(c8yIdOfDevice: String) -> AnyPublisher<C8yAlarm, Error> {
+	
+		return self.connect(subscription: "/alarms/\(c8yIdOfDevice)")
+	}
+	
     private func args(id: String) -> String {
          return "\(C8Y_ALARMS_API)/\(id)"
     }

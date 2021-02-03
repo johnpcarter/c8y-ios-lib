@@ -18,7 +18,7 @@ public class C8yCustomAssetFactory {
 	*/
     func make() throws -> C8yCustomAsset {
        
-        throw C8yCustomAssetProcessor.EncoderNotImplementedError.key(String(describing: self))
+        throw C8yCustomAssetProcessor.DecoderNotImplementedError.key(String(describing: self))
     }
     
 	/**
@@ -30,17 +30,28 @@ public class C8yCustomAssetFactory {
     }
 }
 
+public protocol C8ySimpleAsset: C8yCustomAsset {
+		
+	associatedtype ValueContent
+	
+	/**
+	The value wrapped by the asset
+	*/
+	var value: ValueContent { get }
+	
+}
+
 /**
 Your custom asset Struct must implement the following methods in order that it can decoded/encoded as a JSON fragment from the c8y ManageObject
 */
 public protocol C8yCustomAsset: Codable {
-    
+	
     /**
 	Optional, used to decode fragments fetched from c8y in `C8yManagedObject` instances
 	- parameter container contains the attributes to be retrieved and represented by the implementation of this protocol
 	- parameter forKey attribute name of this instance, included for reference but isn't really required unless decoding attributes from parent structure into common asset (See `Address` or `Planning` examples)
      */
-    mutating func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> Void
+    mutating func decodex(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> Void
     
 	/**
 	Used to encode fragments to be included a `C8yManagedObject` instance that need to be uploaded to c8y
@@ -48,7 +59,17 @@ public protocol C8yCustomAsset: Codable {
 	- parameter forKey attribute name of this instance, included for reference but isn't really required
 	- returns Updated container including attributes from this class
 	*/
-    func encode(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>
+    func encodex(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>
+}
+
+extension C8yCustomAsset {
+	mutating public func decodex(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> Void {
+		fatalError("decodex(container:forKey:) has not been implemented")
+	}
+	
+	public func encodex(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
+		fatalError("encodex(container:forKey:) has not been implemented")
+	}
 }
 
 /**
@@ -70,36 +91,74 @@ public class C8yStringAssetDecoder: C8yCustomAssetFactory {
 /**
 Concrete implementation of `C8yCustomAsset` to encode a string based custom asset
 */
-public struct C8yStringCustomAsset: C8yCustomAsset {
+public struct C8yStringCustomAsset: C8ySimpleAsset {
    
-    public var value: String
-    
+	public typealias ValueContent = String
+	
+	public var value: String
+	
 	/**
 	New instance wrapping giving String asset
 	*/
-    public init(_ value: String) {
-       self.value = value
-    }
-    
-	/**
-	Not used
-	*/
-    public init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
-    }
-    
-	/**
-	Not used
-	*/
-    public mutating func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws {
-        fatalError("init(from:) has not been implemented")
-    }
-    
-	/**
-	Not used
-	*/
-    public func encode(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
+	public init(_ value: String) {
+	   self.value = value
+	}
+}
 
-        fatalError("init(from:) has not been implemented")
-    }
+public struct C8yDictionaryCustomAsset: C8ySimpleAsset {
+		
+	public typealias ValueContent = [String:String]
+	
+	public var value: [String:String] = [:]
+	
+	public init(_ d: [String:String]) {
+		self.value = d
+	}
+	
+	init(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey key: C8yCustomAssetProcessor.AssetObjectKey) throws {
+		
+		let nested = try container.nestedContainer(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self, forKey: key)
+		
+		nested.allKeys.forEach( { key in
+			do {
+				self.value[key.stringValue] = try nested.decode(String.self, forKey: key)
+			} catch {
+				// omit non string values, sorry!!
+			}
+		})
+	}
+	
+	public func encodex(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
+		// TODO
+		
+		return container
+	}
+}
+
+public struct C8yBoolCustomAsset: C8ySimpleAsset {
+
+	public typealias ValueContent = Bool
+	
+	public var value: Bool
+	
+	/**
+	New instance wrapping giving raw asset
+	*/
+	public init(_ value: Bool) {
+	   self.value = value
+	}
+}
+
+public struct C8yDoubleCustomAsset: C8ySimpleAsset {
+
+	public typealias ValueContent = Double
+	
+	public var value: Double
+	
+	/**
+	New instance wrapping giving raw asset
+	*/
+	public init(_ value: Double) {
+	   self.value = value
+	}
 }

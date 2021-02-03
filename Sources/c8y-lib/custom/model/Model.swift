@@ -11,82 +11,131 @@ import Combine
 
 import UIKit
 
-let JC_MANAGED_OBJECT_MODEL = "xModels"
 
-class C8yModelAssetDecoder: C8yCustomAssetFactory {
-   
-    static func register() {
-        C8yCustomAssetProcessor.registerCustomPropertyClass(property: JC_MANAGED_OBJECT_MODEL, decoder: C8yModelAssetDecoder())
-    }
+public struct C8yModel: Hashable {
     
-    override func make(key: C8yCustomAssetProcessor.AssetObjectKey, container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>) throws -> C8yCustomAsset {
-       try C8yModels(container.decode([C8yModel].self, forKey: key))
-    }
-}
-
-public struct C8yModels: C8yCustomAsset {
-   
-    public private(set) var models: [C8yModel] = []
-    
-    public init(_ models: [C8yModel]) {
-        self.models = models
-    }
-    
-    public init(from decoder: Decoder) throws {
-        throw C8yCustomAssetProcessor.DecoderNotImplementedError.key(String(describing: self))
-    }
-    
-    public func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws {
-        throw C8yCustomAssetProcessor.DecoderNotImplementedError.key(String(describing: self))
-    }
-       
-    public func encode(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
-        throw C8yCustomAssetProcessor.DecoderNotImplementedError.key(String(describing: self))
-    }
-}
-
-public struct C8yModel: C8yCustomAsset, Hashable {
-    
-    public private(set) var id: String = ""
-    public private(set) var name: String = ""
-    public private(set) var category: C8yDevice.DeviceCategory = .Unknown
+	public private(set) var name: String = ""
 	public private(set) var description: String? = nil
-    public private(set) var link: String? = ""
-	internal private(set) var imageId: String? = nil
+
+	internal var _operationTemplateDelegate: C8yOperationTemplateDelegate? = nil
 	
-	private var _image: UIImage? = nil
+	public var id: String {
+		return self.info.id
+	}
 	
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case category
-        case link
-		case imageId
-    }
+	public var category: C8yDevice.Category {
+		return self.info.category ?? .Unknown
+	}
+	
+	public var link: String? {
+		return self.info.link
+	}
+	
+	public var preferredMetric: String? {
+		
+		if (self.info.preferredMetric != nil) {
+			if (self.info.preferredSeries != nil) {
+				return "\(self.info.preferredMetric!).\(self.info.preferredSeries!)"
+			} else {
+				return self.info.preferredMetric
+			}
+		} else {
+			return nil
+		}
+	}
+	
+	public var businessDataFields: [String]? {
+		return self.info.businessDataFields
+	}
+	
+	public var businessDataEvents: [C8yModelInfo.BusinessEvent]? {
+		return self.info.businessDataEvents
+	}
+	
+	public var businessDataFragment: String? {
+		return self.info.businessDataFragment
+	}
+	
+	public var agent: String? {
+		return self.info.agent
+	}
+		
+	public var image: UIImage? {
+		return self.info.image()
+	}
+	
+	public var operationTemplates: [C8yOperation.OperationTemplate]? {
+		return self.info.operations
+	}
+	
+	private var info: C8yModelInfo
     
-	init(_ id: String, name: String, category: C8yDevice.DeviceCategory, link: String?, description: String? = nil, image: UIImage? = nil) {
+	init() {
+		self.info = C8yModelInfo()
+	}
+	
+	public init(_ opTemplate: C8yOperationTemplateDelegate? = nil) {
+		self.info = C8yModelInfo()
+		self._operationTemplateDelegate = opTemplate
+	}
+	
+	init(_ object: C8yManagedObject) {
+	
+		self.name = object.name!
+		self.description = object.notes
+		
+		self.info = object.properties["model"] as! C8yModelInfo
+	}
+	
+	public init(_ id: String, name: String, category: C8yDevice.Category, link: String?, description: String? = nil, image: UIImage? = nil, businessDataFragment: String? = nil, businessDataFields: [String]? = nil, businessDataEvents: [C8yModelInfo.BusinessEvent]? = nil) {
         
-        self.id = id
         self.name = name
-        self.category = category
-        self.link = link
 		self.description = description
-		self._image = image
+		
+		self.info = C8yModelInfo(id, category: category, link: link, base64Image: image?.pngData()?.base64EncodedString(), businessDataFragment: businessDataFragment, businessDataFields: businessDataFields, businessDataEvents: businessDataEvents)
     }
     
-    public init(from decoder: Decoder) throws {
-
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.id = try container.decode(String.self, forKey: .id)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.link = try container.decode(String.self, forKey: .link)
-
-        if (container.contains(.category)) {
-            self.category = try C8yDevice.DeviceCategory(rawValue: container.decode(String.self, forKey: .category))!
-        }
-    }
-    
+	public func dataPointTemplate(for key: String) -> C8yModelInfo.DataPoint? {
+	
+		var dp: C8yModelInfo.DataPoint? = nil
+		
+		// look up model from c8y model references
+		
+		for o in self.info.datapoints {
+			if (o.key == key) {
+				dp = o
+				break
+			}
+			
+		}
+		
+		return dp
+	}
+	
+	public func operationTemplate(for type: String) -> C8yOperation.OperationTemplate {
+	
+		var op: C8yOperation.OperationTemplate? = nil
+		
+		// look up model from c8y model references
+		
+		if (self.operationTemplates != nil) {
+			for o in self.operationTemplates! {
+				if (o.type == type) {
+					op = o
+					break
+				}
+			}
+		}
+		
+		if (op == nil && self._operationTemplateDelegate != nil) {
+			// still nil , check if delete has it instead
+			
+			op = self._operationTemplateDelegate!.template(for: type)
+		}
+		
+		return op ?? C8yOperation.OperationTemplate()
+	}
+	
     public static func == (lhs: C8yModel, rhs: C8yModel) -> Bool {
         return lhs.id == rhs.id
     }
@@ -95,31 +144,207 @@ public struct C8yModel: C8yCustomAsset, Hashable {
            
         hasher.combine(self.id.hashValue)
     }
-    
-    public func decode(_ container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws {
-        throw C8yCustomAssetProcessor.DecoderNotImplementedError.key(String(describing: self))
-    }
-    
-    public func encode(_ container: KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey>, forKey: C8yCustomAssetProcessor.AssetObjectKey) throws -> KeyedEncodingContainer<C8yCustomAssetProcessor.AssetObjectKey> {
-        throw C8yCustomAssetProcessor.DecoderNotImplementedError.key(String(describing: self))
-    }
+}
+
+class C8yModelInfoAssetDecoder: C8yCustomAssetFactory {
+   
+	static func register() {
+		C8yCustomAssetProcessor.registerCustomPropertyClass(property: "model", decoder: C8yModelInfoAssetDecoder())
+	}
 	
-	public func image(_ conn: C8yCumulocityConnection) -> AnyPublisher<UIImage, Never> {
+	override func make(key: C8yCustomAssetProcessor.AssetObjectKey, container: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey>) throws -> C8yCustomAsset {
+	   return try container.decode(C8yModelInfo.self, forKey: key)
+	}
+}
+
+public struct C8yModelInfo: C8yCustomAsset {
+   
+	public private(set) var id: String
+	public private(set) var agent: String?
+	public private(set) var category: C8yDevice.Category?
+	public private(set) var link: String?
+	public private(set) var preferredMetric: String?
+	public private(set) var preferredSeries: String?
+	
+	public private(set) var imageBase64: String?
+	public private(set) var manufacturer: String?
+	
+	public private(set) var datapoints: [DataPoint] = []
+	public private(set) var operations: [C8yOperation.OperationTemplate] = []
+
+	public var businessDataFragment: String = "c8y_BusinessData"
+	public var businessDataFields: [String]? = nil
+	public var businessDataEvents: [BusinessEvent]? = nil
+	
+	public struct DataPoint: Codable {
 		
-		if (self._image != nil) {
-			return Just(self._image!).eraseToAnyPublisher()
-		} else if (self.imageId != nil) {
+		public private(set) var key: String
+		public private(set) var series: String
+		public private(set) var min: Double?
+		public private(set) var max: Double?
+
+		public private(set) var label: String?
+		public private(set) var uom: String?
+		public private(set) var aggregationType: String?
+		public private(set) var valueAsPercentage: Bool?
+	}
+	
+	public struct BusinessEvent: Codable {
+		
+		public private(set) var type: String
+		public private(set) var label: String
+		public private(set) var destructive: Bool = false
+		public private(set) var values: C8yCustomAsset? = nil
+		
+		enum CodingKeys: CodingKey {
+			case type
+			case label
+			case destructive
+			case values
+		}
+		
+		public init(_ name: String, label: String, values: [String:String]? = nil, destructive: Bool = false) {
+			self.type = name
+			self.label = label
+			self.destructive = destructive
 			
-			return C8yBinariesService(conn).get(self.imageId!)
-				.map { response -> UIImage in
-					let image = response.content!.parts[0].content.uiImage
-					
-					return image!
-				}.catch { error -> AnyPublisher<UIImage, Never> in
-					return Just(UIImage(systemName: "camera.metering.unknown")!).eraseToAnyPublisher()
-				}.eraseToAnyPublisher()
+			if (values != nil) {
+			
+				self.values = C8yDictionaryCustomAsset(values!)
+			}
+		}
+		
+		public init(from decoder: Decoder) throws {
+			
+			let container = try decoder.container(keyedBy: CodingKeys.self)
+			
+			self.type = try container.decode(String.self, forKey: .type)
+			self.label = try container.decode(String.self, forKey: .label)
+			self.destructive = try container.decodeIfPresent(Bool.self, forKey: .destructive) ?? false
+			
+			if (container.contains(.values)) {
+				do { self.values = C8yStringCustomAsset(try container.decode(String.self, forKey: .values))
+				} catch {
+					do { self.values = C8yDoubleCustomAsset(try container.decode(Double.self, forKey: .values))
+					} catch {
+						do { self.values = C8yBoolCustomAsset(try container.decode(Bool.self, forKey: .values))
+						} catch {
+							// h'mm it's not a simple type, maybe it's a complex structure so we need to try and flatten it
+
+							let nestedContainer: KeyedDecodingContainer<C8yCustomAssetProcessor.AssetObjectKey> = try container.nestedContainer(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self, forKey: .values)
+								
+							do { self.values = try C8yDictionaryCustomAsset(nestedContainer, forKey: C8yCustomAssetProcessor.AssetObjectKey(stringValue: "values")!)
+							} catch {
+								// ignore
+							}
+						}
+					}
+				}
+			}
+
+		}
+		
+		public func encode(to encoder: Encoder) throws {
+			fatalError("Not implemented")
+		}
+	}
+	
+	enum CodingKeys: CodingKey {
+		case id
+		case category
+		case agent
+		case link
+		case preferredMetric
+		case preferredSeries
+		case imageBase64
+		case manufacturer
+		case operations
+		case datapoints
+		case businessDataFields
+		case businessDataEvents
+		case businessDataFragment
+	}
+	
+	public init(from decoder: Decoder) throws {
+		
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.id = try container.decode(String.self, forKey: .id)
+		self.category = C8yDevice.Category(rawValue: try container.decode(String.self, forKey: .category))
+
+		if (container.contains(.agent)) {
+			self.agent = try container.decode(String.self, forKey: .agent)
+		}
+		
+		if (container.contains(.link)) {
+			self.link = try container.decode(String.self, forKey: .link)
+		}
+		
+		if (container.contains(.imageBase64)) {
+			self.imageBase64 = try container.decode(String.self, forKey: .imageBase64)
+		}
+		
+		if (container.contains(.manufacturer)) {
+			self.manufacturer = try container.decode(String.self, forKey: .manufacturer)
+		}
+		
+		if (container.contains(.preferredMetric)) {
+			self.preferredMetric = try container.decode(String.self, forKey: .preferredMetric)
+		}
+		
+		if (container.contains(.preferredSeries)) {
+			self.preferredSeries = try container.decode(String.self, forKey: .preferredSeries)
+		}
+		
+		if (container.contains(.datapoints)) {
+			self.datapoints = try container.decode([DataPoint].self, forKey: .datapoints)
+		}
+		
+		if (container.contains(.operations)) {
+			self.operations = try container.decode([C8yOperation.OperationTemplate].self, forKey: .operations)
+		}
+		
+		if (container.contains(.businessDataFields)) {
+			self.businessDataFields = try container.decode([String].self, forKey: .businessDataFields)
+		}
+		
+		if (container.contains(.businessDataEvents)) {
+			self.businessDataEvents = try container.decode([BusinessEvent].self, forKey: .businessDataEvents)
+		}
+		
+		if (container.contains(.businessDataFragment)) {
+			self.businessDataFragment = try container.decode(String.self, forKey: .businessDataFragment)
+		}
+	}
+	
+	init(_ id: String, category: C8yDevice.Category, link: String?, base64Image: String?, businessDataFragment: String? = nil, businessDataFields: [String]? = nil, businessDataEvents: [BusinessEvent]? = nil) {
+		
+		self.id = id
+		self.category = category
+		self.link = link
+		self.imageBase64 = base64Image
+		
+		if (businessDataFragment != nil) {
+			self.businessDataFragment = businessDataFragment!
+		}
+		
+		if (businessDataFields != nil) {
+			self.businessDataFields = businessDataFields!
+		}
+		
+		self.businessDataEvents = businessDataEvents
+	}
+	
+	init() {
+		self.id = ""
+		self.category = .Unknown
+	}
+	
+	public func image() -> UIImage? {
+		if ( self.imageBase64 != nil) {
+			return Data(base64Encoded: self.imageBase64!)?.uiImage
 		} else {
-			return Just(UIImage(systemName: "photo")!).eraseToAnyPublisher()
+			return nil
 		}
 	}
 }

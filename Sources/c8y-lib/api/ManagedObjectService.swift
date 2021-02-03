@@ -372,11 +372,13 @@ public class C8yManagedObjectsService: JcConnectionRequest<C8yCumulocityConnecti
      */
     public func assignToGroup(child: String, parentId: String) -> AnyPublisher<JcRequestResponse<Bool>, APIError> {
 
-        let payload = "{\n" +
-        "    \"managedObject\" : {\n" +
-        "        \"id\" : \"\(child)\"\n" +
-        "    }\n" +
-        "}"
+        let payload = """
+		 {
+		   \"managedObject\" : {
+		       \"id\" : \"\(child)\"
+		   }
+		}
+		"""
         
     return super._execute(method: Method.POST, resourcePath: "\(C8Y_MANAGED_OBJECTS_API)/\(parentId)/childAssets", contentType: "application/json", request: Data(payload.utf8)).map({ response -> JcRequestResponse<Bool> in
         return JcRequestResponse<Bool>(response, content: true)

@@ -47,12 +47,19 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
 	
     public func testDevice() -> C8yDevice {
         
-        return saintJaques!.device(withC8yId: "D0001")!
+        var d =  saintJaques!.device(withC8yId: "D0001")!
+		d.supplier = "Philips"
+		d.model = "LCT010"
+		d.network = C8yNetwork(type: "LoRa", provider: "objenious", instance: "sag")
+		
+		return d
     }
 
     public func testDevice2() -> C8yDevice {
         
-        return saintJaques!.device(withC8yId: "D0002")!
+		var d = saintJaques!.device(withC8yId: "D0002")!
+		d.isChildDevice = true
+		return d
     }
     
     public func testDevice3() -> C8yDevice {
@@ -85,9 +92,9 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         return shop!
     }
     
-    public override func load(_ conn: C8yCumulocityConnection?, c8yReferencesToLoad: [String], includeSubGroups: Bool) -> AnyPublisher<[AnyC8yObject], JcConnectionRequest<C8yCumulocityConnection>.APIError> {
+	public override func load(favourites: [String], conn: C8yCumulocityConnection?, includeSubGroups: Bool) throws -> AnyPublisher<Bool, Error> {
         // do nothing
-        let p = PassthroughSubject<[AnyC8yObject], JcConnectionRequest<C8yCumulocityConnection>.APIError>()
+        let p = PassthroughSubject<Bool, Error>()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             p.send(completion: .finished)
@@ -127,7 +134,7 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         
         var device3 = makeDevice("D0003", name: "Device 1 in B", model: "c8y_Device", category: .Camera, status: .AVAILABLE, criticalAlarms: 0, majorAlarms: 0, minorAlarms: 0, warningAlarms: 0)
         device3.position = C8yManagedObject.Position(lat: 48.8509226, lng: 2.345821, alt: 0)
-		device3.network = C8yAssignedNetwork(isProvisioned: false)
+		device3.network = C8yNetwork(provisioned: false)
         device3.network.type = "loRa"
         
         var device4 = makeDevice("D0004", name: "Device 2 in B", model: "c8y_Device", category: .Temperature, status: .MAINTENANCE, criticalAlarms: 0, majorAlarms: 0, minorAlarms: 0, warningAlarms: 0)
@@ -165,7 +172,7 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         self.objects = [AnyC8yObject(saintJaques), AnyC8yObject(libr), AnyC8yObject(shop), AnyC8yObject(car)]
     }
     
-    private func makeSiteGroup(_ c8yId: String, name: String, category: C8yGroupCategory, organisationType: C8yOrganisationCategory) -> C8yGroup {
+    private func makeSiteGroup(_ c8yId: String, name: String, category: C8yGroup.Category, organisationType: C8yOrganisationCategory) -> C8yGroup {
         
         var p: C8yPlanning = C8yPlanning()
         p.planningDate = Date()
@@ -181,7 +188,7 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         return C8yGroup(c8yId, name: name, category: .organisation, parentGroupName: nil, notes: "How now brown cow, this is a mocked object")
     }
     
-    private func makeBuildingGroup(_ c8yId: String, name: String, category: C8yGroupCategory) -> C8yGroup {
+    private func makeBuildingGroup(_ c8yId: String, name: String, category: C8yGroup.Category) -> C8yGroup {
         
        var p: C8yPlanning = C8yPlanning()
        p.planningDate = Date()
@@ -197,7 +204,7 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         return newGroup
     }
     
-    private func makeDevice(_ c8yId: String?, name: String, model: String, category: C8yDevice.DeviceCategory, status: C8yManagedObject.AvailabilityStatus, criticalAlarms: Int, majorAlarms: Int, minorAlarms: Int, warningAlarms: Int) -> C8yDevice {
+    private func makeDevice(_ c8yId: String?, name: String, model: String, category: C8yDevice.Category, status: C8yManagedObject.AvailabilityStatus, criticalAlarms: Int, majorAlarms: Int, minorAlarms: Int, warningAlarms: Int) -> C8yDevice {
            
         var device: C8yDevice = C8yDevice(c8yId, serialNumber: "123456789", withName: name, type: "c8y_device", supplier: "apple", model: model, notes: "Mocked device, how now now brown cow", requiredResponseInterval: 30, revision: "1.1.1", category: category)
             
@@ -207,7 +214,7 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         device.wrappedManagedObject.relayState = .CLOSED
         device.webLink = "https://www.apple.com"
         device.setExternalIds([C8yExternalId(withExternalId: "EXT-\(c8yId ?? "xxx")", ofType: "IMEI")])
-        device.wrappedManagedObject.supportedOperations = [C8Y_OPERATION_RESTART, C8Y_OPERATION_COMMAND, C8Y_OPERATION_FIRMWARE, "c8y_Property_TEMP_ROOM"]
+        device.wrappedManagedObject.supportedOperations = [C8Y_OPERATION_RESTART, C8Y_OPERATION_COMMAND, C8Y_OPERATION_FIRMWARE, C8Y_OPERATION_MESSAGE, "c8y_Property_temp_room", "c8y_Property_dimmer"]
         device.wrappedManagedObject.activeAlarmsStatus = C8yManagedObject.ActiveAlarmsStatus(warning: 1, minor: 2, major: 3, critical: 1)
         
         return device
