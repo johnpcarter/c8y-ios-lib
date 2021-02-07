@@ -16,6 +16,8 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 	private var _stopSubscriber: Bool = false
 	private var _cancellable: [AnyCancellable] = []
 
+	private var _clientId: ClientIdProperty = ClientIdProperty(lock: Mutex())
+		
 	deinit {
 		for c in self._cancellable {
 			c.cancel()
@@ -28,30 +30,15 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 	public func connect<T:Decodable>(subscription: String) -> AnyPublisher<T, Error> {
 	
 		let p: PassthroughSubject = PassthroughSubject<T, Error>()
-		
-		self._stopSubscriber = false
-		
-		super._execute(method: Method.POST, resourcePath: C8Y_CLIENT_NOTIFICATION, contentType: "application/json", request: self.clientIdRequest())
-			.subscribe(Subscribers.Sink(receiveCompletion: { completion in
+
+		self._clientId.getClientId(self._connection) { clientId, error in
 			
-			}, receiveValue: { response in
-				
-				if (response.content != nil) {
-					do {
-						let clientIdWrapper: [ClientIdRequestResponse] = try JSONDecoder().decode([ClientIdRequestResponse].self,  from: response.content!)
-						
-						if (clientIdWrapper.count > 0 && clientIdWrapper.first!.successful) {
-							self.subscribe(clientId: clientIdWrapper.first!.clientId!, publisher: p, subscription: subscription)
-						} else {
-							p.send(completion: .failure(InvalidClientIdRequestError(reason: clientIdWrapper.first!.error)))
-						}
-					} catch {
-						p.send(completion: .failure(error))
-					}
-				} else {
-					p.send(completion: .failure(InvalidClientIdRequestError()))
-				}
-			}))
+			if (error != nil) {
+				p.send(completion: .failure(error!))
+			} else {
+				self.subscribe(clientId: clientId!, publisher: p, subscription: subscription)
+			}
+		}
 		
 		return p.eraseToAnyPublisher()
 	}
@@ -68,8 +55,16 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 		
 		super._execute(method: Method.POST, resourcePath: C8Y_CLIENT_NOTIFICATION, contentType: "application/json", request: self.subscribeRequest(clientId, subscription: subscription))
 			.subscribe(Subscribers.Sink(receiveCompletion: { completion in
-			
+				
 				// do nowt
+				
+				switch completion {
+					case .failure(let error):
+						self._clientId.clear()
+						print("subscription error \(error.localizedDescription)")
+					case .finished:
+						print("subscription completed")
+				}
 				
 			}, receiveValue: { response in
 				
@@ -116,6 +111,7 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 						let decoder = JSONDecoder()
 						decoder.dateDecodingStrategy = .formatted(C8yManagedObject.dateFormatter())
 						
+						print("data is \(String(data: response.content!, encoding: .utf8))")
 						let opWrapper: [WaitResponse<T>] = try decoder.decode([WaitResponse<T>].self, from: response.content!)
 						
 						opWrapper.forEach { op in
@@ -134,6 +130,8 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 			}).store(in: &self._cancellable)
 	}
 	
+	
+	
 	public struct InvalidClientIdRequestError: Error {
 		 
 		 public var reason: String?
@@ -143,20 +141,7 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 		 
 		 public var reason: String?
 	}
-	
-	private func clientIdRequest() -> Data {
-	
-		return """
-			{
-				\"channel\": \"/meta/handshake\",
-				\"version\": \"1.0\",
-				\"mininumVersion\": \"1.0beta\",
-				\"supportedConnectionTypes\": ["websocket", "long-polling"],
-				\"systemOfUnits\": \"metric\"
-			  }
-			}
-		""".data(using: .utf8)!
-	}
+
 	
 	private func subscribeRequest(_ clientId: String, subscription: String) -> Data {
 		
@@ -219,6 +204,84 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 				
 				self.data = try nestedContainer.decode(T.self, forKey: .data)
 			}
+		}
+	}
+	
+	class ClientIdProperty {
+		
+		private let lock: Lock
+
+		private var clientId: String? = nil
+		
+		init(lock: Lock) {
+			self.lock = lock
+		}
+
+		func clear() {
+			self.clientId = nil
+		}
+		
+		func getClientId(_ connection: C8yCumulocityConnection, callback: @escaping (String?, Error?) -> Void) {
+			
+			self.lock.lock()
+
+			if (self.clientId != nil) {
+				
+				self.lock.unlock()
+
+				callback(self.clientId, nil)
+				
+			} else {
+				
+				let rq = JcConnectionRequest<C8yCumulocityConnection>(connection)
+				
+				rq._execute(method: Method.POST, resourcePath: C8Y_CLIENT_NOTIFICATION, contentType: "application/json", request: self.clientIdRequest())
+					.subscribe(Subscribers.Sink(receiveCompletion: { completion in
+						
+						switch completion {
+							case .failure(let error):
+								print("error \(error.localizedDescription)")
+							case .finished:
+								print("done")
+						}
+						
+						self.lock.unlock()
+						
+					}, receiveValue: { response in
+						
+						if (response.content != nil) {
+							do {
+								let clientIdWrapper: [ClientIdRequestResponse] = try JSONDecoder().decode([ClientIdRequestResponse].self,  from: response.content!)
+								
+								if (clientIdWrapper.count > 0 && clientIdWrapper.first!.successful) {
+									self.clientId = clientIdWrapper.first!.clientId!
+									callback(self.clientId, nil)
+									
+								} else {
+									callback(nil, InvalidClientIdRequestError(reason: clientIdWrapper.first!.error))
+								}
+							} catch {
+								callback(nil, error)
+							}
+						} else {
+							callback(nil, InvalidClientIdRequestError())
+						}
+					}))
+			}
+		}
+		
+		private func clientIdRequest() -> Data {
+		
+			return """
+				{
+					\"channel\": \"/meta/handshake\",
+					\"version\": \"1.0\",
+					\"mininumVersion\": \"1.0beta\",
+					\"supportedConnectionTypes\": ["websocket", "long-polling"],
+					\"systemOfUnits\": \"metric\"
+				  }
+				}
+			""".data(using: .utf8)!
 		}
 	}
 }

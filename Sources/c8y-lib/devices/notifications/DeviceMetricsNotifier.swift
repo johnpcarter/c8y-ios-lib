@@ -16,9 +16,7 @@ public class C8yDeviceMetricsNotifier {
 			self._primaryMeasurementInterval = Double(self.deviceWrapper!.device.requiredResponseInterval == nil ? 60 : self.deviceWrapper!.device.requiredResponseInterval! * 60)
 		}
 	}
-	
-	var conn: C8yCumulocityConnection? = nil
-	
+		
 	private var _monitorPublisher: CurrentValueSubject<Measurement, Never>?
 
 	private var _loadBatteryAndPrimaryMetricValuesDONE: Bool = false
@@ -39,10 +37,9 @@ public class C8yDeviceMetricsNotifier {
 		self.stopMonitoring()
 	}
 	
-	func reload(_ deviceWrapper: C8yMutableDevice, conn: C8yCumulocityConnection) {
+	func reload(_ deviceWrapper: C8yMutableDevice) {
 		
 		self.deviceWrapper = deviceWrapper
-		self.conn = conn
 		
 		self.updateMetricsForToday()
 	}
@@ -125,14 +122,14 @@ public class C8yDeviceMetricsNotifier {
 			let m: Measurement
 			
 			if (t != nil) {
-				var uom = t!.uom ?? ""
+				var uom = t!.unit ?? ""
 
 				if (t!.valueAsPercentage != nil && t!.valueAsPercentage!) {
 					v = round((v / (t!.max! - t!.min!)) * 100)
 					uom = "%"
 				}
 				
-				m = Measurement(min: v, max: v, unit: uom, label: t!.label ?? "", type: preferredMetric!)
+				m = Measurement(min: v, max: v, unit: uom, label: t!.label, type: preferredMetric!)
 			} else {
 				// no template
 				
@@ -168,7 +165,7 @@ public class C8yDeviceMetricsNotifier {
 	*/
 	public func fetchAllMetricsForToday() -> AnyPublisher<[String:[C8yMeasurement]], JcConnectionRequest<C8yCumulocityConnection>.APIError> {
 					
-		return C8yMeasurementsService(self.conn!).get(forSource: self.deviceWrapper!.device.c8yId!, pageNum: 0, from: Date().advanced(by: -86400), to: Date(), reverseDateOrder: true).map({response in
+		return C8yMeasurementsService(self.deviceWrapper!.conn!).get(forSource: self.deviceWrapper!.device.c8yId!, pageNum: 0, from: Date().advanced(by: -86400), to: Date(), reverseDateOrder: true).map({response in
 			
 			var results: [String:[C8yMeasurement]] = [:]
 			
@@ -221,7 +218,7 @@ public class C8yDeviceMetricsNotifier {
 	
 		// get battery level
 
-		self.getMeasurementSeries(self.deviceWrapper!.device, type: label, series: series, interval: interval, connection: self.conn!)
+		self.getMeasurementSeries(self.deviceWrapper!.device, type: label, series: series, interval: interval, connection: self.deviceWrapper!.conn!)
 			.receive(on: RunLoop.main)
 			.subscribe(Subscribers.Sink(receiveCompletion: { completion in
 				switch completion {
@@ -299,7 +296,7 @@ public class C8yDeviceMetricsNotifier {
 			}
 			
 			if (mType != nil) {
-				return self.getMeasurementSeries(self.deviceWrapper!.device, type: mType!, series: mSeries!, interval: self._primaryMeasurementInterval, connection: self.conn!)
+				return self.getMeasurementSeries(self.deviceWrapper!.device, type: mType!, series: mSeries!, interval: self._primaryMeasurementInterval, connection: self.deviceWrapper!.conn!)
 					.receive(on: RunLoop.main)
 					.map {series in
 						

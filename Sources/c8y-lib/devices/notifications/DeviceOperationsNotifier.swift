@@ -12,9 +12,7 @@ import Combine
 public class  C8yDeviceOperationsNotifier: ObservableObject {
 	
 	var deviceWrapper: C8yMutableDevice? = nil
-	
-	public var conn: C8yCumulocityConnection? = nil
-	
+		
 	private var _deviceOperationHistoryTimer: JcRepeatingTimer? = nil
 	private var _cancellable: [AnyCancellable] = []
 
@@ -22,11 +20,9 @@ public class  C8yDeviceOperationsNotifier: ObservableObject {
 		
 	}
 	
-	func reload(_ deviceWrapper: C8yMutableDevice, conn: C8yCumulocityConnection) {
+	func reload(_ deviceWrapper: C8yMutableDevice) {
 		
-		self.deviceWrapper = deviceWrapper
-		self.conn = conn
-		
+		self.deviceWrapper = deviceWrapper		
 		self.updateOperationHistory()
 	}
 	
@@ -41,19 +37,15 @@ public class  C8yDeviceOperationsNotifier: ObservableObject {
 		}
 	}
 	
-	func run(_ operation: C8yOperation, deviceWrapper: C8yMutableDevice? = nil, conn: C8yCumulocityConnection? = nil) throws -> AnyPublisher<C8yOperation, Error> {
+	func run(_ operation: C8yOperation, deviceWrapper: C8yMutableDevice? = nil) throws -> AnyPublisher<C8yOperation, Error> {
 		
 		if (deviceWrapper != nil) {
 			self.deviceWrapper = deviceWrapper
 		}
 		
-		if (conn != nil) {
-			self.conn = conn
-		}
-		
 		let p = PassthroughSubject<C8yOperation, Error>()
 
-		try C8yOperationService(self.conn!).post(operation: operation)
+		try C8yOperationService(self.deviceWrapper!.conn!).post(operation: operation)
 			.mapError( { error -> Error in
 				return error
 			})
@@ -85,7 +77,7 @@ public class  C8yDeviceOperationsNotifier: ObservableObject {
 	
 	func waitForOperationResult(_ op: C8yOperation, publisher p: PassthroughSubject<C8yOperation, Error>) {
 		
-		self.longPollingService = C8yOperationService(self.conn!)
+		self.longPollingService = C8yOperationService(self.deviceWrapper!.conn!)
 		
 		self.longPollingService!.subscribeForNewOperations(c8yIdOfDevice: op.deviceId)
 			.receive(on: RunLoop.main)
@@ -145,7 +137,7 @@ public class  C8yDeviceOperationsNotifier: ObservableObject {
 	*/
 	public func fetchOperationHistory() -> AnyPublisher<[C8yOperation], JcConnectionRequest<C8yCumulocityConnection>.APIError> {
 					  
-		return C8yOperationService(self.conn!).get(self.deviceWrapper!.device.c8yId!).map({response in
+		return C8yOperationService(self.deviceWrapper!.conn!).get(self.deviceWrapper!.device.c8yId!).map({response in
 			return response.content!.operations
 		}).eraseToAnyPublisher()
 	}

@@ -777,7 +777,7 @@ public class C8yEditableDevice: ObservableObject, Equatable {
 				self.networkType?.properties.forEach( { k, property in
 					
 					if (property.label != nil) {
-						self.properties[k] = EditableProperty(self._editableDevice, property: property, value: property.lookupValue(source: device.wrappedManagedObject) as? String)
+						self.properties[k] = EditableProperty(self._editableDevice, property: property, value: property.lookupValue(source: device.wrappedManagedObject))
 					}
 				})
 			}

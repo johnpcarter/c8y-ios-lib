@@ -87,12 +87,12 @@ public struct C8yModel: Hashable {
 		self.info = object.properties["model"] as! C8yModelInfo
 	}
 	
-	public init(_ id: String, name: String, category: C8yDevice.Category, link: String?, description: String? = nil, image: UIImage? = nil, businessDataFragment: String? = nil, businessDataFields: [String]? = nil, businessDataEvents: [C8yModelInfo.BusinessEvent]? = nil) {
+	public init(_ id: String, name: String, category: C8yDevice.Category, link: String?, description: String? = nil, image: UIImage? = nil, businessDataFragment: String? = nil, businessDataFields: [String]? = nil, businessDataEvents: [C8yModelInfo.BusinessEvent]? = nil, datapoints: [C8yModelInfo.DataPoint]? = nil) {
         
         self.name = name
 		self.description = description
 		
-		self.info = C8yModelInfo(id, category: category, link: link, base64Image: image?.pngData()?.base64EncodedString(), businessDataFragment: businessDataFragment, businessDataFields: businessDataFields, businessDataEvents: businessDataEvents)
+		self.info = C8yModelInfo(id, category: category, link: link, base64Image: image?.pngData()?.base64EncodedString(), businessDataFragment: businessDataFragment, businessDataFields: businessDataFields, businessDataEvents: businessDataEvents, datapoints: datapoints)
     }
     
 	public func dataPointTemplate(for key: String) -> C8yModelInfo.DataPoint? {
@@ -102,7 +102,7 @@ public struct C8yModel: Hashable {
 		// look up model from c8y model references
 		
 		for o in self.info.datapoints {
-			if (o.key == key) {
+			if (o.fragment == key) {
 				dp = o
 				break
 			}
@@ -178,15 +178,39 @@ public struct C8yModelInfo: C8yCustomAsset {
 	
 	public struct DataPoint: Codable {
 		
-		public private(set) var key: String
-		public private(set) var series: String
+		public var fragment: String
+		public var series: String
+		public var label: String
+		public var unit: String?
+		
+		public var color: String? = nil // rgb e.g. #ffffff
+		public var lineType: String? = nil
+		public var renderType: String? = nil
+		
 		public private(set) var min: Double?
 		public private(set) var max: Double?
-
-		public private(set) var label: String?
-		public private(set) var uom: String?
+		
+		public private(set) var upper: Double?
+		public private(set) var lower: Double?
+		public private(set) var middle: Double?
+		
 		public private(set) var aggregationType: String?
 		public private(set) var valueAsPercentage: Bool?
+		
+		public init(_ key: String, series: String, label: String, unit: String? = nil, showAsPercentage: Bool = false, min: Double? = nil, max: Double? = nil, lower: Double? = nil, upper: Double? = nil, middle: Double? = nil) {
+			
+			self.fragment = key
+			self.series = series
+			self.label = label
+			self.unit = unit
+			self.valueAsPercentage = showAsPercentage
+			
+			self.min = min
+			self.max = max
+			self.lower = lower
+			self.upper = upper
+			self.middle = middle
+		}
 	}
 	
 	public struct BusinessEvent: Codable {
@@ -317,7 +341,7 @@ public struct C8yModelInfo: C8yCustomAsset {
 		}
 	}
 	
-	init(_ id: String, category: C8yDevice.Category, link: String?, base64Image: String?, businessDataFragment: String? = nil, businessDataFields: [String]? = nil, businessDataEvents: [BusinessEvent]? = nil) {
+	init(_ id: String, category: C8yDevice.Category, link: String?, base64Image: String?, businessDataFragment: String? = nil, businessDataFields: [String]? = nil, businessDataEvents: [BusinessEvent]? = nil, datapoints: [C8yModelInfo.DataPoint]? = nil) {
 		
 		self.id = id
 		self.category = category
@@ -330,6 +354,10 @@ public struct C8yModelInfo: C8yCustomAsset {
 		
 		if (businessDataFields != nil) {
 			self.businessDataFields = businessDataFields!
+		}
+
+		if (datapoints != nil) {
+			self.datapoints = datapoints!
 		}
 		
 		self.businessDataEvents = businessDataEvents

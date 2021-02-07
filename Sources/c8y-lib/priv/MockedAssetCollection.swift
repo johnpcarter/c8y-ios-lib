@@ -156,7 +156,8 @@ public class C8yMockedAssetCollection : C8yAssetCollection {
         libr.addToGroup(device5)
         libr.addToGroup(device6)
         
-        let device7 = makeDevice("D0007", name: "Device 1 in Franprix", model: "c8y_Device", category: .Light, status: .MAINTENANCE, criticalAlarms: 0, majorAlarms: 3, minorAlarms: 0, warningAlarms: 1)
+        var device7 = makeDevice("D0007", name: "Device 1 in Franprix", model: "c8y_Device", category: .Light, status: .MAINTENANCE, criticalAlarms: 0, majorAlarms: 3, minorAlarms: 0, warningAlarms: 1)
+		device7.position = C8yManagedObject.Position(lat: 48.8496215, lng: 2.3494371, alt: 0)
         shop.addToGroup(device7)
         
         self.add(saintJaques)

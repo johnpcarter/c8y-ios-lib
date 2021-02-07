@@ -13,7 +13,6 @@ import CoreLocation
 public class C8yDeviceEventsNotifier {
 	
 	var deviceWrapper: C8yMutableDevice? = nil
-	var conn: C8yCumulocityConnection? = nil
 	
 	private var _cancellable: [AnyCancellable] = []
 
@@ -21,10 +20,9 @@ public class C8yDeviceEventsNotifier {
 		
 	}
 	
-	func reload(_ deviceWrapper: C8yMutableDevice, conn: C8yCumulocityConnection) {
+	func reload(_ deviceWrapper: C8yMutableDevice) {
 		
 		self.deviceWrapper = deviceWrapper
-		self.conn = conn
 		
 		self.updateEventLogsForToday()
 	}
@@ -66,7 +64,7 @@ public class C8yDeviceEventsNotifier {
 	
 	public func listenForNewEvents() -> AnyPublisher<C8yEvent, Error> {
 		
-		self.longPollingService = C8yEventsService(self.conn!)
+		self.longPollingService = C8yEventsService(self.deviceWrapper!.conn!)
 		
 		return self.longPollingService!.subscribeForNewEvents(c8yIdOfDevice: self.deviceWrapper!.device.c8yId!).map { event -> C8yEvent in
 			
@@ -92,7 +90,7 @@ public class C8yDeviceEventsNotifier {
 	*/
 	public func fetchEventLogsForToday() -> AnyPublisher<[C8yEvent], JcConnectionRequest<C8yCumulocityConnection>.APIError> {
 					
-		return C8yEventsService(self.conn!).get(source: self.deviceWrapper!.device.c8yId!, pageNum: 0).map({response in
+		return C8yEventsService(self.deviceWrapper!.conn!).get(source: self.deviceWrapper!.device.c8yId!, pageNum: 0).map({response in
 			
 			return response.content!.events
 			

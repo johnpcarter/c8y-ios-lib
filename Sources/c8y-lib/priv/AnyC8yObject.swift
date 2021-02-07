@@ -60,6 +60,19 @@ public struct AnyC8yObject: Identifiable, Equatable, Hashable {
         }
     }
     
+	public var position: C8yManagedObject.Position? {
+		get {
+			if (self.type == .C8yDevice) {
+				let d: C8yDevice = self.wrappedValue()
+				
+				return d.position
+			} else {
+				let g: C8yGroup = self.wrappedValue()
+				return g.position
+			}
+		}
+	}
+	
 	/**
 	Array of child objects associated with the wrapped object, both `C8yGroup` and `C8yDevice`
 	support child elements

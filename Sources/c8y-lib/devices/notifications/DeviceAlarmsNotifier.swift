@@ -13,7 +13,6 @@ public class C8yDeviceAlarmsNotifier {
 	
 
 	var deviceWrapper: C8yMutableDevice? = nil
-	var conn: C8yCumulocityConnection? = nil
 	
 	private var _cancellable: [AnyCancellable] = []
 	
@@ -21,10 +20,9 @@ public class C8yDeviceAlarmsNotifier {
 		
 	}
 	
-	func reload(_ deviceWrapper: C8yMutableDevice, conn: C8yCumulocityConnection) {
+	func reload(_ deviceWrapper: C8yMutableDevice) {
 		
 		self.deviceWrapper = deviceWrapper
-		self.conn = conn
 		
 		self.updateAlarmsForToday()
 	}
@@ -66,8 +64,8 @@ public class C8yDeviceAlarmsNotifier {
 	*/
 	public func fetchActiveAlarmsForToday() -> AnyPublisher<[C8yAlarm], JcConnectionRequest<C8yCumulocityConnection>.APIError> {
 			
-		return C8yAlarmsService(self.conn!).get(source: self.deviceWrapper!.device.c8yId!, status: .ACTIVE, pageNum: 0)
-			.merge(with: C8yAlarmsService(self.conn!).get(source: self.deviceWrapper!.device.c8yId!, status: .ACKNOWLEDGED, pageNum: 0))
+		return C8yAlarmsService(self.deviceWrapper!.conn!).get(source: self.deviceWrapper!.device.c8yId!, status: .ACTIVE, pageNum: 0)
+			.merge(with: C8yAlarmsService(self.deviceWrapper!.conn!).get(source: self.deviceWrapper!.device.c8yId!, status: .ACKNOWLEDGED, pageNum: 0))
 			.collect()
 			.map({response in
 				var array: [C8yAlarm] = []
@@ -84,7 +82,7 @@ public class C8yDeviceAlarmsNotifier {
 	
 	public func listenForNewAlarms() -> AnyPublisher<C8yAlarm, Error> {
 		
-		self.longPollingService = C8yAlarmsService(self.conn!)
+		self.longPollingService = C8yAlarmsService(self.deviceWrapper!.conn!)
 		
 		return self.longPollingService!.subscribeForNewAlarms(c8yIdOfDevice: self.deviceWrapper!.device.c8yId!).map { event -> C8yAlarm in
 			

@@ -36,6 +36,8 @@ public class C8yMutableDevice: ObservableObject  {
         }
     }
 
+	@Published public var model: C8yModel
+	
 	/**
 	Returns a list of the move recent movement for this device based on emitted events for `C8yLocationUpdate_EVENT`
 	This will return an empty set if no recent movement has been detected i.e. no recent events have been sent.
@@ -63,7 +65,7 @@ public class C8yMutableDevice: ObservableObject  {
         didSet {
             
             if (self.reloadMetrics) {
-				self._deviceMetricsNotifier.reload(self, conn: self.conn!)
+				self._deviceMetricsNotifier.reload(self)
             }
         }
     }
@@ -75,7 +77,7 @@ public class C8yMutableDevice: ObservableObject  {
         didSet {
                
             if (self.reloadLogs) {
-				self._deviceEventsNotifier.reload(self, conn: self.conn!)
+				self._deviceEventsNotifier.reload(self)
             }
         }
     }
@@ -86,7 +88,7 @@ public class C8yMutableDevice: ObservableObject  {
     @Published public var reloadAlarms: Bool = false {
         didSet {
             if (self.reloadAlarms) {
-				self._deviceAlarmsNotifier.reload(self, conn: self.conn!)
+				self._deviceAlarmsNotifier.reload(self)
             }
         }
     }
@@ -97,7 +99,7 @@ public class C8yMutableDevice: ObservableObject  {
     @Published public var reloadOperations: Bool = false {
         didSet {
             if (self.reloadOperations) {
-				self._deviceOperationsNotifier.reload(self, conn: self.conn!)
+				self._deviceOperationsNotifier.reload(self)
             }
         }
     }
@@ -134,8 +136,6 @@ public class C8yMutableDevice: ObservableObject  {
 	Returns the current battery level if available (returns -2 if not applicable)
 	*/
 	@Published public internal(set) var batteryLevel: Double = -2
-    
-	@Published public private(set) var model: C8yModel
 	
 	/**
 	Returns the primary metric for this device e.g. Temperature, ambiance etc.
@@ -229,14 +229,13 @@ public class C8yMutableDevice: ObservableObject  {
 	- parameter device: Device to which we want to fetch mutable data
 	- parameter connection: Connection details in order to connect to Cumulocity
 	*/
-	public init(_ device: C8yDevice, connection: C8yCumulocityConnection, deviceModels: C8yDeviceModels? = nil) {
+	public init(_ device: C8yDevice, connection: C8yCumulocityConnection, model: C8yModel? = nil) {
         
         self.device = device
         self.conn = connection
+		self.model = model != nil ? model! : C8yModel()
 		self.maintenanceMode = device.requiredResponseInterval == -1
 		self.isDeployed = device.isDeployed;
-
-		self.model = C8yModel(device.revision ?? "", name: device.model, category: .Unknown, link: nil)
 		
 		if (self.device.wrappedManagedObject.properties[C8Y_MEASUREMENT_BATTERY] != nil) {
 			self.batteryLevel = (self.device.wrappedManagedObject.properties[C8Y_MEASUREMENT_BATTERY]! as! C8yDoubleCustomAsset).value
@@ -248,20 +247,10 @@ public class C8yMutableDevice: ObservableObject  {
             self.position = CLLocationCoordinate2D(latitude: device.position!.lat, longitude: device.position!.lng)
         }
 		
-		if (deviceModels != nil) {
-			deviceModels!.modelFor(device: self.device)
-				.receive(on: RunLoop.main)
-				.subscribe(Subscribers.Sink(receiveCompletion: { completion in
-					print("No model available")
-				}, receiveValue: { result in
-					
-					self.model = result
-				}))
-		}
-		self._deviceMetricsNotifier.conn = self.conn
-		self._deviceEventsNotifier.conn = self.conn
-		self._deviceAlarmsNotifier.conn = self.conn
-		self._deviceOperationsNotifier.conn = self.conn
+		self._deviceMetricsNotifier.deviceWrapper = self
+		self._deviceEventsNotifier.deviceWrapper = self
+		self._deviceAlarmsNotifier.deviceWrapper = self
+		self._deviceOperationsNotifier.deviceWrapper = self
 
 		self.getExternalIds()
     }
@@ -291,16 +280,15 @@ public class C8yMutableDevice: ObservableObject  {
 	       
 	public func reloadAllAssociatedData() {
 	
-		self._deviceMetricsNotifier.reload(self, conn: self.conn!)
-		self._deviceOperationsNotifier.reload(self, conn: self.conn!)
-		self._deviceEventsNotifier.reload(self, conn: self.conn!)
-		self._deviceAlarmsNotifier.reload(self, conn: self.conn!)
+		self._deviceMetricsNotifier.reload(self)
+		self._deviceOperationsNotifier.reload(self)
+		self._deviceEventsNotifier.reload(self)
+		self._deviceAlarmsNotifier.reload(self)
 	}
 	
 	public func startMonitorForPrimaryMetric(_ preferredMetric: String?, refreshInterval: Double) {
 	
 		self._deviceMetricsNotifier.deviceWrapper = self
-		self._deviceMetricsNotifier.conn = self.conn!
 		
 		self._deviceMetricsNotifier.startMonitorForPrimaryMetric(preferredMetric, refreshInterval: refreshInterval)
 	}
@@ -315,17 +303,21 @@ public class C8yMutableDevice: ObservableObject  {
 	
 	public func trackDevice() {
 	
-		self._deviceEventsNotifier.listenForNewEvents().receive(on: RunLoop.main).subscribe(Subscribers.Sink(receiveCompletion: { completed in
-			
-		}, receiveValue: { event in
-						
-			if (event.type == C8yLocationUpdate_EVENT && event.position != nil) {
-				let p = CLLocationCoordinate2D(latitude: event.position!.lat, longitude: event.position!.lng)
+		self._deviceEventsNotifier.deviceWrapper = self
+
+		self._deviceEventsNotifier.listenForNewEvents()
+			.receive(on: RunLoop.main)
+			.subscribe(Subscribers.Sink(receiveCompletion: { completed in
 				
-				self.position = p
-				self.tracking.insert(p, at: 0)
-			}
-		}))
+			}, receiveValue: { event in
+				
+				if (event.type == C8yLocationUpdate_EVENT && event.position != nil) {
+					let p = CLLocationCoordinate2D(latitude: event.position!.lat, longitude: event.position!.lng)
+					
+					self.position = p
+					self.tracking.insert(p, at: 0)
+				}
+			}))
 	}
 	
 	public func stopTracking() {
@@ -435,25 +427,6 @@ public class C8yMutableDevice: ObservableObject  {
 		}).eraseToAnyPublisher()
 	}
     
-	public func operation(for type: String) -> C8yOperation {
-	
-		let template = self.model.operationTemplate(for: type)
-		var op = C8yOperation(forSource: self.device.c8yId!, type: type, description: template.description ?? "Operation sent from c8y iphone app")
-		
-		op.model = template
-		
-		if (template.value != nil) {
-			let v = self.device.wrappedManagedObject.properties[template.value!]
-			
-			if (v != nil && v is C8yStringCustomAsset) {
-				op.operationDetails = C8yOperation.OperationDetails(template.value!, value: (v as! C8yStringCustomAsset).value)
-			} else {
-				op.operationDetails = C8yOperation.OperationDetails(template.value!, value: "")
-			}
-		}
-		
-		return op
-	}
 	/**
 	Submits the given operation to Cumulocity and records it in `operationHistory`
 	The operation will have an initial status of PENDING
@@ -464,7 +437,7 @@ public class C8yMutableDevice: ObservableObject  {
 	*/
 	public func sendOperation(_ op: C8yOperation) throws -> AnyPublisher<C8yOperation, Error> {
 					
-		return try self._deviceOperationsNotifier.run(op, deviceWrapper: self, conn: self.conn!)
+		return try self._deviceOperationsNotifier.run(op, deviceWrapper: self)
 			.receive(on: RunLoop.main)
 			.map({ updatedOperation -> C8yOperation in
 				
@@ -763,7 +736,6 @@ public class C8yMutableDevice: ObservableObject  {
 	public func primaryMetricPublisher(preferredMetric: String?, autoRefresh: Bool = false) -> AnyPublisher<C8yDeviceMetricsNotifier.Measurement, Never> {
 		
 		self._deviceMetricsNotifier.deviceWrapper = self
-		self._deviceMetricsNotifier.conn = self.conn!
 		
 		return self._deviceMetricsNotifier.primaryMetricPublisher(preferredMetric: preferredMetric ?? self.model.preferredMetric, autoRefresh: autoRefresh)
 	}
@@ -780,6 +752,26 @@ public class C8yMutableDevice: ObservableObject  {
        }
     }
     
+	public func operation(for type: String) -> C8yOperation {
+		
+		let template = self.model.operationTemplate(for: type)
+		var op = C8yOperation(forSource: self.device.c8yId!, type: type, description: template.description ?? "Operation sent from c8y iphone app")
+		
+		op.model = template
+		
+		if (template.value != nil) {
+			let v = self.device.wrappedManagedObject.properties[template.value!]
+			
+			if (v != nil && v is C8yStringCustomAsset) {
+				op.operationDetails = C8yOperation.OperationDetails(template.value!, value: (v as! C8yStringCustomAsset).value)
+			} else {
+				op.operationDetails = C8yOperation.OperationDetails(template.value!, value: "")
+			}
+		}
+		
+		return op
+	}
+	
 	private func getExternalIds() {
 	
 		C8yManagedObjectsService(self.conn!).externalIDsForManagedObject(device.wrappedManagedObject.id!)

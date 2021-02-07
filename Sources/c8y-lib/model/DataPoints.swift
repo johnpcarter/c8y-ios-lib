@@ -28,11 +28,12 @@ public struct C8yDataPoints: Codable {
         private(set) var id: String?
         
         public var fragment: String
+		public var series: String
+		public var label: String
         public var unit: String
+		
         public var color: String // rgb e.g. #ffffff
-        public var series: String
-        public var  lineType: String
-        public var label: String
+        public var lineType: String
         public var renderType: String
         
         enum CodingKeys: String, CodingKey {
@@ -69,7 +70,7 @@ public struct C8yDataPoints: Codable {
     
     public init(_ reference: String, series: String, unit: String, color: String, label: String) {
         
-        self.dataPoints = [DataPoint(reference: reference, value: DataPointValue(id: nil, fragment: series, unit:  unit, color: color, series: series, lineType: "thin", label: label, renderType: "line"))]
+		self.dataPoints = [DataPoint(reference: reference, value: DataPointValue(id: nil, fragment: reference, series:  series, label: label, unit: unit, color: color, lineType: "thin", renderType: "line"))]
     }
     
     public init(from decoder: Decoder) throws {

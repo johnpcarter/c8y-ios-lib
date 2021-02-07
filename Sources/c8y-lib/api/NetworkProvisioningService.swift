@@ -121,7 +121,7 @@ public class C8yNetworkProvisioningService: JcConnectionRequest<C8yCumulocityCon
 			let v = property.lookupValue(source: device.wrappedManagedObject)
 			
 			if (v != nil) {
-				url = url.replacingOccurrences(of: "{\(key)}", with: (v as! String).addingPercentEncoding(withAllowedCharacters: .alphanumerics)!)
+				url = url.replacingOccurrences(of: "{\(key)}", with: (v!).addingPercentEncoding(withAllowedCharacters: .alphanumerics)!)
 			}
 		})
 		

@@ -99,14 +99,11 @@ public class C8yAssetCollection: ObservableObject {
 
 	public var parent: AnyC8yObject? = nil
 	
-    private let _objectsLockQueue = DispatchQueue(label: "c8y.objects.lock.queue")
-
     private var _refreshTimer: JcRepeatingTimer? = nil
     private var _reload: Bool = false
     private var _firstLoadCompleted: Bool = false
     private var _lastLoadError: Error? = nil
     private var _cancellableSet: Set<AnyCancellable> = []
-    private let _cancellableLockQueue = DispatchQueue(label: "cancellable.lock.queue")
 	private var _favourites: [String]? = nil
 	
 	/**
@@ -319,11 +316,11 @@ public class C8yAssetCollection: ObservableObject {
 	
 	- parameter asset: device or group to be refreshed
 	*/
-	public func refreshAsset<T:C8yObject>(_ asset: T) {
+	public func refreshAsset<T:C8yObject>(_ asset: T, addIfMissing: Bool = false) {
 					
 		if (self.objectFor(asset.c8yId!).object != nil) {
 			_ = self.replaceObjectFor(asset)
-		} else {
+		} else if (addIfMissing) {
 			// asset is not present, so assume we need to add it to favourites
 			
 			self._updateFavourites(asset)
@@ -339,6 +336,7 @@ public class C8yAssetCollection: ObservableObject {
 			self._refreshTimer!.suspend()
 			self._refreshTimer = nil
 		}
+		
         self.connection = nil
         self._cancellableSet.removeAll()
         self.objects.removeAll()
@@ -428,7 +426,7 @@ public class C8yAssetCollection: ObservableObject {
 		var m = self.mutableDevices[device.c8yId!]
 		
 		if (m == nil) {
-			m = C8yMutableDevice(device, connection: self.connection!, deviceModels: self.deviceModels)
+			m = self.makeMutableDevice(device)
 			
 			self.mutableDevices[device.c8yId!] = m
 		}
@@ -574,7 +572,7 @@ public class C8yAssetCollection: ObservableObject {
 		if (obj is C8yDevice && self.mutableDevices[obj.c8yId!] != nil) {
 			let d: C8yDevice = obj as! C8yDevice
 			
-			self.mutableDevices[obj.c8yId!] = C8yMutableDevice(d, connection: self.connection!, deviceModels: self.deviceModels)
+			self.mutableDevices[obj.c8yId!] = self.makeMutableDevice(d)
 		}
 		
 		return found
@@ -1315,24 +1313,24 @@ public class C8yAssetCollection: ObservableObject {
 		return self._updateFavourites(AnyC8yObject(object))
 	}
 	
-    private func _updateFavourites(_ object: AnyC8yObject) {
-        
-        self._objectsLockQueue.sync {
-            
-			if (object.type == .C8yGroup) {
-                
-                let existingObject: C8yGroup? = self._objectFor(object.c8yId!, excludeDevices: true)
-				self._updateFavourites(existingObject, with: object)
-               
-			} else if (object.type == .C8yDevice) {
-                
-				// add or replace divice
-				
-                let existingObject: C8yDevice? = self._objectFor(object.c8yId!, excludeDevices: false)
-				self._updateFavourites(existingObject, with: object)
-            }
-        }
-    }
+	private func _updateFavourites(_ object: AnyC8yObject) {
+		
+		objc_sync_enter(self)
+		defer { objc_sync_exit(self) }
+		
+		if (object.type == .C8yGroup) {
+			
+			let existingObject: C8yGroup? = self._objectFor(object.c8yId!, excludeDevices: true)
+			self._updateFavourites(existingObject, with: object)
+			
+		} else if (object.type == .C8yDevice) {
+			
+			// add or replace divice
+			
+			let existingObject: C8yDevice? = self._objectFor(object.c8yId!, excludeDevices: false)
+			self._updateFavourites(existingObject, with: object)
+		}
+	}
     
 	private func _updateFavourites<T:C8yObject>(_ existingObject: T?, with object: AnyC8yObject) {
 	
@@ -1353,32 +1351,50 @@ public class C8yAssetCollection: ObservableObject {
 			if (object.type == .C8yDevice && self.mutableDevices[object.c8yId!] != nil) {
 				let d: C8yDevice = object.wrappedValue()
 				
-				self.mutableDevices[object.c8yId!] = C8yMutableDevice(d, connection: self.connection!, deviceModels: self.deviceModels)
+				self.mutableDevices[object.c8yId!] = self.makeMutableDevice(d)
 			}
 		}
 		
 		self.updateTitle()
 	}
 	
-    private func _removeFromFavourites(_ c8yId: String) -> Bool {
+	private func _removeFromFavourites(_ c8yId: String) -> Bool {
+		
+		var found: Bool = false
+		
+		objc_sync_enter(self)
+		defer { objc_sync_exit(self) }
+		
+		for i in self.objects.indices {
+			
+			if (self.objects[i].c8yId == c8yId) {
+				self.objects.remove(at: i)
+				found = true
+				self.updateTitle()
+				break
+			}
+		}
+		
+		return found
+	}
     
-        var found: Bool = false
-        
-        self._objectsLockQueue.sync {
-            for i in self.objects.indices {
-                
-                if (self.objects[i].c8yId == c8yId) {
-                    self.objects.remove(at: i)
-                    found = true
-					self.updateTitle()
-                    break
-                }
-            }
-        }
-        
-        return found
-    }
-    
+	private func makeMutableDevice(_ d: C8yDevice) -> C8yMutableDevice {
+		
+		let m = C8yMutableDevice(d, connection: self.connection!)
+
+		if (self.deviceModels != nil) {
+			deviceModels!.modelFor(device: d)
+				.receive(on: RunLoop.main)
+				.subscribe(Subscribers.Sink(receiveCompletion: { completion in
+					print("No model available")
+				}, receiveValue: { result in
+					m.model = result
+				}))
+		}
+		
+		return m
+	}
+	
 	private func updateTitle() {
 		
 		if (parent != nil && parent!.type == .C8yDevice) {
@@ -1493,16 +1509,18 @@ public class C8yAssetCollection: ObservableObject {
     
     private func _storeCancellable(_ c: AnyCancellable) {
            
-        _ = self._cancellableLockQueue.sync {
-            self._cancellableSet.insert(c)
-        }
+		objc_sync_enter(self)
+		defer { objc_sync_exit(self) }
+		
+		self._cancellableSet.insert(c)
     }
     
     private func _removeCancellable(_ c: AnyCancellable) {
            
-        self._cancellableLockQueue.async {
-            self._cancellableSet.remove(c)
-        }
+		objc_sync_enter(self)
+		defer { objc_sync_exit(self) }
+		
+		self._cancellableSet.remove(c)
     }
     
     private func _objectFor<T:C8yObject>(_ c8yId: String, excludeDevices: Bool) -> T? {

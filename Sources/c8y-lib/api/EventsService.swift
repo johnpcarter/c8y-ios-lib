@@ -65,7 +65,6 @@ public class C8yEventsService: C8ySubscriber {
     public func get(source: String, pageNum: Int) -> AnyPublisher<JcRequestResponse<C8yPagedEvents>, APIError> {
      
         self.revert = false
-        self.pageSize = 50
         
         return super._get(resourcePath: self.args(forSource: source, pageNum: pageNum)).tryMap({ response in
             try JcRequestResponse<C8yPagedEvents>(response, dateFormatter: C8yManagedObject.dateFormatter())
