@@ -22,9 +22,15 @@ public class C8yCumulocityConnection : JcSimpleConnection {
      - parameter tenant: The name of your c8y tenant (you can find it at the beginning of your url in the web browser after logging in e.g. https://#tenant#.cumulocity.com/..'
      - parameter instance: The name of your c8y instance to use. Instances are provided for different regions e.g. 'cumulocity.com' or 'eu-cumulocity.com' etc.
      */
-    public init(tenant: String, server: String) {
+    public init(tenant: String, server: String) throws {
         
-        super.init(url: URL(string: String(format: "https://%@.%@", tenant, server))!, authEndpoint: C8Y_AUTH_USERPROFILE_API)
+		let url = URL(string: String(format: "https://%@.%@", tenant, server))
+		
+		guard url != nil else {
+			throw InvalidConnectionInfo.badTenantName
+		}
+		
+        super.init(url: url!, authEndpoint: C8Y_AUTH_USERPROFILE_API)
     }
     
     /**
@@ -62,4 +68,8 @@ public class C8yCumulocityConnection : JcSimpleConnection {
             return super._get(resourcePath: C8Y_AUTH_USERPROFILE_API).eraseToAnyPublisher()
         }
     }
+	
+	public enum InvalidConnectionInfo: Error {
+		case badTenantName
+	}
 }
