@@ -56,7 +56,7 @@ public class  C8yDeviceOperationsNotifier: ObservableObject {
 					case .failure(let error):
 						p.send(completion: .failure(error))
 					case .finished:
-						print("done")
+						break
 				}
 			}, receiveValue: { response in
 				
@@ -89,9 +89,7 @@ public class  C8yDeviceOperationsNotifier: ObservableObject {
 				if (operation.id == op.id) {
 					
 					// got it, notify
-					
-					print("================= got operation update back")
-					
+										
 					p.send(operation)
 					p.send(completion: .finished)
 					
@@ -119,10 +117,11 @@ public class  C8yDeviceOperationsNotifier: ObservableObject {
 				self.deviceWrapper!.reloadOperations = false
 				
 				switch completion {
-				case .failure(let error):
-					print("failed due to \(error)")
+				case .failure:
+					//TODO: Report error
+					break
 				default:
-					print("done")
+					break
 				}
 			}) { results in
 				

@@ -94,9 +94,7 @@ public struct C8yEvent: JcEncodableContent, Identifiable {
         self.text = ""
         
         for (key) in values.allKeys {
-            
-			print("===============================> event key is \(key)")
-			
+            			
             switch (key.stringValue) {
             case "id":
                 self.id = try values.decode(String.self, forKey: key)

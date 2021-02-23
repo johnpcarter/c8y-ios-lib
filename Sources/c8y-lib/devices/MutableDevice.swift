@@ -130,7 +130,7 @@ public class C8yMutableDevice: ObservableObject  {
 	Returns true if the device has been provisioned with its network.
 
 	*/
-	@Published public private(set) var isDeployed: Bool
+	@Published public var isDeployed: Bool
 	
 	/**
 	Returns the current battery level if available (returns -2 if not applicable)
@@ -228,12 +228,14 @@ public class C8yMutableDevice: ObservableObject  {
 	Constructor to create a mutable device for the give device
 	- parameter device: Device to which we want to fetch mutable data
 	- parameter connection: Connection details in order to connect to Cumulocity
+	- parameter model: optional model details for device
 	*/
 	public init(_ device: C8yDevice, connection: C8yCumulocityConnection, model: C8yModel? = nil) {
         
         self.device = device
         self.conn = connection
 		self.model = model != nil ? model! : C8yModel()
+		self.model = C8yModel()
 		self.maintenanceMode = device.requiredResponseInterval == -1
 		self.isDeployed = device.isDeployed;
 		
@@ -253,8 +255,34 @@ public class C8yMutableDevice: ObservableObject  {
 		self._deviceOperationsNotifier.deviceWrapper = self
 
 		self.getExternalIds()
+		self.loadChildAssets()
     }
     
+	public static func make(c8yId id: String, connection: C8yCumulocityConnection, model: C8yModel? = nil, completionHandler: @escaping (Result<C8yMutableDevice, Error>) -> Void) {
+				
+		C8yManagedObjectsService(connection).get(id)
+			.receive(on: RunLoop.main)
+			.subscribe(Subscribers.Sink(receiveCompletion: { completion in
+				switch completion {
+				case .failure(let error):
+					completionHandler(.failure(error))
+				case .finished:
+					break
+				}
+			}, receiveValue: { response in
+				
+				do {
+					let deviceWrapper = C8yMutableDevice(try C8yDevice(response.content!), connection: connection, model: model)
+					
+					completionHandler(.success(deviceWrapper))
+				} catch {
+					// TODO: what to do in case of error
+					
+					completionHandler(.failure(error))
+				}
+			}))
+	}
+	
     deinit {
 		self.stopMonitoring()
     }
@@ -374,11 +402,13 @@ public class C8yMutableDevice: ObservableObject  {
 			try self.sendOperation(op)
 			.subscribe(Subscribers.Sink(receiveCompletion: { (completion) in
 					
+				// currently ignorant of success/failure
+				
 				switch completion {
-					case .failure(let error):
-						print(error)
+					case .failure:
+						break
 					case .finished:
-						print("done")
+						break
 				}
 					
 				self.isRestarting = false
@@ -415,8 +445,6 @@ public class C8yMutableDevice: ObservableObject  {
 			
 			self.device.relayState = state
 			
-			print("========= toggle response")
-
 			do { try self.updateDeviceProperty(withKey: C8Y_OPERATION_RELAY, value: C8yStringCustomAsset(state.rawValue))
 			} catch {
 				// ignore
@@ -440,9 +468,7 @@ public class C8yMutableDevice: ObservableObject  {
 		return try self._deviceOperationsNotifier.run(op, deviceWrapper: self)
 			.receive(on: RunLoop.main)
 			.map({ updatedOperation -> C8yOperation in
-				
-				print("========= send operation responded")
-				
+								
 				if (updatedOperation.model.value != nil) {
 										
 					do {
@@ -560,14 +586,10 @@ public class C8yMutableDevice: ObservableObject  {
 								return updatedEvent
 							}).eraseToAnyPublisher()
 					} catch {
-						return Just(updatedEvent).mapError({ never -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
-							return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
-						}).eraseToAnyPublisher()
+						return Just(updatedEvent).setFailureType(to: JcConnectionRequest<C8yCumulocityConnection>.APIError.self).eraseToAnyPublisher()
 					}
 				} else {
-					return Just(updatedEvent).mapError({ never -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
-						return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
-					}).eraseToAnyPublisher()
+					return Just(updatedEvent).setFailureType(to: JcConnectionRequest<C8yCumulocityConnection>.APIError.self).eraseToAnyPublisher()
 				}
 			}).eraseToAnyPublisher()
 	}
@@ -659,9 +681,7 @@ public class C8yMutableDevice: ObservableObject  {
                 return self.lastAttachment!
                 }).eraseToAnyPublisher()
         } else {
-            return Just(self.lastAttachment!).mapError({ _ -> JcConnectionRequest<C8yCumulocityConnection>.APIError in
-				return JcConnectionRequest<C8yCumulocityConnection>.APIError(httpCode: -1, reason: "won't happen")
-            }).eraseToAnyPublisher()
+            return Just(self.lastAttachment!).setFailureType(to: JcConnectionRequest<C8yCumulocityConnection>.APIError.self).eraseToAnyPublisher()
         }
     }
 
@@ -740,17 +760,31 @@ public class C8yMutableDevice: ObservableObject  {
 		return self._deviceMetricsNotifier.primaryMetricPublisher(preferredMetric: preferredMetric ?? self.model.preferredMetric, autoRefresh: autoRefresh)
 	}
 	
-    private func primaryDataPoint() -> [C8yDataPoints.DataPoint] {
-               
-       //TODO: link this to C8yModels
-       
-        if (device.dataPoints != nil && device.dataPoints!.dataPoints.count > 0) {
-            return device.dataPoints!.dataPoints
-       } else {
-	
-            return []
-       }
-    }
+	public func loadChildAssets(completionHandler: ((C8yDevice) -> Void)? = nil) {
+			
+		var assets: [C8yManagedObject.ChildReferences.ReferencedObject] = []
+		
+		if (self.device.wrappedManagedObject.childDevices != nil && self.device.wrappedManagedObject.childAssets != nil) {
+			assets = (self.device.wrappedManagedObject.childDevices!.references! + self.device.wrappedManagedObject.childAssets!.references!)
+
+		} else if (self.device.wrappedManagedObject.childAssets != nil) {
+			assets = self.device.wrappedManagedObject.childAssets!.references ?? []
+		} else if (self.device.wrappedManagedObject.childDevices != nil) {
+			assets = self.device.wrappedManagedObject.childDevices!.references ?? []
+		}
+		
+		assets.forEach({ c in
+			
+			self.processChildAsset(c) { obj in
+				
+				self.device.children.append(obj)
+				
+				if (completionHandler != nil && c.id == assets.last?.id) {
+					completionHandler!(self.device)
+				}
+			}
+		})
+	}
     
 	public func operation(for type: String) -> C8yOperation {
 		
@@ -772,9 +806,21 @@ public class C8yMutableDevice: ObservableObject  {
 		return op
 	}
 	
+	private func primaryDataPoint() -> [C8yDataPoints.DataPoint] {
+			   
+	   //TODO: link this to C8yModels
+	   
+		if (device.dataPoints != nil && device.dataPoints!.dataPoints.count > 0) {
+			return device.dataPoints!.dataPoints
+	   } else {
+	
+			return []
+	   }
+	}
+	
 	private func getExternalIds() {
 	
-		C8yManagedObjectsService(self.conn!).externalIDsForManagedObject(device.wrappedManagedObject.id!)
+		C8yManagedObjectsService(self.conn!).externalIDsForManagedObject(self.device.c8yId!)
 			.receive(on: RunLoop.main)
 			.subscribe(Subscribers.Sink(receiveCompletion: { completion in
 
@@ -782,6 +828,35 @@ public class C8yMutableDevice: ObservableObject  {
 			self.device.setExternalIds(response.content!.externalIds)
 			
 		}))
+	}
+	
+	private func processChildAsset(_ c: C8yManagedObject.ChildReferences.ReferencedObject, completionHandler: @escaping (AnyC8yObject) -> Void) {
+		
+		C8yManagedObjectsService(self.conn!).get(c.ref!.lastToken("/"))
+			.subscribe(Subscribers.Sink(receiveCompletion: { completion in
+				
+				// do nothing
+				
+			}, receiveValue: { value in
+				
+				if (value.content != nil) {
+					
+					do {
+				
+						var child = try (C8yDevice(value.content!))
+						
+						C8yManagedObjectsService(self.conn!).externalIDsForManagedObject(child.c8yId!)
+							.receive(on: RunLoop.main)
+							.subscribe(Subscribers.Sink(receiveCompletion: { completion in
+								completionHandler(AnyC8yObject(child))
+							}, receiveValue: { response in
+								child.setExternalIds(response.content!.externalIds)
+							}))
+					} catch {
+						// TODO: currently ignoring invalid child devices
+					}
+				}
+			}))
 	}
 	
     private func makeError<T>(_ response: JcRequestResponse<T>) -> Error? {

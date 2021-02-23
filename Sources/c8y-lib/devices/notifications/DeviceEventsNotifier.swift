@@ -42,10 +42,11 @@ public class C8yDeviceEventsNotifier {
 			.sink(receiveCompletion: { completion in
 				self.deviceWrapper!.reloadLogs = false
 				switch completion {
-				case .failure(let error):
-					print("failed due to \(error)")
+				case .failure:
+					//TODO: report error
+					break
 				default:
-					print("done")
+					break
 				}
 				
 				self.deviceWrapper!.reloadLogs = false

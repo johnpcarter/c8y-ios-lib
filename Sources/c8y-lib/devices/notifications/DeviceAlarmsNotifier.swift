@@ -46,16 +46,17 @@ public class C8yDeviceAlarmsNotifier {
 			.sink(receiveCompletion: { completion in
 				self.deviceWrapper!.reloadAlarms = false
 				switch completion {
-				case .failure(let error):
-					print("failed due to \(error)")
-				default:
-					print("done")
+					case .failure:
+					//TODO: report error
+						break
+					default:
+						break
 				}
 				
 				self.deviceWrapper!.reloadAlarms = false
 			}) { results in
 				self.deviceWrapper!.alarms = results
-		}.store(in: &self._cancellable)
+			}.store(in: &self._cancellable)
 	}
 	
 	/**

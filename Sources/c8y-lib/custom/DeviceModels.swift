@@ -128,10 +128,11 @@ public class C8yDeviceModels: ObservableObject {
         
         C8yManagedObjectsService(self._conn!).get(forType: C8Y_SUPPLIERS, pageNum: 0).sink(receiveCompletion: { (completion) in
             switch completion {
-            case .failure(let error):
-                print(error)
+            case .failure:
+                //TODO: report
+				break
             case .finished:
-                print("done")
+                break
             }
         }, receiveValue: { (response) in
             self._didLoad = true

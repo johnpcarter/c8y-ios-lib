@@ -72,9 +72,7 @@ class GroupLoader {
         query.add(key: "bygroupid", op: nil, value: self._c8yId)
                         
         C8yManagedObjectsService(_conn).get(forQuery: query, pageNum: pageNum).sink(receiveCompletion: { completion in
-            
-			print("Completed")
-			
+            			
 			//self._groupLoader.send(completion: .finished)
 			
         }, receiveValue: { response in
@@ -186,7 +184,6 @@ class GroupLoader {
 				case .failure(let error):
 					print(error)
 				case .finished:
-					print("sub group finished \(String(describing: childGroup.wrappedManagedObject.name)) - children \(childGroup.children.count)")
 					
 					if (self._includeGroups) {
 						self.parent.addToGroup(childGroup)

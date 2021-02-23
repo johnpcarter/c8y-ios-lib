@@ -73,9 +73,7 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
     }
     
     public init(from decoder:Decoder) throws {
-        
-		print("Decoding operation:")
-		
+        		
         let values = try decoder.container(keyedBy: C8yCustomAssetProcessor.AssetObjectKey.self)
         
         self.deviceId = ""
@@ -83,9 +81,7 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
 		self.operationDetails = OperationDetails()
 		
         for (key) in values.allKeys {
-            
-			print("processing key \(key)")
-			
+            			
             switch (key.stringValue) {
             case "id":
                 self.id = try values.decode(String.self, forKey: key)
@@ -112,7 +108,8 @@ public struct C8yOperation: JcEncodableContent, Identifiable {
                         self.type = key.stringValue
                     }
                 } catch {
-                    print("bugger \(error.localizedDescription)")
+                    //TODO: report error maybe?
+					// for the moment just ignore any invalid entries
                 }
             }
         }

@@ -59,11 +59,10 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 				// do nowt
 				
 				switch completion {
-					case .failure(let error):
+					case .failure:
 						self._clientId.clear()
-						print("subscription error \(error.localizedDescription)")
 					case .finished:
-						print("subscription completed")
+						break
 				}
 				
 			}, receiveValue: { response in
@@ -111,7 +110,6 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 						let decoder = JSONDecoder()
 						decoder.dateDecodingStrategy = .formatted(C8yManagedObject.dateFormatter())
 						
-						print("data is \(String(data: response.content!, encoding: .utf8))")
 						let opWrapper: [WaitResponse<T>] = try decoder.decode([WaitResponse<T>].self, from: response.content!)
 						
 						opWrapper.forEach { op in
@@ -120,7 +118,6 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 							}
 						}
 					} catch {
-						print("error \(error)")
 					// should we report errors TODO ?
 					}
 				} else {
@@ -190,14 +187,7 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 		public required init(from decoder: Decoder) throws {
 			
 			let container = try decoder.container(keyedBy: CodingKeys.self)
-			
-			let keys = container.allKeys
-			
-			for k in keys {
-				print("key in response = \(k)")
-			}
-			
-
+						
 			if (container.contains(.data)) {
 				let nestedContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
 				self.realtimeAction = try nestedContainer.decode(String.self, forKey: .realtimeAction)
@@ -242,7 +232,7 @@ public class C8ySubscriber: JcConnectionRequest<C8yCumulocityConnection> {
 							case .failure(let error):
 								print("error \(error.localizedDescription)")
 							case .finished:
-								print("done")
+								break
 						}
 						
 						self.lock.unlock()

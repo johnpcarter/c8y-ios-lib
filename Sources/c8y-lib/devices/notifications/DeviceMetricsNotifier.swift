@@ -60,12 +60,6 @@ public class C8yDeviceMetricsNotifier {
 				
 				self.deviceWrapper!.reloadMetrics = false
 				
-				switch completion {
-				case .failure(let error):
-					print("failed due to \(error)")
-				default:
-					print("done")
-				}
 				
 			}, receiveValue: { results in
 				self.deviceWrapper!.measurements = results
@@ -151,8 +145,6 @@ public class C8yDeviceMetricsNotifier {
 			self._loadBatteryAndPrimaryMetricValuesDONE = true
 			self._preferredMetric = preferredMetric
 						
-			print("setting up for primary metric '\(preferredMetric ?? "nil")' for \(self.deviceWrapper!.device.name) to \(autoRefresh)")
-
 			self.startMonitorForPrimaryMetric(preferredMetric, refreshInterval: self._primaryMeasurementInterval)
 		}
 		
@@ -203,8 +195,6 @@ public class C8yDeviceMetricsNotifier {
 				self.deviceWrapper!.primaryMetricHistory = MeasurementSeries(name: m!.series.last!.name, label: type, unit: m!.series.last!.unit, yValues: v, xValues: t)
 			}
 		}
-
-		print("setting primary metric to \(String(describing: self.deviceWrapper!.primaryMetric.min)) for \(self.deviceWrapper!.device.name)")
 	
 		return self.deviceWrapper!.primaryMetric
 	}
@@ -226,8 +216,7 @@ public class C8yDeviceMetricsNotifier {
 						self.deviceWrapper!.batteryLevel = -1
 						self._disableBatteryFetcher = true
 					case .finished:
-						// do nothing
-						print("nowt")
+						break
 				}
 			}, receiveValue: { series in
 				if (series != nil && series!.values.count > 0) {
@@ -241,9 +230,7 @@ public class C8yDeviceMetricsNotifier {
 	}
 	
 	private func getMeasurementSeries(_ device: C8yDevice, type: String, series: String, interval: Double, connection: C8yCumulocityConnection, retries: Int? = nil) -> AnyPublisher<C8yMeasurementSeries?, Never> {
-		
-		print("Fetching metrics for device \(device.name), \(type), \(series)")
-		
+				
 		var rinterval = interval
 		
 		return C8yMeasurementsService(connection).getSeries(forSource: device.c8yId!, type: type, series: series, from: Date().addingTimeInterval(-rinterval), to: Date(), aggregrationType: .MINUTELY)
@@ -302,8 +289,6 @@ public class C8yDeviceMetricsNotifier {
 						
 						return self.populatePrimaryMetric(series, type: mType!)
 
-					}.catch { error -> AnyPublisher<Measurement, Never> in
-						return Just(Measurement()).eraseToAnyPublisher()
 					}.eraseToAnyPublisher()
 			} else {
 				return Just(Measurement()).eraseToAnyPublisher() // dummy

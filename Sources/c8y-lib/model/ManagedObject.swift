@@ -598,7 +598,7 @@ public struct C8yManagedObject: JcEncodableContent, JcProperties {
 						self.network = try container.decode(C8yNetwork.self, forKey: key)
 					case "childAdditions":
 						//ignore
-						print("ignore")
+						break
 					case C8Y_MANAGED_OBJECT_ISAGENT:
 						self.isAgent = true
 					default:

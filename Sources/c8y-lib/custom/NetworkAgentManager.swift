@@ -65,9 +65,10 @@ public class C8yNetworkAgentManager: ObservableObject {
 			.subscribe(Subscribers.Sink(receiveCompletion: { completion in
 				switch completion {
 					case .failure(let error):
+						// TODO: report error
 						print(error)
 					case .finished:
-						print("done")
+						break
 				}
 			}, receiveValue: { response in
 				
@@ -226,11 +227,9 @@ public class C8yNetworkAgent {
 								.subscribe(Subscribers.Sink(receiveCompletion: {completion in
 								
 								switch completion {
-									case .failure(let error):
-										print("error \(error)")
+									case .failure:
 										onLoadPublisher.send(false)
 									case .finished:
-										print("done")
 										onLoadPublisher.send(true)
 								}
 								

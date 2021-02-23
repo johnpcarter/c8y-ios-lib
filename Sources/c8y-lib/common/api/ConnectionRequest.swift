@@ -180,9 +180,7 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
 		if (_connection.credentials != nil) {
 			urlRequest = _connection.credentials!.encodeCredentials(urlRequest: urlRequest)
 		}
-		
-		print("invoking \(method.rawValue) - " + urlRequest.url!.absoluteString)
-		
+				
 		urlRequest.addValue(acceptType ?? "application/json", forHTTPHeaderField: "Accept")
 		
 		if (headers != nil) {
@@ -192,10 +190,6 @@ public class JcConnectionRequest<T:JcSimpleConnection> {
 		}
 		
 		if (method == Method.POST || method == Method.PUT || method == Method.PATCH) {
-			
-			if (data != nil && data!.count < 2048) {
-				print("\(String(decoding: data!, as: UTF8.self))")
-			}
 			
 			urlRequest.addValue(contentType ?? "application/json", forHTTPHeaderField: "Content-Type")
 			urlRequest.httpBody = data!
